@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\alert.png" />
+    <None Remove="Images\background.png" />
+    <None Remove="Images\blank-file-yellow.png" />
+    <None Remove="Images\blank-file.png" />
+    <None Remove="Images\close.png" />
+    <None Remove="Images\collapse-all-arrow.png" />
+    <None Remove="Images\collapse-all-blue.png" />
+    <None Remove="Images\collapse-all-darkblue.png" />
+    <None Remove="Images\collapse-all.png" />
+    <None Remove="Images\cyber.png" />
+    <None Remove="Images\expand-all-blue.png" />
+    <None Remove="Images\expand-all-darkblue.png" />
+    <None Remove="Images\folder.png" />
+    <None Remove="Images\hyperlink-green.png" />
+    <None Remove="Images\hyperlink.png" />
+    <None Remove="Images\next.png" />
+    <None Remove="Images\play-black.png" />
+    <None Remove="Images\play-darkblue.png" />
+    <None Remove="Images\play-green.png" />
+    <None Remove="Images\play-lightgreen.png" />
+    <None Remove="Images\quill.png" />
+    <None Remove="Images\sharingan.png" />
+    <None Remove="Images\study.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.1.2.30" />
+    <PackageReference Include="FluentWPF" Version="0.9.0" />
+    <PackageReference Include="HtmlAgilityPack.NetCore" Version="1.5.0.1" />
+    <PackageReference Include="LemmaGenerator" Version="1.1.0" />
+    <PackageReference Include="MaterialDesignColors" Version="2.0.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
+    <PackageReference Include="Microsoft.ML" Version="1.6.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TFIDF\TFIDF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\alert.png" />
+    <Resource Include="Images\background.png" />
+    <Resource Include="Images\blank-file-yellow.png" />
+    <Resource Include="Images\blank-file.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\collapse-all-arrow.png" />
+    <Resource Include="Images\collapse-all-blue.png" />
+    <Resource Include="Images\collapse-all-darkblue.png" />
+    <Resource Include="Images\collapse-all.png" />
+    <Resource Include="Images\cyber.png" />
+    <Resource Include="Images\expand-all-blue.png" />
+    <Resource Include="Images\expand-all-darkblue.png" />
+    <Resource Include="Images\folder.png" />
+    <Resource Include="Images\hyperlink-green.png" />
+    <Resource Include="Images\hyperlink.png" />
+    <Resource Include="Images\next.png" />
+    <Resource Include="Images\play-black.png" />
+    <Resource Include="Images\play-darkblue.png" />
+    <Resource Include="Images\play-green.png" />
+    <Resource Include="Images\play-lightgreen.png" />
+    <Resource Include="Images\quill.png" />
+    <Resource Include="Images\sharingan.png" />
+    <Resource Include="Images\study.png" />
+  </ItemGroup>
+
+</Project>

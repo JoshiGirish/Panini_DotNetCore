@@ -1,0 +1,12 @@
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini_core.csproj.AssemblyReference.cache
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\MainWindow.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\AboutPage.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\ConfigPage.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\LoadPage.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\AboutView.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\Input.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\TabsView.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\App.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini_core_MarkupCompile.cache
+D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini_core_MarkupCompile.lref

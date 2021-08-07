@@ -1,0 +1,472 @@
+﻿<Page x:Class="Panini.Pages.ResultsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:vm="clr-namespace:Panini.ViewModel"
+      xmlns:local="clr-namespace:Panini"
+      xmlns:m="clr-namespace:Panini.Models"
+      xmlns:beh="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+      xmlns:p="clr-namespace:Panini.Pages"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="ResultsPage">
+
+  <!-- Set the datacontext to the viewmodel -->
+  <Page.DataContext>
+    <vm:ResultsViewModel />
+  </Page.DataContext>
+
+  <!-- Root -->
+  <DockPanel Background="Transparent">
+
+    <!--DockPanelResources-->
+    <DockPanel.Resources>
+      
+      <DataTemplate x:Key="checkbox">
+        <CheckBox IsChecked="{Binding IsSelected, RelativeSource= {RelativeSource AncestorType=ListViewItem}}"
+                  Margin="0,1,1,1">
+        </CheckBox>
+      </DataTemplate>
+
+
+    </DockPanel.Resources>
+
+    <!-- Status Bar(docked to the bottom) -->
+    <StatusBar Height="20"
+               DockPanel.Dock="Bottom">
+      <StatusBar.Background>
+        <SolidColorBrush Color="{Binding StatusBarColor}" />
+      </StatusBar.Background>
+      <TextBlock Text="{Binding HeaderText}"
+                 VerticalAlignment="Center" />
+      <ProgressBar Width="100"
+                   Height="16"
+                   VerticalAlignment="Center"
+                   Minimum="0"
+                   Maximum="100"
+                   Value="{Binding Progress}" />
+      <StatusBarItem>
+        <TextBlock Text="{Binding Status}"
+                   Margin="10 0 0 0"
+                   VerticalAlignment="Center"
+                   FontSize="12"
+                   Padding="0 3 0 0" />
+      </StatusBarItem>
+    </StatusBar>
+
+    <!-- Body -->
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="30" />
+        <RowDefinition Height="1*" />
+      </Grid.RowDefinitions>
+
+      <!-- Toolbar and SearchBox -->
+      <StackPanel Grid.Row="0"
+                  Orientation="Horizontal">
+        <Button Width="30"
+                Margin="10 0 0 0"
+                Command="{Binding Run}"
+                Background="Transparent"
+                ToolTip="Rank Topics"
+                BorderThickness="0">
+          <Image Source="/Images/play-lightgreen.png"
+                 Height="18"></Image>
+        </Button>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        <Button Width="30"
+                Margin="0 0 0 0"
+                Command="{Binding ExpandAll}"
+                Background="Transparent"
+                ToolTip="Expand All"
+                BorderThickness="0">
+          <Image Source="/Images/expand-all-blue.png"
+                 Height="18"></Image>
+        </Button>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        <Button Width="30"
+                Margin="0 0 0 0"
+                Command="{Binding CollapseAll}"
+                Background="Transparent"
+                ToolTip="Collpase All"
+                BorderThickness="0">
+          <Image Source="/Images/collapse-all-blue.png"
+                 Height="18"></Image>
+        </Button>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        <Label Margin="20 0 10 0"
+               VerticalAlignment="Center">Search :</Label>
+        <TextBox x:Name="searchbox"
+                 Width="200"
+                 Height="20"
+                 VerticalAlignment="Center"
+                 Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="Topic name search.">
+          <beh:Interaction.Triggers>
+            <beh:EventTrigger EventName="TextChanged"
+                              SourceObject="{Binding ElementName=searchbox}">
+              <beh:InvokeCommandAction Command="{Binding Search}" />
+            </beh:EventTrigger>
+          </beh:Interaction.Triggers>
+        </TextBox>
+        <!--<Button Content="Open XML"
+                Height="25"
+                Width="50"
+                HorizontalAlignment="Right" />-->
+      </StackPanel>
+
+      <Border Grid.Row="1"
+              BorderBrush="LightGray"
+              BorderThickness="1">
+        <!-- Topics Table -->
+        <DockPanel Background="Transparent"
+                   Margin="10 0 10 0">
+          <!--<Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>-->
+            <ScrollViewer Grid.Column="0">
+              <ItemsControl                 ItemsSource="{Binding TopicCollection}"
+                                            ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate DataType="{x:Type m:TopicItem}">
+                    <DockPanel HorizontalAlignment="Stretch" Background="Transparent">
+
+                      <!-- Topic expander -->
+                      <Expander DockPanel.Dock="Top"
+                                Header="{Binding Path=Name}"
+                                IsExpanded="{Binding IsExpanded}"
+                                Margin="0 10 0 0"
+                                HeaderTemplate="{StaticResource ResourceKey=titleText}">
+                        <Expander.Style>
+                          <Style TargetType="{x:Type Expander}">
+                            <Setter Property="Visibility"
+                                    Value="{Binding IsVisible}" />
+                          </Style>
+                        </Expander.Style>
+                        <Expander.Resources>
+                          <Style x:Key="DataGrid_Centering"
+                                 TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Template">
+                              <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                  <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center" />
+                                  </Grid>
+                                </ControlTemplate>
+                              </Setter.Value>
+                            </Setter>
+                          </Style>
+                        </Expander.Resources>
+                        <Grid Margin="0 5 0 0">
+                          <DataGrid ItemsSource="{Binding itemCollection}"
+                                    AutoGenerateColumns="False"
+                                    HorizontalGridLinesBrush="LightGray"
+                                    VerticalGridLinesBrush="LightGray"
+                                    AreRowDetailsFrozen="True"
+                                    CanUserAddRows="False"
+                                    BorderBrush="Transparent"
+                                    CellStyle="{StaticResource DataGrid_Centering}"
+                                    Background="Transparent" RowBackground="Transparent">
+                            <DataGrid.RowStyle>
+                              <Style TargetType="DataGridRow">
+                                <Setter Property="Height"
+                                        Value="25" />
+                              </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Resources>
+                              <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="BorderThickness"
+                                        Value="0" />
+                              </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+
+                              <!-- File Launcher Icon -->
+                              <DataGridTemplateColumn Width="25">
+                                <DataGridTemplateColumn.CellTemplate>
+                                  <DataTemplate>
+                                    <Button DataContext="Global"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Command="{Binding DataContext.OpenFile, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                            MinHeight="23"
+                                            Padding="0"
+                                            Margin="0">
+                                      <Image Source="/Images/blank-file.png"
+                                             Height="15"
+                                             Cursor="Hand"
+                                             Margin="0"
+                                             VerticalAlignment="Top">
+                                      </Image>
+                                      <Button.ToolTip>
+                                        <TextBlock Width="150"
+                                                   TextWrapping="Wrap"
+                                                   Text="Open this topic in web browser." />
+                                      </Button.ToolTip>
+                                    </Button>
+                                  </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                              </DataGridTemplateColumn>
+
+                              <!-- Linked Status icon cell -->
+                              <DataGridTemplateColumn Width="25">
+                                <DataGridTemplateColumn.CellTemplate>
+                                  <DataTemplate>
+                                    <Button Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Visibility="{Binding IsLinked}">
+                                      <Grid>
+                                        <Image Source="/Images/hyperlink-green.png"
+                                               Height="13"
+                                               Cursor="Hand">
+                                        </Image>
+                                      </Grid>
+                                      <Button.ToolTip>
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Width="150"
+                                                   Text="A link to this topic exists in the source topic." />
+                                      </Button.ToolTip>
+                                    </Button>
+                                  </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                              </DataGridTemplateColumn>
+
+                              <!-- Similarity Score Cell -->
+                              <DataGridTextColumn Header="Score"
+                                                  Binding="{Binding simScore}">
+                                <DataGridTextColumn.ElementStyle>
+                                  <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment"
+                                            Value="Center" />
+                                  <Setter Property="Background" Value="Transparent"/>
+                                </Style>
+                                </DataGridTextColumn.ElementStyle>
+                              </DataGridTextColumn>
+
+                              <!-- Inline Links -->
+                              <DataGridTemplateColumn Header="Inline Links">
+                                <DataGridTemplateColumn.CellTemplate>
+                                  <DataTemplate>
+                                    <Button Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Visibility="{Binding IsLinked}">
+                                      <!--<Image Source="/Images/hyperlink-green.png"
+                                           Height="13"
+                                           Cursor="Hand">
+                                    </Image>-->
+                                      <Grid>
+                                        <!--<Rectangle Fill="#fff0fc"
+                                                 Height="25"
+                                                 Width="25" />-->
+                                        <TextBlock Text="{Binding NumOfInlineLinks}"
+                                                   FontSize="12"
+                                                   Margin="0"
+                                                   Padding="0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" />
+                                      </Grid>
+                                      <Button.ToolTip>
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Width="150"
+                                                   Text="Set of inline links to topics in the same directory." />
+                                      </Button.ToolTip>
+                                    </Button>
+                                  </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                              </DataGridTemplateColumn>
+
+                              <!-- Related Links -->
+                              <DataGridTemplateColumn Header="Related Links">
+                                <DataGridTemplateColumn.CellTemplate>
+                                  <DataTemplate>
+                                    <Button Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Visibility="{Binding IsLinked}">
+                                      <!--<Image Source="/Images/hyperlink-green.png"
+                                           Height="13"
+                                           Cursor="Hand">
+                                    </Image>-->
+                                      <Grid>
+                                        <!--<Rectangle Fill="#fff7f0"
+                                                 Height="25"
+                                                 Width="25" />-->
+                                        <TextBlock Text="{Binding NumOfRelatedLinks}"
+                                                   FontSize="12"
+                                                   Margin="0"
+                                                   Padding="0"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" />
+                                      </Grid>
+                                      <Button.ToolTip>
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Width="150"
+                                                   Text="Set of related links to topics in the same directory." />
+                                      </Button.ToolTip>
+                                    </Button>
+                                  </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                              </DataGridTemplateColumn>
+
+                              <!-- Similar Topic Name cell -->
+                              <DataGridTextColumn Header="Similar Topics"
+                                                  Binding="{Binding Name}">
+                                <DataGridTextColumn.ElementStyle>
+                                  <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight"
+                                            Value="SemiBold" />
+                                    <Setter Property="Margin"
+                                            Value="5 0 5 0" />
+                                  <Setter Property="Background" Value="Transparent"/>
+                                </Style>
+                                </DataGridTextColumn.ElementStyle>
+                              </DataGridTextColumn>
+                              <!--<DataGridTextColumn Header="Keywords"
+                                                Binding="{Binding keywordsString}"
+                                                Width="*" />-->
+
+                              <!-- Keywords Cell -->
+                              <DataGridTemplateColumn Header="Keywords"
+                                                      Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                  <DataTemplate>
+                                    <Grid>
+                                      <ListView ItemsSource="{Binding Path=Keywords}"
+                                                BorderThickness="0"
+                                                Background="Transparent"
+                                                VerticalAlignment="Center">
+                                        <ListView.ItemContainerStyle>
+                                          <Style TargetType="{x:Type ListViewItem}">
+                                            <!--<Setter Property="Background"
+                                                    Value="{StaticResource c1}" />-->
+                                            <Setter Property="Margin"
+                                                    Value="0 0 5 0" />
+                                          </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.ItemsPanel>
+                                          <ItemsPanelTemplate>
+                                            <WrapPanel IsItemsHost="True"></WrapPanel>
+                                          </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                      </ListView>
+                                    </Grid>
+                                  </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                              </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+                          </DataGrid>
+                          <!-- Header Row -->
+                          <!--<ListView Grid.Row="0"
+                              Margin="20 
+                             0 0 0"
+                              Background="White" BorderThickness="0">
+                      <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                          <Setter Property="HorizontalContentAlignment"
+                                  Value="Stretch" />
+                        </Style>
+                      </ListView.ItemContainerStyle>
+                      <ListViewItem Background="{StaticResource c1}">
+                        <Grid>
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="56*" />
+                            <ColumnDefinition Width="40*" />
+                          </Grid.ColumnDefinitions>
+                          <TextBlock Grid.Column="0"
+                                     Text="Score" FontWeight="SemiBold"/>
+                          <TextBlock Grid.Column="1"
+                                     Text="Similar Topics"
+                                     FontWeight="SemiBold" Margin="10 0 0 0"/>
+                          <TextBlock Grid.Column="2"
+                                     Text="Common Words"
+                                     HorizontalAlignment="Center"
+                                     FontWeight="SemiBold" />
+                        </Grid>
+                      </ListViewItem>
+                    </ListView>-->
+
+                          <!-- Items Row -->
+                          <!--<ListView Grid.Row="1"
+                              ItemsSource="{Binding itemCollection}"
+                              Margin="20 
+                             0 0 0"
+                              Background="White"
+                              BorderBrush="{StaticResource c1}">
+                      
+                    </ListView>-->
+                          <!--<ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                          <Setter Property="HorizontalContentAlignment"
+                                  Value="Stretch" />
+                        </Style>
+                      </ListView.ItemContainerStyle>
+                      <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type m:TopicResultItem}">
+                          <Grid>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="40" />
+                              <ColumnDefinition Width="20" />
+                              <ColumnDefinition Width="56*" />
+                              <ColumnDefinition Width="40*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding Path=simScore}" VerticalAlignment="Center"/>
+                            <Image Grid.Column="1" Source="/Images/blank-file.png" Height="18" Cursor="Hand"/>
+                            <TextBlock Grid.Column="2"
+                                       Text="{Binding Path=Name}"
+                                       VerticalAlignment="Center"
+                                       Margin="10 0 0 0"/>
+                            <ListView Grid.Column="3"
+                                      Width="500"
+                                      ItemsSource="{Binding Path=keywords}"
+                                      BorderThickness="0"
+                                      Background="White"
+                                      VerticalAlignment="Center">
+                              <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                  <Setter Property="Background"
+                                          Value="{StaticResource c1}" />
+                                  <Setter Property="Margin"
+                                          Value="0 0 5 0" />
+                                </Style>
+                              </ListView.ItemContainerStyle>
+                              <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                  <WrapPanel IsItemsHost="True"></WrapPanel>
+                                </ItemsPanelTemplate>
+                              </ListView.ItemsPanel>
+                            </ListView>
+                          </Grid>
+                        </DataTemplate>
+                      </ListView.ItemTemplate>-->
+                          <!--</ListView>-->
+
+                        </Grid>
+                      </Expander>
+                    </DockPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+            <!--<GridSplitter Grid.Column="1"
+                          Width="4"
+                          HorizontalAlignment="Left" />-->
+            <!--<local:AvlonTextEditor Grid.Column="1"
+                                   FontFamily="Consolas"
+                                   FontSize="10pt"
+                                   SyntaxHighlighting="XML" >
+            </local:AvlonTextEditor>-->
+          <!--</Grid>-->
+        </DockPanel>
+      </Border>
+    </Grid>
+  </DockPanel>
+</Page>
