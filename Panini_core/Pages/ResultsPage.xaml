@@ -6,7 +6,10 @@
       xmlns:vm="clr-namespace:Panini.ViewModel"
       xmlns:local="clr-namespace:Panini"
       xmlns:m="clr-namespace:Panini.Models"
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialDesign="mater"
       xmlns:beh="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
       xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
       xmlns:p="clr-namespace:Panini.Pages"
       mc:Ignorable="d"
@@ -24,13 +27,12 @@
 
     <!--DockPanelResources-->
     <DockPanel.Resources>
-      
+
       <DataTemplate x:Key="checkbox">
         <CheckBox IsChecked="{Binding IsSelected, RelativeSource= {RelativeSource AncestorType=ListViewItem}}"
                   Margin="0,1,1,1">
         </CheckBox>
       </DataTemplate>
-
 
     </DockPanel.Resources>
 
@@ -42,12 +44,19 @@
       </StatusBar.Background>
       <TextBlock Text="{Binding HeaderText}"
                  VerticalAlignment="Center" />
-      <ProgressBar Width="100"
+      <!--<ProgressBar Width="100"
                    Height="16"
                    VerticalAlignment="Center"
                    Minimum="0"
                    Maximum="100"
-                   Value="{Binding Progress}" />
+                   Value="{Binding Progress}" />-->
+      <ProgressBar IsIndeterminate="True" 
+                   Width="100" 
+                   Height="16" 
+                   Foreground="#3b00a8"
+                   VerticalAlignment="Center"
+                   Opacity="0.7"
+                   Visibility="{Binding ProgressBarVisibility}"/>
       <StatusBarItem>
         <TextBlock Text="{Binding Status}"
                    Margin="10 0 0 0"
@@ -73,8 +82,9 @@
                 Background="Transparent"
                 ToolTip="Rank Topics"
                 BorderThickness="0">
-          <Image Source="/Images/play-lightgreen.png"
-                 Height="18"></Image>
+          <!--<Image Source="/Images/play-lightgreen.png"
+                 Height="18"></Image>-->
+          <md:PackIcon Kind="PlayCircle" Height="25" Width="25"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
         <Button Width="30"
@@ -83,8 +93,9 @@
                 Background="Transparent"
                 ToolTip="Expand All"
                 BorderThickness="0">
-          <Image Source="/Images/expand-all-blue.png"
-                 Height="18"></Image>
+          <!--<Image Source="/Images/expand-all-blue.png"
+                 Height="18"></Image>-->
+          <md:PackIcon Kind="ExpandAll" Height="25" Width="25"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
         <Button Width="30"
@@ -93,8 +104,9 @@
                 Background="Transparent"
                 ToolTip="Collpase All"
                 BorderThickness="0">
-          <Image Source="/Images/collapse-all-blue.png"
-                 Height="18"></Image>
+          <!--<Image Source="/Images/collapse-all-blue.png"
+                 Height="18"></Image>-->
+          <md:PackIcon Kind="CollapseAll" Height="25" Width="25"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
         <Label Margin="20 0 10 0"
@@ -112,14 +124,42 @@
             </beh:EventTrigger>
           </beh:Interaction.Triggers>
         </TextBox>
+        <md:PackIcon Kind="Search" Height="25" Width="25" VerticalAlignment="Center" Margin="5 0 5 0"/>
         <!--<Button Content="Open XML"
                 Height="25"
                 Width="50"
                 HorizontalAlignment="Right" />-->
       </StackPanel>
-
-      <Border Grid.Row="1"
-              BorderBrush="LightGray"
+      <Grid Grid.Row="1">
+        <Grid Height="200" 
+              Width="400" 
+              VerticalAlignment="Center" 
+              HorizontalAlignment="Center"
+              Visibility="{Binding ProcessingMessageVisibility}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="1*"/>
+              <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <fa:ImageAwesome Grid.Column="0" 
+                             Icon="Cog" Spin="True" 
+                             SpinDuration="10" 
+                             Height="50" 
+                             VerticalAlignment="Center" 
+                             HorizontalAlignment="Center"
+                             Foreground="#3b00a8" Opacity="0.7"
+                             Visibility="{Binding ProcessingMessageVisibility}"/>
+          <TextBlock Grid.Column="1" 
+                     Text="{Binding ProcessingStage}" 
+                     Margin="20 0 0 0" 
+                     FontSize="20"
+                     FontWeight="SemiBold"
+                     Foreground="#3b00a8"
+                     Opacity="0.7"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Center"/>
+        </Grid>
+        <Border Grid.Row="1"
+              BorderBrush="#f2f2f2"
               BorderThickness="1">
         <!-- Topics Table -->
         <DockPanel Background="Transparent"
@@ -129,26 +169,39 @@
               <ColumnDefinition />
               <ColumnDefinition />
             </Grid.ColumnDefinitions>-->
-            <ScrollViewer Grid.Column="0">
-              <ItemsControl                 ItemsSource="{Binding TopicCollection}"
+
+          
+
+          <ScrollViewer Grid.Column="0">
+              
+            <ItemsControl                 ItemsSource="{Binding TopicCollection}"
                                             ScrollViewer.VerticalScrollBarVisibility="Visible">
 
                 <ItemsControl.ItemTemplate>
-                  <DataTemplate DataType="{x:Type m:TopicItem}">
+                <DataTemplate DataType="{x:Type m:TopicItem}">
+                  <md:Card UniformCornerRadius="5" Margin="5" Padding="10">
+                    <md:Card.Background>
+                        <SolidColorBrush Color="white" Opacity="0.8"/>
+                    </md:Card.Background>
+                    <md:Card.Style>
+                      <Style TargetType="{x:Type md:Card}">
+                        <Setter Property="Visibility"
+                                    Value="{Binding IsVisible, FallbackValue='Visible'}" />
+                      </Style>
+                    </md:Card.Style>
                     <DockPanel HorizontalAlignment="Stretch" Background="Transparent">
 
                       <!-- Topic expander -->
                       <Expander DockPanel.Dock="Top"
                                 Header="{Binding Path=Name}"
                                 IsExpanded="{Binding IsExpanded}"
-                                Margin="0 10 0 0"
                                 HeaderTemplate="{StaticResource ResourceKey=titleText}">
-                        <Expander.Style>
+                        <!--<Expander.Style>
                           <Style TargetType="{x:Type Expander}">
                             <Setter Property="Visibility"
                                     Value="{Binding IsVisible}" />
                           </Style>
-                        </Expander.Style>
+                        </Expander.Style>-->
                         <Expander.Resources>
                           <Style x:Key="DataGrid_Centering"
                                  TargetType="{x:Type DataGridCell}">
@@ -199,12 +252,13 @@
                                             MinHeight="23"
                                             Padding="0"
                                             Margin="0">
-                                      <Image Source="/Images/blank-file.png"
+                                      <!--<Image Source="/Images/blank-file.png"
                                              Height="15"
                                              Cursor="Hand"
                                              Margin="0"
                                              VerticalAlignment="Top">
-                                      </Image>
+                                      </Image>-->
+                                      <md:PackIcon Kind="FileOutline" Height="18" Width="18" VerticalAlignment="Center"/>
                                       <Button.ToolTip>
                                         <TextBlock Width="150"
                                                    TextWrapping="Wrap"
@@ -223,10 +277,11 @@
                                             BorderBrush="Transparent"
                                             Visibility="{Binding IsLinked}">
                                       <Grid>
-                                        <Image Source="/Images/hyperlink-green.png"
+                                        <!--<Image Source="/Images/hyperlink-green.png"
                                                Height="13"
                                                Cursor="Hand">
-                                        </Image>
+                                        </Image>-->
+                                        <md:PackIcon Kind="LinkVariant" Height="18" Width="18"/>
                                       </Grid>
                                       <Button.ToolTip>
                                         <TextBlock TextWrapping="Wrap"
@@ -340,7 +395,7 @@
                                       <ListView ItemsSource="{Binding Path=Keywords}"
                                                 BorderThickness="0"
                                                 Background="Transparent"
-                                                VerticalAlignment="Center">
+                                                VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                         <ListView.ItemContainerStyle>
                                           <Style TargetType="{x:Type ListViewItem}">
                                             <!--<Setter Property="Background"
@@ -452,7 +507,8 @@
                         </Grid>
                       </Expander>
                     </DockPanel>
-                  </DataTemplate>
+                  </md:Card>
+                </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
             </ScrollViewer>
@@ -467,6 +523,7 @@
           <!--</Grid>-->
         </DockPanel>
       </Border>
+      </Grid>
     </Grid>
   </DockPanel>
 </Page>

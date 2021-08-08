@@ -28,7 +28,7 @@ namespace Panini
             Config = new Dictionary<string, object>();
             Config["keywordCount"] = 5;
             Config["similarTopicCount"] = 5;
-            Config["colorScheme"] = "Cold";
+            Config["colorScheme"] = "Default";
 
             // Initialize NLP data
             NLPData = new Dictionary<string, object>();

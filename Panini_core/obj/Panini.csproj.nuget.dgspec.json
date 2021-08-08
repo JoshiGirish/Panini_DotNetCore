@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[0.9.0, )"
             },
+            "FontAwesome.WPF": {
+              "target": "Package",
+              "version": "[4.7.0.9, )"
+            },
             "HtmlAgilityPack.NetCore": {
               "target": "Package",
               "version": "[1.5.0.1, )"

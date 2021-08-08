@@ -28,7 +28,7 @@ namespace Panini.ViewModel
         private ResultsPage resultsPage = new ResultsPage();
         private SummaryPage summaryPage = new SummaryPage();
 
-        private Page _currentPage = new Page();
+        private Page _currentPage = new AboutPage();
 
         public Page CurrentPage
         {

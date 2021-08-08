@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ti8iZf2j4fLEJ8a2ZmBRjobB0LWwcfyYNHDdSXF5SgRqSbWD+CYNJgAZ8UtX1Cb1rshWKz2zGrc6Z0wAeqxxdw==",
+  "dgSpecHash": "0iMxjWqLPrfnFiB5IiPCMU8VLHD0dVvKOFIIfiNBGjoKzMcRNPrXZu+aoQCS0jZa5U/0NEmceAMgXsFOYZITIw==",
   "success": true,
   "projectFilePath": "D:\\Dev\\C sharp\\Panini_core\\Panini_core\\Panini.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Girish\\.nuget\\packages\\avalonedit\\6.1.2.30\\avalonedit.6.1.2.30.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\fluentwpf\\0.9.0\\fluentwpf.0.9.0.nupkg.sha512",
+    "C:\\Users\\Girish\\.nuget\\packages\\fontawesome.wpf\\4.7.0.9\\fontawesome.wpf.4.7.0.9.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack\\1.11.34\\htmlagilitypack.1.11.34.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack.netcore\\1.5.0.1\\htmlagilitypack.netcore.1.5.0.1.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\lemmagenerator\\1.1.0\\lemmagenerator.1.1.0.nupkg.sha512",
@@ -98,6 +99,16 @@
     "C:\\Users\\Girish\\.nuget\\packages\\system.xml.xpath\\4.0.1\\system.xml.xpath.4.0.1.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'FontAwesome.WPF 4.7.0.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "FontAwesome.WPF",
+      "targetGraphs": [
+        "net5.0-windows7.0"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",

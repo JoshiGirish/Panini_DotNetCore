@@ -20,6 +20,15 @@
   <!-- Page resources -->
   <Page.Resources>
     <vm:ColorSchemeConverter x:Key="colorSchemeConverterKey" />
+    <Style x:Key="commonStyle" TargetType="Control">
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style BasedOn="{StaticResource commonStyle}" TargetType="Label"/>
+    <Style BasedOn="{StaticResource commonStyle}" TargetType="TextBox"/>
+    <Style BasedOn="{StaticResource commonStyle}" TargetType="CheckBox"/>
+    <Style BasedOn="{StaticResource commonStyle}" TargetType="RadioButton"/>
   </Page.Resources>
   
   <!-- Root -->
@@ -50,12 +59,12 @@
     <StackPanel Margin="10">
       
       <!-- Topic Section -->
-      <DockPanel Height="25">
+      <DockPanel Height="30">
         <Label DockPanel.Dock="Left"
                Content="Topic"
                    FontWeight="Bold"
-                   Margin="0 0 10 0" />
-        <Separator />
+                   Margin="0 0 10 0" Foreground="#3b00a8"/>
+            <Separator Background="#3b00a8" Opacity="0.3"/>
       </DockPanel>
       <Grid Margin="0 10 0 20">
         <Grid.ColumnDefinitions>
@@ -184,13 +193,13 @@
       </Grid>
 
       <!-- Results Section -->
-      <DockPanel Height="25">
+      <DockPanel Height="30">
         <Label DockPanel.Dock="Left"
                Content="Results"
                    FontWeight="Bold"
-                   Margin="0 0 10 0" />
-        <Separator />
-      </DockPanel>
+                   Margin="0 0 10 0" Foreground="#3b00a8"/>
+            <Separator Background="#3b00a8"  Opacity="0.3"/>
+          </DockPanel>
       <Grid Margin="0 10 0 20">
         <Grid.ColumnDefinitions>
           <ColumnDefinition MaxWidth="400" />
@@ -239,12 +248,12 @@
       </Grid>
       
       <!-- Summary Section -->
-      <DockPanel Height="25">
+      <DockPanel Height="30">
         <Label DockPanel.Dock="Left"
                Content="Summary"
-                   FontWeight="Bold" Margin="0 0 10 0" />
-        <Separator />
-      </DockPanel>
+                   FontWeight="Bold" Margin="0 0 10 0" Foreground="#3b00a8"/>
+            <Separator Background="#3b00a8"  Opacity="0.3"/>
+          </DockPanel>
       <Grid Margin="0 10 0 20">
         <Grid.ColumnDefinitions>
           <ColumnDefinition MaxWidth="400" />
@@ -263,7 +272,10 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Content="Heatmap Color Scheme" />
             <StackPanel Grid.Column="1">
-              <RadioButton Content="Hot"
+                  <RadioButton Content="Default"
+                           Margin="3"
+                           IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=colorSchemeConverterKey}, ConverterParameter=Default}" />
+                  <RadioButton Content="Hot"
                            Margin="3"
                            IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=colorSchemeConverterKey}, ConverterParameter=Hot}" />
               <RadioButton Content="Cold"

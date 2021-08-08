@@ -36,6 +36,43 @@ namespace Panini.ViewModel
         public int maxVisibleSimilarTopics { get { return maxVisibleSimilarTopics; } set { maxVisibleSimilarTopics = value; RaisePropertyChanged(); } }
         private float _progress;
 
+
+        #region ProgressBar Visibility
+        /// <summary>
+        /// Progress bar in the status bar.
+        /// </summary>
+        private string _progressBarVisibility = "Collapsed";
+
+        public string ProgressBarVisibility
+        {
+            get { return _progressBarVisibility; }
+            set { _progressBarVisibility = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        #region Processing Flag
+        /// <summary>
+        /// Flag to display the processing prompt.
+        /// </summary>
+        private string _processingMessageVisibility = "Collapsed";
+
+        public string ProcessingMessageVisibility
+        {
+            get { return _processingMessageVisibility; }
+            set { _processingMessageVisibility = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        #region Processing Stage
+        private string _processingStage;
+
+        public string ProcessingStage
+        {
+            get { return _processingStage; }
+            set { _processingStage = value; RaisePropertyChanged(); }
+        }
+
+        #endregion
         public string _status;
         public string Status
         {
@@ -127,14 +164,25 @@ namespace Panini.ViewModel
         /// </summary>
         private void compute_results()
         {
-            // Execute stages asynchronously on multiple threads
-            Status = $"Processing topics. Please wait ...";
-            StatusBarColor = StatusColors["Warning"];
-            Progress = 0.0f;
+
+            // Display the processing prompt and progress bar
+            ProcessingMessageVisibility = "Visible";
+            ProgressBarVisibility = "Visible";
+            Status = $"Please wait ...";
+            //StatusBarColor = StatusColors["Warning"];     
+
+            ProcessingStage = "Generating Lexicon and Topic Instances";
             dataCache.corpus.generate_topics_async();
+
+            ProcessingStage = "Calculating TFIDF Scores";
             dataCache.corpus.calculate_tfidf_scores_async();
+
+            ProcessingStage = "Calculating Cosine Similarity Scores";
             dataCache.corpus.calculate_topic_similarity_scores_async();
-                
+
+            ProcessingMessageVisibility = "Collapsed";
+            ProgressBarVisibility = "Collapsed";
+            Status = "";
             foreach (var topic in dataCache.corpus.concDict.Values)
             {
                 var enumItems = dataCache.corpus.get_similar_topics(topic, (int)dataCache.Config["similarTopicCount"])

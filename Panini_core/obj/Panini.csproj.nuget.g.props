@@ -21,5 +21,6 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_Xaml_Behaviors_Wpf Condition=" '$(PkgMicrosoft_Xaml_Behaviors_Wpf)' == '' ">C:\Users\Girish\.nuget\packages\microsoft.xaml.behaviors.wpf\1.1.31</PkgMicrosoft_Xaml_Behaviors_Wpf>
     <PkgMaterialDesignThemes Condition=" '$(PkgMaterialDesignThemes)' == '' ">C:\Users\Girish\.nuget\packages\materialdesignthemes\4.1.0</PkgMaterialDesignThemes>
+    <PkgFontAwesome_WPF Condition=" '$(PkgFontAwesome_WPF)' == '' ">C:\Users\Girish\.nuget\packages\fontawesome.wpf\4.7.0.9</PkgFontAwesome_WPF>
   </PropertyGroup>
 </Project>

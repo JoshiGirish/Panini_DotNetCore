@@ -197,7 +197,7 @@ namespace Panini.ViewModel
             set { _kernelSize = value; RaisePropertyChanged(); }
         }
 
-		private string _isPreviewVisible = "Collapsed";
+		private string _isPreviewVisible;
 
         public string IsPreviewVisible
         {
@@ -526,6 +526,7 @@ namespace Panini.ViewModel
 				TicklineColor = OxyColors.Transparent,
 				Key = "heatmapColorAxis"
 			});
+
 			Model.Axes.Add(new OxyPlot.Axes.CategoryAxis
             {
 				Position = AxisPosition.Bottom,
@@ -533,6 +534,7 @@ namespace Panini.ViewModel
 				ItemsSource = (string[])plotData["hlabels"],
 				Angle = 90.0,
 			});
+
 			Model.Axes.Add(new OxyPlot.Axes.CategoryAxis
             {
 				Position = AxisPosition.Left,
@@ -543,9 +545,9 @@ namespace Panini.ViewModel
             OxyPlot.Series.HeatMapSeries heatMapSeries = new OxyPlot.Series.HeatMapSeries
             {
 				X0 = 0.0,
-				X1 = IsPreviewVisible == "Visible" ? KernelSize - 1 : dataCache.corpus.topics.Count-1,
+				X1 = KernelSize < dataCache.corpus.topics.Count ? KernelSize - 1 : dataCache.corpus.topics.Count-1,
 				Y0 = 0.0,
-				Y1 = IsPreviewVisible == "Visible" ? KernelSize - 1 : dataCache.corpus.topics.Count - 1,
+				Y1 = KernelSize < dataCache.corpus.topics.Count ? KernelSize - 1 : dataCache.corpus.topics.Count - 1,
 				XAxisKey = "Source Topics",
 				YAxisKey = "Target Topics",
 				ColorAxisKey = "heatmapColorAxis",
@@ -615,10 +617,19 @@ namespace Panini.ViewModel
                     OxyColor.FromRgb(237, 119, 119),
                     OxyColor.FromRgb(119, 217, 237)
 				};
+
+				case "Default":
+					return new List<OxyColor>
+				{
+					OxyColor.FromRgb(59, 0, 168),
+					OxyColors.Transparent
+					//OxyColor.FromRgb(byte.MaxValue, 224, 224)
+				};
+
 				default:
 					return new List<OxyColor>
 				{
-					OxyColor.FromRgb(217, 119, 119),
+					OxyColor.FromRgb(59, 0, 168),
 					OxyColors.Transparent
 					//OxyColor.FromRgb(byte.MaxValue, 224, 224)
 				};

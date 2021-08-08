@@ -27,9 +27,8 @@
 
     <ResourceDictionary x:Key="materials">
       <ResourceDictionary.MergedDictionaries>
-        <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
       </ResourceDictionary.MergedDictionaries>
@@ -53,6 +52,7 @@
               <Trigger Property="IsMouseOver" Value="true">
                 <Setter TargetName="Border" Property="Background" Value="#d9d9d9"/>
                 <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="ToolTipService.InitialShowDelay" Value="2000"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -108,6 +108,13 @@
     <Style TargetType="{x:Type TextBox}">
       <Setter Property="Background"
               Value="Transparent" />
+      <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style TargetType="{x:Type Label}">
+      <Setter Property="Background"
+              Value="Transparent" />
+      <Setter Property="FontSize" Value="14"/>
     </Style>
 
     <Style TargetType="{x:Type DataGrid}">
@@ -120,17 +127,18 @@
       <Setter Property="Background" Value="Transparent"/>
     </Style>
     <Style TargetType="{x:Type DataGridColumnHeader}">
-      <!--<Setter>
+      <Setter>
         <Setter.Property>Background</Setter.Property>
         <Setter.Value>
           <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientStop Color="#6c1cff" Offset="0"/>
-            <GradientStop Color="#3b00a8" Offset="1.0"/>
+            <GradientStop Color="#ede3ff" Offset="0"/>
+            <GradientStop Color="#e3daf5" Offset="1.0"/>
           </LinearGradientBrush>
         </Setter.Value>
       </Setter>
-      <Setter Property="Foreground" Value="White"/>-->
-      <Setter Property="Background" Value="#d9d9d9"/>
+      <Setter Property="Foreground" Value="Black"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <!--<Setter Property="Background" Value="#f3edff"/>-->
       <Setter Property="Height" Value="25"/>
     </Style>
     <Style TargetType="{x:Type TextBlock}">
@@ -144,14 +152,14 @@
     <Style TargetType="Border"
              x:Key="RacePitBorderStyle">
       <Style.Resources>
-        <LinearGradientBrush x:Key="BackBrush"
+        <!--<LinearGradientBrush x:Key="BackBrush"
                                StartPoint="0.5,0"
                                EndPoint="0.5,1">
           <GradientStop Color="#E0E0E0"
                           Offset="0.1" />
           <GradientStop Color="#E0E0E0"
                           Offset="0.9" />
-        </LinearGradientBrush>
+        </LinearGradientBrush>-->
       </Style.Resources>
       <Setter Property="Background"
                 Value="Transparent" />
@@ -159,11 +167,11 @@
 
     <DataTemplate x:Key="titleText">
       <Border Style="{StaticResource RacePitBorderStyle}"
-                Height="24">
+                Height="24" Margin="0 0 0 10">
         <TextBlock Text="{Binding}"
                      Margin="4 0"
                      VerticalAlignment="Center"
-                     Foreground="Black"
+                     Foreground="#3b00a8"
                      FontSize="14"
                      FontWeight="SemiBold"
                      Width="{Binding
@@ -176,11 +184,5 @@
         </TextBlock>
       </Border>
     </DataTemplate>
-
-    <Style TargetType="{x:Type Expander}">
-      <Setter Property="HeaderTemplate"
-                Value="{StaticResource titleText}" />
-    </Style>
-    
   </Application.Resources>
 </Application>

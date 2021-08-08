@@ -80,7 +80,7 @@
                 Background="Transparent">
           <!--<Image Source="/Images/folder.png"
                  Height="25" />-->
-          <md:PackIcon Kind="Folder" Height="20" Width="20"/>
+          <md:PackIcon Kind="Folder" Height="25" Width="25"/>
         </Button>
         <TextBox Text="{Binding DirectoryPath}" Grid.Column="1"
                  VerticalAlignment="Center"
@@ -105,7 +105,9 @@
       <!-- Files Listbox -->
       <Grid DockPanel.Dock="Top">
         <ListBox ItemsSource="{Binding ListOfFiles}"
-                 ScrollViewer.VerticalScrollBarVisibility="Visible" Background="Transparent">
+                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                 Background="Transparent"
+                 FontSize="14">
         </ListBox>
       </Grid>
     </DockPanel>

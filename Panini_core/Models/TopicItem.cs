@@ -19,7 +19,7 @@ namespace Panini.Models
             set { _isExpanded = value; RaisePropertyChanged(); }
         }
 
-        private string _isVisible;
+        private string _isVisible = "Visible";
 
         public string IsVisible
         {

@@ -22,7 +22,7 @@ namespace Panini.ViewModel
         public string IgnoreTopicName { get => string.Join(",",ignoreTopicName); set { ignoreTopicName = value.Replace(" ", string.Empty).Split(',').ToList(); dataCache.corpus.ignoreTopicName = ignoreTopicName; RaisePropertyChanged();  } }
 
         public string IgnoreTopicNameStartsWith { get => string.Join(",", ignoreTopicNameStartsWith);  set { ignoreTopicNameStartsWith = value.Replace(" ", string.Empty).Split(',').ToList(); dataCache.corpus.ignoreTopicNameStartsWith = ignoreTopicNameStartsWith; RaisePropertyChanged(); } }
-        private string _colorScheme = "Cold";
+        private string _colorScheme = "Default";
 
         public string ColorScheme
         {

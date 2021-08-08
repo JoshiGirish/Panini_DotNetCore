@@ -9,21 +9,25 @@
         xmlns:beh="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="PANINI"
-        Height="600"
-        Width="900"
+        Height="800"
+        Width="1000"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        MinWidth="700"
+        WindowStyle="None" MouseLeftButtonDown="WindowMouseLeftButtonDown"
+MinWidth="700"
         MinHeight="400"
         fw:AcrylicWindow.Enabled="True"
-        fw:AcrylicWindow.TitleBarMode="Extend"
         fw:AcrylicWindow.TintColor="White"
         fw:AcrylicWindow.TintOpacity="0.9"
         Icon="Images/sharingan.png" 
-        AllowsTransparency="True"
-        TextElement.FontWeight="Medium"
-        TextElement.FontSize="14"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+        AllowsTransparency="True">
+  <x:Code>
+    <![CDATA[            
+                  private void WindowMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+                  {
+                      DragMove();
+                  }
+              ]]>
+  </x:Code> 
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
   </WindowChrome.WindowChrome>
@@ -93,48 +97,90 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <Grid.Resources>
-        
-      </Grid.Resources>
+        </Grid.Resources>
         <ListView BorderBrush="#cfcfcf" BorderThickness="1" Background="Transparent">
-        <ListViewItem x:Name="About" Height="50" VerticalContentAlignment="Center" IsSelected="True">
+        <ListViewItem x:Name="About" 
+                      Height="50" 
+                      VerticalContentAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Center"
+                      IsSelected="True">
             <md:PackIcon Kind="Home"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
                 <beh:InvokeCommandAction Command="{Binding SwitchView}" CommandParameter="{Binding ElementName=About, Path=Name}"/>
               </beh:EventTrigger>
             </beh:Interaction.Triggers>
+            <ListViewItem.ToolTip>
+              <StackPanel Width="200">
+                <TextBlock Text="About" FontSize="16" FontWeight="SemiBold"/>
+                <TextBlock TextWrapping="Wrap" Text="About view displays information about the tool."/>
+              </StackPanel>
+            </ListViewItem.ToolTip>
           </ListViewItem>
-          <ListViewItem x:Name="Load" Height="50" VerticalContentAlignment="Center">
+          <ListViewItem x:Name="Load" Height="50" VerticalContentAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Center">
             <md:PackIcon Kind="Input"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
                 <beh:InvokeCommandAction Command="{Binding SwitchView}" CommandParameter="{Binding ElementName=Load, Path=Name}"/>
               </beh:EventTrigger>
             </beh:Interaction.Triggers>
+            <ListViewItem.ToolTip>
+              <StackPanel Width="200">
+                <TextBlock Text="Inputs" FontSize="16" FontWeight="SemiBold"/>
+                <TextBlock TextWrapping="Wrap" Text="Inputs view lets you select a list of topics to be processed."/>
+              </StackPanel>
+            </ListViewItem.ToolTip>
         </ListViewItem>
-          <ListViewItem x:Name="Config" Height="50" VerticalContentAlignment="Center">
+          <ListViewItem x:Name="Config" Height="50" VerticalContentAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Center">
             <md:PackIcon Kind="Settings"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
                 <beh:InvokeCommandAction Command="{Binding SwitchView}" CommandParameter="{Binding ElementName=Config, Path=Name}"/>
               </beh:EventTrigger>
             </beh:Interaction.Triggers>
+            <ListViewItem.ToolTip>
+              <StackPanel Width="200">
+                <TextBlock Text="Settings" FontSize="16" FontWeight="SemiBold"/>
+                <TextBlock TextWrapping="Wrap" Text="Settings view lets you configure parameters."/>
+              </StackPanel>
+            </ListViewItem.ToolTip>
         </ListViewItem>
-          <ListViewItem x:Name="Results" Height="50" VerticalContentAlignment="Center">
+          <ListViewItem x:Name="Results" Height="50" VerticalContentAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Center">
             <md:PackIcon Kind="PlayBox"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
                 <beh:InvokeCommandAction Command="{Binding SwitchView}" CommandParameter="{Binding ElementName=Results, Path=Name}"/>
               </beh:EventTrigger>
             </beh:Interaction.Triggers>
+            <ListViewItem.ToolTip>
+              <StackPanel Width="200">
+                <TextBlock Text="Execution" FontSize="16" FontWeight="SemiBold"/>
+                <TextBlock TextWrapping="Wrap" Text="Execution view lets you run the TFIDF analysis and displays topic rankings."/>
+              </StackPanel>
+            </ListViewItem.ToolTip>
         </ListViewItem>
-          <ListViewItem x:Name="Summary" Height="50" VerticalContentAlignment="Center">
+          <ListViewItem x:Name="Summary" Height="50" VerticalContentAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Center">
             <md:PackIcon Kind="File"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
                 <beh:InvokeCommandAction Command="{Binding SwitchView}" CommandParameter="{Binding ElementName=Summary, Path=Name}"/>
               </beh:EventTrigger>
             </beh:Interaction.Triggers>
+            <ListViewItem.ToolTip>
+              <StackPanel Width="200">
+                <TextBlock Text="Report" FontSize="16" FontWeight="SemiBold"/>
+                <TextBlock TextWrapping="Wrap" Text="Report view displays summary of the analysis."/>
+              </StackPanel>
+            </ListViewItem.ToolTip>
         </ListViewItem>
       </ListView>
         <Frame Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden">
