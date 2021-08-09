@@ -20,10 +20,10 @@
       </Border>
     </StackPanel>
   <Grid>
-    <!--<Image Source="/Images/background.png"
+    <Image Source="/Images/background.png"
            Stretch="Fill"
            Opacity="0.6">
-    </Image>-->
+    </Image>
     <Image Source="/Images/quill.png"
            HorizontalAlignment="Right"
            Margin="30"

@@ -204,7 +204,7 @@ namespace Panini.ViewModel
                 }
                 App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        TopicCollection.Add(new TopicItem() { Name = topic.topicName, IsVisible="Visible", itemCollection = itemColl });
+                        TopicCollection.Add(new TopicItem() { Name = topic.topicName, IsVisible="Visible", IsExpanded=true , itemCollection = itemColl });
                     });
             }
             _dummyTopicCollection = TopicCollection;
