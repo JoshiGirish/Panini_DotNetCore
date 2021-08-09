@@ -15,7 +15,7 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows;
 using System.Linq;
-using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Panini.ViewModel
 {
@@ -92,10 +92,13 @@ namespace Panini.ViewModel
         private void Browse()
         {
 
-            FolderBrowserDialog diag = new FolderBrowserDialog();
-            if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            var dlg = new CommonOpenFileDialog();
+            dlg.Title = "Select Directory";
+            dlg.IsFolderPicker = true;
+            
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                DirectoryPath = diag.SelectedPath;  //selected folder path
+                DirectoryPath = dlg.FileName;  //selected folder path
                 dataCache.DirPath = DirectoryPath;
             }
         }

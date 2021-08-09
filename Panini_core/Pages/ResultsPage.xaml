@@ -115,7 +115,7 @@
                  Width="200"
                  Height="20"
                  VerticalAlignment="Center"
-                 Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="Topic name search.">
           <beh:Interaction.Triggers>
             <beh:EventTrigger EventName="TextChanged"
@@ -129,6 +129,8 @@
                 Height="25"
                 Width="50"
                 HorizontalAlignment="Right" />-->
+        
+        
       </StackPanel>
       <Grid Grid.Row="1">
         <Grid Height="200" 

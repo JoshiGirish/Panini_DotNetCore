@@ -69,3 +69,5 @@ D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\ref\Panini.d
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Panini.pdb
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.csproj.CopyComplete
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.genruntimeconfig.cache
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.WindowsAPICodePack.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.WindowsAPICodePack.Shell.dll

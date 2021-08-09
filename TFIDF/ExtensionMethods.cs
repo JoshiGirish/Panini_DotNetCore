@@ -18,8 +18,11 @@ namespace TFIDF
 
         public static List<string> lemmatize(this string[] words)
         {
-            var dataFilepath = @"D:\Dev\C sharp\TFIDF\full7z-mlteast-en-modified.lem";
-            var stream = File.OpenRead(dataFilepath);
+            //var dataFilepath = @"D:\Dev\C sharp\TFIDF\full7z-mlteast-en-modified.lem";
+            //var stream = File.OpenRead(dataFilepath);
+            var byteArray = Properties.Resources.full7z_mlteast_en_modified;
+            var stream = new MemoryStream(byteArray);
+            
             var lemmatizer = new Lemmatizer(stream);
             var lemmatizedWords = new List<string>();
             foreach(string word in words)

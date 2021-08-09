@@ -17,12 +17,12 @@ namespace Panini.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            FolderBrowserDialog diag = new FolderBrowserDialog();
-            if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                string folder = diag.SelectedPath;  //selected folder path
-                dirPath.Text = folder;
-            }
+            //FolderBrowserDialog diag = new FolderBrowserDialog();
+            //if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //    string folder = diag.SelectedPath;  //selected folder path
+            //    dirPath.Text = folder;
+            //}
         }
     }
 }

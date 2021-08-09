@@ -170,6 +170,7 @@ namespace Panini.ViewModel
             ProgressBarVisibility = "Visible";
             Status = $"Please wait ...";
             //StatusBarColor = StatusColors["Warning"];     
+            SearchText = string.Empty;
 
             ProcessingStage = "Generating Lexicon and Topic Instances";
             dataCache.corpus.generate_topics_async();
@@ -262,7 +263,7 @@ namespace Panini.ViewModel
         public string SearchText
         {
             get { return _searchText; }
-            set { _searchText = value; }
+            set { _searchText = value; RaisePropertyChanged(); }
         }
 
         private ICommand _search;
