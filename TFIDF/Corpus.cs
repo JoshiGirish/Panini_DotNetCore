@@ -19,7 +19,7 @@ namespace TFIDF
         public List<Topic> topics = new List<Topic>();
         public static List<string> topicNames = new List<string>();
         public static Dictionary<string, Topic> topicMap = new Dictionary<string, Topic>();
-        public static Lexicon vocabulary = new Lexicon();
+        //public static Lexicon vocabulary;
         public ConcurrentDictionary<string, Topic> concDict;
         public static string targetDir;
         public static DirectoryInfo targetDirInfo;
@@ -39,11 +39,14 @@ namespace TFIDF
         /// Initializes the corpus data.
         /// </summary>
         /// <param name="directory"></param>
-        public Corpus(string directory)
+        public Corpus(string directory, int maxSize)
         {
             //read_files(directory);
             targetDir = directory;
             initializeDict();
+
+            // Initialize lexicon
+            Lexicon.MaxVocabSize = maxSize;
 
             ignoreData = new Dictionary<string, List<string>>(){{"end",  ignoreTopicNameEndsWith},
                                                                 {"start", ignoreTopicNameStartsWith},
@@ -67,13 +70,13 @@ namespace TFIDF
         /// <summary>
         /// Resets the corpus data.
         /// </summary>
-        public void reset_corpus()
+        public void reset_corpus(int maxSize)
         {
             concqueue = new ConcurrentQueue<Topic>{ };
             topics = new List<Topic>();
             topicNames = new List<string>();
             topicMap = new Dictionary<string, Topic>();
-            vocabulary = new Lexicon();
+            Lexicon.MaxVocabSize = maxSize;
             concDict = new ConcurrentDictionary<string, Topic>();
         }
         #endregion
@@ -192,8 +195,11 @@ namespace TFIDF
                                                        if (Topic.Is_valid(file.FullName, ignoreData))
                                                        {
                                                            var topic = instantiate_topic(file, targetDir, ignoreData);
-                                                           concqueue.Enqueue(topic);
-                                                           update_lexicon(topic);
+                                                           if(topic.words != null)
+                                                           {
+                                                               concqueue.Enqueue(topic);
+                                                               update_lexicon(topic);
+                                                           }
                                                        }
                                                    });
 
@@ -205,6 +211,7 @@ namespace TFIDF
                     topics.Add(top);
                 }
             }
+            Lexicon.update_lexicon_words();
             stopwatch.Stop();
             var instantiationTime = stopwatch.ElapsedMilliseconds / 1000;
             Console.WriteLine($" Topic instantiation ---> {instantiationTime} sec"); // 5 sec
@@ -268,7 +275,7 @@ namespace TFIDF
             var doc = new HtmlDocument();
             doc.Load(path);
             Topic topic = new Topic(fileName, path, doc, ignoreData);
-            topicNames.Add(topicName);
+            if(topic.words != null) topicNames.Add(topicName);
 
             return topic;
         }
@@ -284,7 +291,7 @@ namespace TFIDF
         {
             // Update the lexicon
             Console.WriteLine(topic.words.Count);
-            vocabulary.update_from(topic.words);
+            Lexicon.update_from(topic.words);
             Console.WriteLine(Lexicon.vocabsize);
         }
         #endregion

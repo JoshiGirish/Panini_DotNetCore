@@ -110,7 +110,31 @@ namespace Panini.ViewModel
             set { _textEditor = value; RaisePropertyChanged(); }
         }
 
+        public Stopwatch stopwatch = new Stopwatch();
 
+        private long _topicGenerationTime;
+
+        public long TopicGenerationTime
+        {
+            get { return _topicGenerationTime; }
+            set { _topicGenerationTime = value; RaisePropertyChanged(); }
+        }
+
+        private long _tfidfComputationTime;
+
+        public long TFIDFComputationTime
+        {
+            get { return _tfidfComputationTime; }
+            set { _tfidfComputationTime = value; RaisePropertyChanged(); }
+        }
+
+        private long _simScoreComputationTime;
+
+        public long SimScoreComputationTime
+        {
+            get { return _simScoreComputationTime; }
+            set { _simScoreComputationTime = value; RaisePropertyChanged(); }
+        }
         #endregion
 
         // Execution Methods
@@ -128,11 +152,13 @@ namespace Panini.ViewModel
 
         private void RunCallback()
         {
-            dataCache.corpus.reset_corpus();
+            dataCache.corpus.reset_corpus((int)dataCache.Config["maxVocabSize"]);
             TopicCollection.Clear();
             Thread generateThread = new Thread(new ThreadStart(compute_results));
+            generateThread.IsBackground = true;
             generateThread.Start();
         }
+
         #endregion
 
         #region OpenFile callback
@@ -172,14 +198,24 @@ namespace Panini.ViewModel
             //StatusBarColor = StatusColors["Warning"];     
             SearchText = string.Empty;
 
+
+            stopwatch = Stopwatch.StartNew();
             ProcessingStage = "Generating Lexicon and Topic Instances";
             dataCache.corpus.generate_topics_async();
+            stopwatch.Stop();
+            TopicGenerationTime = stopwatch.ElapsedMilliseconds / 1000;
 
+            stopwatch = Stopwatch.StartNew();
             ProcessingStage = "Calculating TFIDF Scores";
             dataCache.corpus.calculate_tfidf_scores_async();
+            stopwatch.Stop();
+            TFIDFComputationTime = stopwatch.ElapsedMilliseconds / 1000;
 
+            stopwatch = Stopwatch.StartNew();
             ProcessingStage = "Calculating Cosine Similarity Scores";
             dataCache.corpus.calculate_topic_similarity_scores_async();
+            stopwatch.Stop();
+            SimScoreComputationTime = stopwatch.ElapsedMilliseconds / 1000;
 
             ProcessingMessageVisibility = "Collapsed";
             ProgressBarVisibility = "Collapsed";

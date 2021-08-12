@@ -9,12 +9,13 @@ namespace TFIDF
     {
 
         public static Corpus corpus { get; set; }
+        public static int MaxVocabSize = 500;
 
         public static void Main(string[] args)
         {
             //var directory = @"C:\Users\Girish\Downloads\python-3.9.6-docs-html\library";
             var directory = @"C:\Users\Girish\Downloads\wiki";
-            corpus = new Corpus(directory);
+            corpus = new Corpus(directory, MaxVocabSize);
             foreach(var topic in corpus.topics)
             {
                 List<string> relTopics = new List<string>();

@@ -46,6 +46,15 @@ namespace Panini.ViewModel
             set { _similarTopicCount = value; RaisePropertyChanged(); dataCache.Config["similarTopicCount"] = value; }
         }
 
+        private int _maxVocabSize = 500;
+
+        public int MaxVocabSize
+        {
+            get { return _maxVocabSize; }
+            set { _maxVocabSize = value; RaisePropertyChanged(); dataCache.Config["maxVocabSize"] = value;}
+        }
+
+
         public ConfigViewModel()
         {
             PropertyChanged += update_config;

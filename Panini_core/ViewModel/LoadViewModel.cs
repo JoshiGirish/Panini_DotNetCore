@@ -128,11 +128,12 @@ namespace Panini.ViewModel
                 return;
             }
             Thread createThread = new Thread(new ThreadStart(task));
+            createThread.IsBackground = true;
             createThread.Start();
         }
         private void task()
         {
-            dataCache.corpus = new Corpus(DirectoryPath);
+            dataCache.corpus = new Corpus(DirectoryPath, (int)dataCache.Config["maxVocabSize"]);
             IEnumerable<string> names = dataCache.corpus.read_files(DirectoryPath);
             int fileCount = 0;
             foreach (var name in names)

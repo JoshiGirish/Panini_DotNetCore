@@ -144,8 +144,16 @@ namespace TFIDF
         {
             var data = new string(text.Where(c => !char.IsPunctuation(c) && !char.IsSymbol(c)).ToArray()); // remove punctuation and symbols
             data = Regex.Replace(data, @"[^\u0000-\u007F]+", string.Empty); 
-            var validWords = data.tokenize().lemmatize(); 
-            return validWords.Where(word => !int.TryParse(word, out _) && word.Length>1).Select(n => n).ToList(); // return words which are not numbers
+            var validWords = data.tokenize()?.lemmatize();
+            if(validWords != null)
+            {
+                return validWords.Where(word => !int.TryParse(word, out _) && word.Length>1).Select(n => n).ToList(); // return words which are not numbers
+            }
+            else
+            {
+                return null;
+            }
+
         }
         #endregion
 

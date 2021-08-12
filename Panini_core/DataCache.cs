@@ -29,6 +29,7 @@ namespace Panini
             Config["keywordCount"] = 5;
             Config["similarTopicCount"] = 5;
             Config["colorScheme"] = "Default";
+            Config["maxVocabSize"] = 500;
 
             // Initialize NLP data
             NLPData = new Dictionary<string, object>();

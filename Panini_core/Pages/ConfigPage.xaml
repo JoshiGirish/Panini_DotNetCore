@@ -220,7 +220,7 @@
                    Content="Number of Similar Topics"
                    VerticalAlignment="Center" />
             <TextBox Grid.Column="1"
-                     Text="{Binding SimilarTopicCount}"
+                     Text="{Binding SimilarTopicCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                      VerticalAlignment="Center"
                      Width="50"
                      HorizontalAlignment="Left" />
@@ -237,13 +237,30 @@
                    Content="Number of Keywords"
                    VerticalAlignment="Center" />
             <TextBox Grid.Column="1"
-                     Text="{Binding KeywordCount}"
+                     Text="{Binding KeywordCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                      VerticalAlignment="Center"
                      Width="50"
                      HorizontalAlignment="Left" />
           </Grid>
-          
-        </StackPanel>
+
+              <!-- Max Vocab Size -->
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="*"
+                                MaxWidth="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                   Content="Lexicon Max Vocab Size"
+                   VerticalAlignment="Center" />
+                <TextBox Grid.Column="1"
+                     Text="{Binding MaxVocabSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                     VerticalAlignment="Center"
+                     Width="50"
+                     HorizontalAlignment="Left" />
+              </Grid>
+
+            </StackPanel>
         <StackPanel Grid.Column="1" />
       </Grid>
       
