@@ -74,20 +74,17 @@
                 Command="{Binding Run}"
                 Background="Transparent"
                 ToolTip="Rank Topics"
-                BorderThickness="0">
-          <!--<Image Source="/Images/play-lightgreen.png"
-                 Height="18"></Image>-->
+                BorderThickness="0"
+                Cursor="Hand">
           <md:PackIcon Kind="PlayCircle" Height="25" Width="25"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-        <Button Width="30"
+        <!--<Button Width="30"
                 Margin="0 0 0 0"
                 Command="{Binding ExpandAll}"
                 Background="Transparent"
                 ToolTip="Expand All"
                 BorderThickness="0">
-          <!--<Image Source="/Images/expand-all-blue.png"
-                 Height="18"></Image>-->
           <md:PackIcon Kind="ExpandAll" Height="25" Width="25"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
@@ -97,11 +94,9 @@
                 Background="Transparent"
                 ToolTip="Collpase All"
                 BorderThickness="0">
-          <!--<Image Source="/Images/collapse-all-blue.png"
-                 Height="18"></Image>-->
           <md:PackIcon Kind="CollapseAll" Height="25" Width="25"/>
         </Button>
-        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />-->
       </StackPanel>
       <DockPanel Grid.Row="1"
                  Background="Transparent">

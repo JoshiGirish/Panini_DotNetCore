@@ -17,7 +17,7 @@ MinWidth="700"
         MinHeight="400"
         fw:AcrylicWindow.Enabled="True"
         fw:AcrylicWindow.TintColor="White"
-        fw:AcrylicWindow.TintOpacity="0.9"
+        fw:AcrylicWindow.TintOpacity="1"
         Icon="Images/sharingan.png" 
         AllowsTransparency="True">
   <x:Code>

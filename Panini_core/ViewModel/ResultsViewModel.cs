@@ -50,6 +50,19 @@ namespace Panini.ViewModel
         }
         #endregion
 
+        #region Results Visibility
+        /// <summary>
+        /// Controls visiblity of the result topic list and the details view.
+        /// </summary>
+        private string _resultsVisibility = "Collapsed";
+
+        public string ResultsVisibility
+        {
+            get { return _resultsVisibility; }
+            set { _resultsVisibility = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
         #region Processing Flag
         /// <summary>
         /// Flag to display the processing prompt.
@@ -192,6 +205,7 @@ namespace Panini.ViewModel
         {
 
             // Display the processing prompt and progress bar
+            ResultsVisibility = "Collapsed"; // Hide the previous results if already computed
             ProcessingMessageVisibility = "Visible";
             ProgressBarVisibility = "Visible";
             Status = $"Please wait ...";
@@ -246,6 +260,7 @@ namespace Panini.ViewModel
             }
             _dummyTopicCollection = TopicCollection;
             dataCache.TopicCollection = TopicCollection;
+            ResultsVisibility = "Visible"; // display the results
         }
         #endregion
 
