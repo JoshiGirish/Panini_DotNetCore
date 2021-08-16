@@ -18,6 +18,8 @@ using Microsoft.Win32;
 using ICSharpCode.AvalonEdit;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Panini.ViewModel
 {
@@ -35,6 +37,7 @@ namespace Panini.ViewModel
         public TopicResultItem selectedResultItem { get; set; }
         public int maxVisibleSimilarTopics { get { return maxVisibleSimilarTopics; } set { maxVisibleSimilarTopics = value; RaisePropertyChanged(); } }
         private float _progress;
+        
 
 
         #region ProgressBar Visibility
@@ -150,6 +153,7 @@ namespace Panini.ViewModel
         }
         #endregion
 
+
         // Execution Methods
         #region Run TF-IDF CallBack
         /// <summary>
@@ -216,6 +220,7 @@ namespace Panini.ViewModel
             stopwatch = Stopwatch.StartNew();
             ProcessingStage = "Generating Lexicon and Topic Instances";
             dataCache.corpus.generate_topics_async();
+            dataCache.corpus.compute_max();
             stopwatch.Stop();
             TopicGenerationTime = stopwatch.ElapsedMilliseconds / 1000;
 
@@ -255,7 +260,7 @@ namespace Panini.ViewModel
                 }
                 App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        TopicCollection.Add(new TopicItem() { Name = topic.topicName, IsVisible="Visible", IsExpanded=true , itemCollection = itemColl });
+                        TopicCollection.Add(new TopicItem(topic.topicName, "Visible", true ,itemColl));
                     });
             }
             _dummyTopicCollection = TopicCollection;

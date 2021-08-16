@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="PANINI"
         Height="800"
-        Width="1000"
+        Width="1200"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" MouseLeftButtonDown="WindowMouseLeftButtonDown"
 MinWidth="700"

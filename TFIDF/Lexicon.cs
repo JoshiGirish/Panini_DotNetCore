@@ -9,7 +9,7 @@ namespace TFIDF
     {
         public static IEnumerable<string> words = new List<string>();
         public static int MaxVocabSize = 500;
-        public static int vocabsize { get { return words.Count(); } set { } }
+        //public static int vocabsize { get { return words.Count(); } set { } }
         public static ConcurrentDictionary<string, int> wordsDictionary = new ConcurrentDictionary<string, int>();
         public static object lockKey;
 

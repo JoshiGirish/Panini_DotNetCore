@@ -4,13 +4,45 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TFIDF;
 
 namespace Panini.Models
 {
     public class TopicItem: BaseModel
     {
+        private readonly DataCache dataCache = DataCache.Instance;
         public string Name {get; set;}
         public ObservableCollection<TopicResultItem> itemCollection { get; set; }
+        public int wordsRatio { get; set; }
+        public string wordsRatioTooltip { get; set; }
+        public int xrefsRatio { get; set; }
+        public string xrefsRatioTooltip { get; set; }
+        public int relinksRatio { get; set; }
+        public string relinksRatioTooltip { get; set; }
+        public float partition = 100;
+
+        public int NumOfSentences
+        {
+            get { return dataCache.corpus.concDict[Name].sentCount; }
+        }
+
+        public int NumOfUniqueWords
+        {
+            get { return dataCache.corpus.concDict[Name].words.Count; }
+        }
+
+        public int NumOfInlineLinks
+
+        {
+            get { return dataCache.corpus.concDict[Name].xrefs.Count; }
+        }
+
+        public int NumOfRelatedLinks
+{
+            get { return dataCache.corpus.concDict[Name].relinks.Count; }
+        }
+
+
         private bool _isExpanded;
 
         public bool IsExpanded
@@ -27,17 +59,58 @@ namespace Panini.Models
             set { _isVisible = value; RaisePropertyChanged(); }
         }
 
-
-        public TopicItem()
+        private ObservableCollection<WordsListModel> _wordsList;
+        public ObservableCollection<WordsListModel> WordsList
         {
+            get { return _wordsList; }
+            set { _wordsList = value; RaisePropertyChanged(); }
         }
 
-        public TopicItem(string name, ObservableCollection<TopicResultItem> itemCollection)
+
+        private ObservableCollection<InlineLinksModel> _inlineLinksList;
+
+        public ObservableCollection<InlineLinksModel> InlineLinksList
+        {
+            get { return _inlineLinksList; }
+            set { _inlineLinksList = value; RaisePropertyChanged(); }
+        }
+
+
+        private ObservableCollection<RelatedLinksModel> _relatedLinksModels;
+
+        public ObservableCollection<RelatedLinksModel> RelatedLinksList
+        {
+            get { return _relatedLinksModels; }
+            set { _relatedLinksModels = value; RaisePropertyChanged(); }
+        }
+
+
+        public TopicItem(string name, string isVisible, bool isExpanded, ObservableCollection<TopicResultItem> itemCollection)
         {
             Name = name;
             this.itemCollection = itemCollection;
-        }
+            IsVisible = isVisible;
+            IsExpanded = IsExpanded;
+            WordsList = new ObservableCollection<WordsListModel>();
+            foreach (var word in dataCache.corpus.concDict[Name].tfidf.tfidfVector.OrderByDescending(n=>n.Value).Take(50).Select(n => n.Key))
+            {
+                if(dataCache.corpus.concDict[Name].words.Contains(word)) WordsList.Add(new WordsListModel(Name, word));
+            }
 
+            InlineLinksList = new ObservableCollection<InlineLinksModel>();
+            foreach(var tag in dataCache.corpus.concDict[Name].xrefTags)
+            {
+                InlineLinksList.Add(new InlineLinksModel(Name, tag));
+            }
+
+            RelatedLinksList = new ObservableCollection<RelatedLinksModel>();
+            foreach (var tag in dataCache.corpus.concDict[Name].relinkTags)
+            {
+                RelatedLinksList.Add(new RelatedLinksModel(Name, tag));
+            }
+
+            compute_ratios();
+        }
         public override string ToString()
         {
             return Name;
@@ -51,6 +124,31 @@ namespace Panini.Models
                 names.Add(item.Name);
             }
             return names;
+        }
+
+        public void compute_ratios()
+        {
+            // Calculate fraction of words compared to max
+            float wordCount = dataCache.corpus.concDict[Name].words.Count();
+            wordsRatioTooltip = $"Words in topic : {(int)wordCount}";
+            float maxWordCount = dataCache.corpus.wordsMax;
+            if(wordCount != 0.0f && maxWordCount != 0.0f)
+            {
+            wordsRatio = (int)((wordCount / maxWordCount)*partition);
+            }
+            else { wordsRatio = 0; }
+
+            // Calculate fraction of xrefs compared to max
+            float xrefCount = dataCache.corpus.concDict[Name].xrefs.Count();
+            xrefsRatioTooltip = $"Inline links in topic : {(int)xrefCount}";
+            float maxXrefCount = dataCache.corpus.xrefsMax;
+            xrefsRatio = (xrefCount != 0 && maxXrefCount != 0) ? (int)((xrefCount / maxXrefCount)*partition*0.5) : 0;
+
+            // Calculate fraction of relinks compared to max
+            float relinkCount = dataCache.corpus.concDict[Name].relinks.Count();
+            relinksRatioTooltip = $"Related links in topic : {(int)relinkCount}";
+            float maxrelinkCount = dataCache.corpus.relinksMax;
+            relinksRatio = (relinkCount != 0 && maxrelinkCount != 0) ? (int)((relinkCount / maxrelinkCount)*partition*0.5) : 0;
         }
     }
 }

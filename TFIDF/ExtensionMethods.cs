@@ -34,7 +34,7 @@ namespace TFIDF
 
         #region Clean Links
         /// <summary>
-        /// This method takes a list of strings as argument and generates a set out of the strings and skips empty strings.
+        /// This method takes a list of strings as argument and generates a set out of the strings by skipping empty strings.
         /// </summary>
         /// <param name="links"></param>
         /// <returns></returns>

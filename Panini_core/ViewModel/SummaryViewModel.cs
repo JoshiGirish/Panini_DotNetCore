@@ -640,9 +640,9 @@ namespace Panini.ViewModel
 		{
 			NLPDataInstance.Tokenizer = "Regexp Tokenizer";
 			NLPDataInstance.SimilarityMeasure = "Term-Frequency Inverse-Document-Frequency (TFIDF)";
-			NLPDataInstance.TfIdfVectorLength = Lexicon.vocabsize;
+			NLPDataInstance.TfIdfVectorLength = Lexicon.words.Count();
 			NLPDataInstance.NumOfSentences = dataCache.corpus.concDict.Values.Select((Topic n) => n.sentCount).Sum();
-			NLPDataInstance.NumOfTokens = Lexicon.vocabsize;
+			NLPDataInstance.NumOfTokens = Lexicon.words.Count();
 			NLPDataInstance.IsExpanded = true;
 			NLPDataInstance.IsVisible = "Visible";
 		}

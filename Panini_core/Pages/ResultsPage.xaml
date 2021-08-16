@@ -15,7 +15,7 @@
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="800"
-      Title="ResultsPage">
+      Title="ResultsPage" FontSize="14">
 
 
   <Page.Resources>
@@ -219,6 +219,353 @@
         </DockPanel>
       </md:Card>
     </DataTemplate>
+
+    <DataTemplate x:Key="summaryTemplate" DataType="{x:Type m:TopicItem}">
+      <StackPanel Grid.Row="0" Margin="20 0 0 0">
+
+        <!--Topic Name -->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*"
+                                MaxWidth="300" />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                   Content="Topic name"
+                   VerticalAlignment="Center" />
+          <TextBlock Grid.Column="1"
+                     Text="{Binding Path=Name, Mode=OneWay}"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left" />
+        </Grid>
+
+        <!-- Number of Sentences -->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*"
+                                MaxWidth="300" />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                   Content="Number of Sentences"
+                   VerticalAlignment="Center" />
+          <TextBlock Grid.Column="1"
+                     Text="{Binding Path=NumOfSentences, Mode=OneWay}"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left" />
+        </Grid>
+
+        <!-- Number of Words -->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*"
+                                MaxWidth="300" />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                   Content="Number of words"
+                   VerticalAlignment="Center" />
+          <TextBlock Grid.Column="1"
+                     Text="{Binding Path=NumOfUniqueWords, Mode=OneWay}"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left" />
+        </Grid>
+
+        <!-- Number of xrefs -->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*"
+                                MaxWidth="300" />
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                   Content="Number of inline links"
+                   VerticalAlignment="Center" />
+          <TextBlock Grid.Column="1"
+                     Text="{Binding Path=NumOfInlineLinks, Mode=OneWay}"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left" />
+        </Grid>
+
+        <!-- Number of relinks -->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                   Content="Number of related links"
+                   VerticalAlignment="Center" />
+          <TextBlock Grid.Column="1"
+                     Text="{Binding Path=NumOfRelatedLinks, Mode=OneWay}"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left" />
+        </Grid>
+
+      </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="wordsTemplate" DataType="{x:Type m:TopicItem}">
+      <DataTemplate.Resources>
+        <Style x:Key="DataGrid_Centering"
+                                 TargetType="{x:Type DataGridCell}">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type DataGridCell}">
+                <Grid Background="{TemplateBinding Background}">
+                  <ContentPresenter VerticalAlignment="Center" />
+                </Grid>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </DataTemplate.Resources>
+      <DataGrid ItemsSource="{Binding WordsList}"
+                                    AutoGenerateColumns="False"
+                                    HorizontalGridLinesBrush="LightGray"
+                                    VerticalGridLinesBrush="LightGray"
+                                    AreRowDetailsFrozen="True"
+                                    CanUserAddRows="False"
+                                    BorderBrush="Transparent"
+                                    CellStyle="{StaticResource DataGrid_Centering}"
+                                    Background="Transparent" RowBackground="Transparent">
+        <DataGrid.RowStyle>
+          <Style TargetType="DataGridRow">
+            <Setter Property="Height"
+                                        Value="20" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+          </Style>
+        </DataGrid.RowStyle>
+        <DataGrid.Columns>
+
+          <!--word cell-->
+          <DataGridTextColumn Header="Word"
+                                                  Binding="{Binding word}"  Width="*">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment"
+                                            Value="Center" />
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+          <!--tf cell-->
+          <DataGridTextColumn Header="TF"
+                                                  Binding="{Binding tf}">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment"
+                                            Value="Center" />
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+          <!--idf cell-->
+          <DataGridTextColumn Header="IDF"
+                                                  Binding="{Binding idf}">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment"
+                                            Value="Center" />
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+          <!--tfidf cell-->
+          <DataGridTextColumn Header="TFIDF"
+                                                  Binding="{Binding tfidf}">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment"
+                                            Value="Center" />
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+        </DataGrid.Columns>
+      </DataGrid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="xrefsTemplate" DataType="{x:Type m:TopicItem}">
+      <DataTemplate.Resources>
+        <Style x:Key="DataGrid_Centering"
+                                 TargetType="{x:Type DataGridCell}">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type DataGridCell}">
+                <Grid Background="{TemplateBinding Background}">
+                  <ContentPresenter VerticalAlignment="Center" />
+                </Grid>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </DataTemplate.Resources>
+      <DataGrid ItemsSource="{Binding InlineLinksList}"
+                                    AutoGenerateColumns="False"
+                                    HorizontalGridLinesBrush="LightGray"
+                                    VerticalGridLinesBrush="LightGray"
+                                    AreRowDetailsFrozen="True"
+                                    CanUserAddRows="False"
+                                    BorderBrush="Transparent"
+                                    CellStyle="{StaticResource DataGrid_Centering}"
+                                    Background="Transparent" RowBackground="Transparent">
+        <DataGrid.RowStyle>
+          <Style TargetType="DataGridRow">
+            <Setter Property="Height"
+                                        Value="20" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+          </Style>
+        </DataGrid.RowStyle>
+        <DataGrid.Columns>
+
+          <!--file cell-->
+          <DataGridTextColumn Header="Target"
+                                                  Binding="{Binding linkedFile}">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Margin" Value="5 0 5 0"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+          <!--URI cell-->
+          <DataGridTextColumn Header="URI"
+                                                  Binding="{Binding linkURI}"   Width="*">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Margin" Value="5 0 5 0"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+        </DataGrid.Columns>
+      </DataGrid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="relinksTemplate" DataType="{x:Type m:TopicItem}">
+      <DataTemplate.Resources>
+        <Style x:Key="DataGrid_Centering"
+                                 TargetType="{x:Type DataGridCell}">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type DataGridCell}">
+                <Grid Background="{TemplateBinding Background}">
+                  <ContentPresenter VerticalAlignment="Center" />
+                </Grid>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </DataTemplate.Resources>
+      <DataGrid ItemsSource="{Binding RelatedLinksList}"
+                                    AutoGenerateColumns="False"
+                                    HorizontalGridLinesBrush="LightGray"
+                                    VerticalGridLinesBrush="LightGray"
+                                    AreRowDetailsFrozen="True"
+                                    CanUserAddRows="False"
+                                    BorderBrush="Transparent"
+                                    CellStyle="{StaticResource DataGrid_Centering}"
+                                    Background="Transparent" RowBackground="Transparent">
+        <DataGrid.RowStyle>
+          <Style TargetType="DataGridRow">
+            <Setter Property="Height"
+                                        Value="20" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+          </Style>
+        </DataGrid.RowStyle>
+        <DataGrid.Columns>
+
+          <!--File cell-->
+          <DataGridTextColumn Header="Target"
+                                                  Binding="{Binding linkedFile}"  Width="*">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+          <!--URI cell-->
+          <DataGridTextColumn Header="URI"
+                                                  Binding="{Binding linkURI}"   Width="*">
+            <!--<DataGridTextColumn.HeaderStyle>
+              <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5 0 5 0"/>
+                <Setter Property="FontSize" Value="14"/>
+              </Style>
+            </DataGridTextColumn.HeaderStyle>-->
+            <DataGridTextColumn.ElementStyle>
+              <Style TargetType="TextBlock">
+                <Setter Property="Background" Value="Transparent"/>
+              </Style>
+            </DataGridTextColumn.ElementStyle>
+          </DataGridTextColumn>
+
+        </DataGrid.Columns>
+      </DataGrid>
+    </DataTemplate>
+    
+    
   </Page.Resources>
 
   <!-- Set the datacontext to the viewmodel -->
@@ -360,11 +707,9 @@
         </Border>
       </Grid>
 
-      
-      <Grid Grid.Row="2">
-        
         <!-- Processing Information -->
-        <Grid Height="200" 
+        <Grid Grid.Row="2"
+              Height="200" 
               Width="400" 
               VerticalAlignment="Center" 
               HorizontalAlignment="Center"
@@ -391,313 +736,209 @@
                      TextWrapping="Wrap"
                      VerticalAlignment="Center"/>
         </Grid>
+      
+      <!-- Results Body -->
+      <Grid Grid.Row="2">
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*"/>
+          </Grid.ColumnDefinitions>
         
         
+        <!-- Results Left Half section -->
         <Border Grid.Row="1"
               BorderBrush="#f2f2f2"
               BorderThickness="1">
           <Grid Visibility="{Binding ResultsVisibility}">
             <Grid.RowDefinitions>
               <RowDefinition Height="*"/>
+              <RowDefinition Height="Auto"/>
               <RowDefinition MinHeight="200"/>
             </Grid.RowDefinitions>
-          <!-- Topics Table -->
-          <!--<DockPanel Background="Transparent"
-                   Margin="10 0 10 0">-->
-              <ListBox Grid.Row="0" IsSynchronizedWithCurrentItem="True"
+              <DockPanel Grid.Row="0">
+                <Grid Height="20" DockPanel.Dock="Top">
+                  <Grid.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                      <GradientStop Color="#b295e8" Offset="0"/>
+                      <GradientStop Color="#947cc2" Offset="1.0"/>
+                    </LinearGradientBrush>
+                  </Grid.Background>
+                  <TextBlock Text="Topics List" FontSize="14" FontWeight="SemiBold" Foreground="white" HorizontalAlignment="Center"/>
+                </Grid>
+                <ListBox DockPanel.Dock="Top" IsSynchronizedWithCurrentItem="True"
              ItemsSource="{Binding TopicCollection}" Background="Transparent" FontSize="14" BorderBrush="LightGray" SelectedIndex="0">
                   <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
                       <Setter Property="Visibility" Value="{Binding IsVisible}"/>
                       <Setter Property="SnapsToDevicePixels" Value="true"/>
                       <Setter Property="OverridesDefaultStyle" Value="true"/>
-                    <Setter Property="Template">
-                      <Setter.Value>
-                        <ControlTemplate TargetType="ListBoxItem">
-                          <Border Name="Border" Padding="2" SnapsToDevicePixels="true" Background="Transparent">
-                            <ContentPresenter/>
-                          </Border>
-                          <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="#efe6ff"/>
+                      <Setter Property="Template">
+                        <Setter.Value>
+                          <ControlTemplate TargetType="ListBoxItem">
+                            <Border Name="Border" Padding="2" SnapsToDevicePixels="true" Background="Transparent">
+                              <ContentPresenter/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                              <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#efe6ff"/>
 
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="#efe6ff"/>
-                              <Setter Property="Cursor" Value="Hand"/>
-                            </Trigger>
-                          </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                      </Setter.Value>
-                    </Setter>
-                  </Style>
+                              </Trigger>
+                              <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#efe6ff"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                              </Trigger>
+                            </ControlTemplate.Triggers>
+                          </ControlTemplate>
+                        </Setter.Value>
+                      </Setter>
+                    </Style>
                   </ListBox.ItemContainerStyle>
-              <ListBox.ItemTemplate>
-                <DataTemplate>
-                  <StackPanel Orientation="Horizontal">
-                    <md:PackIcon Kind="File" Margin="5 0 5 0" Height="15" Opacity="0.5"/>
-                    <TextBlock Text="{Binding Path=Name}"/>
-                  </StackPanel>
-                </DataTemplate>
-              </ListBox.ItemTemplate>
-              </ListBox>
-              <!--<ItemsControl                 ItemsSource="{Binding TopicCollection}"
-                                            ScrollViewer.VerticalScrollBarVisibility="Visible">
-
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate DataType="{x:Type m:TopicItem}">
-                    <md:Card UniformCornerRadius="5" Margin="5" Padding="10">
-                      <md:Card.Background>
-                        <SolidColorBrush Color="white" Opacity="0.8"/>
-                      </md:Card.Background>
-                      <md:Card.Style>
-                        <Style TargetType="{x:Type md:
-            }">
-                          <Setter Property="Visibility"
-                                    Value="{Binding IsVisible, FallbackValue='Visible'}" />
-                        </Style>
-                      </md:Card.Style>
-                      <DockPanel HorizontalAlignment="Stretch" Background="Transparent">
-
-                        --><!-- Topic expander --><!--
-                        <Expander DockPanel.Dock="Top"
-                                Header="{Binding Path=Name}"
-                                IsExpanded="{Binding IsExpanded}"
-                                HeaderTemplate="{StaticResource ResourceKey=titleText}">
-                          --><!--<Expander.Style>
-                          <Style TargetType="{x:Type Expander}">
-                            <Setter Property="Visibility"
-                                    Value="{Binding IsVisible}" />
-                          </Style>
-                        </Expander.Style>--><!--
-                          <Expander.Resources>
-                            <Style x:Key="DataGrid_Centering"
-                                 TargetType="{x:Type DataGridCell}">
-                              <Setter Property="Template">
-                                <Setter.Value>
-                                  <ControlTemplate TargetType="{x:Type DataGridCell}">
-                                    <Grid Background="{TemplateBinding Background}">
-                                      <ContentPresenter VerticalAlignment="Center" />
-                                    </Grid>
-                                  </ControlTemplate>
-                                </Setter.Value>
-                              </Setter>
-                            </Style>
-                          </Expander.Resources>
-                          <Grid Margin="0 5 0 0">
-                            <DataGrid ItemsSource="{Binding itemCollection}"
-                                    AutoGenerateColumns="False"
-                                    HorizontalGridLinesBrush="LightGray"
-                                    VerticalGridLinesBrush="LightGray"
-                                    AreRowDetailsFrozen="True"
-                                    CanUserAddRows="False"
-                                    BorderBrush="Transparent"
-                                    CellStyle="{StaticResource DataGrid_Centering}"
-                                    Background="Transparent" RowBackground="Transparent">
-                              <DataGrid.RowStyle>
-                                <Style TargetType="DataGridRow">
-                                  <Setter Property="Height"
-                                        Value="25" />
-                                </Style>
-                              </DataGrid.RowStyle>
-                              <DataGrid.Resources>
-                                <Style TargetType="{x:Type DataGridCell}">
-                                  <Setter Property="BorderThickness"
-                                        Value="0" />
-                                </Style>
-                              </DataGrid.Resources>
-                              <DataGrid.Columns>
-
-                                --><!-- File Launcher Icon --><!--
-                                <DataGridTemplateColumn Width="25">
-                                  <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                      <Button DataContext="Global"
-                                            Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Command="{Binding DataContext.OpenFile, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
-                                            MinHeight="23"
-                                            Padding="0"
-                                            Margin="0">
-                                        --><!--<Image Source="/Images/blank-file.png"
-                                             Height="15"
-                                             Cursor="Hand"
-                                             Margin="0"
-                                             VerticalAlignment="Top">
-                                      </Image>--><!--
-                                        <md:PackIcon Kind="FileOutline" Height="18" Width="18" VerticalAlignment="Center"/>
-                                        <Button.ToolTip>
-                                          <TextBlock Width="150"
-                                                   TextWrapping="Wrap"
-                                                   Text="Open this topic in web browser." />
-                                        </Button.ToolTip>
-                                      </Button>
-                                    </DataTemplate>
-                                  </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-
-                                --><!-- Linked Status icon cell --><!--
-                                <DataGridTemplateColumn Width="25">
-                                  <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                      <Button Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Visibility="{Binding IsLinked}">
-                                        <Grid>
-                                          --><!--<Image Source="/Images/hyperlink-green.png"
-                                               Height="13"
-                                               Cursor="Hand">
-                                        </Image>--><!--
-                                          <md:PackIcon Kind="LinkVariant" Height="18" Width="18"/>
-                                        </Grid>
-                                        <Button.ToolTip>
-                                          <TextBlock TextWrapping="Wrap"
-                                                   Width="150"
-                                                   Text="A link to this topic exists in the source topic." />
-                                        </Button.ToolTip>
-                                      </Button>
-                                    </DataTemplate>
-                                  </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-
-                                --><!-- Similarity Score Cell --><!--
-                                <DataGridTextColumn Header="Score"
-                                                  Binding="{Binding simScore}">
-                                  <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                      <Setter Property="HorizontalAlignment"
-                                            Value="Center" />
-                                      <Setter Property="Background" Value="Transparent"/>
-                                    </Style>
-                                  </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-
-                                --><!-- Inline Links --><!--
-                                <DataGridTemplateColumn Header="Inline Links">
-                                  <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                      <Button Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Visibility="{Binding IsLinked}">
-                                        --><!--<Image Source="/Images/hyperlink-green.png"
-                                           Height="13"
-                                           Cursor="Hand">
-                                    </Image>--><!--
-                                        <Grid>
-                                          --><!--<Rectangle Fill="#fff0fc"
-                                                 Height="25"
-                                                 Width="25" />--><!--
-                                          <TextBlock Text="{Binding NumOfInlineLinks}"
-                                                   FontSize="12"
-                                                   Margin="0"
-                                                   Padding="0"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center" />
-                                        </Grid>
-                                        <Button.ToolTip>
-                                          <TextBlock TextWrapping="Wrap"
-                                                   Width="150"
-                                                   Text="Set of inline links to topics in the same directory." />
-                                        </Button.ToolTip>
-                                      </Button>
-                                    </DataTemplate>
-                                  </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-
-                                --><!-- Related Links --><!--
-                                <DataGridTemplateColumn Header="Related Links">
-                                  <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                      <Button Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Visibility="{Binding IsLinked}">
-                                        --><!--<Image Source="/Images/hyperlink-green.png"
-                                           Height="13"
-                                           Cursor="Hand">
-                                    </Image>--><!--
-                                        <Grid>
-                                          --><!--<Rectangle Fill="#fff7f0"
-                                                 Height="25"
-                                                 Width="25" />--><!--
-                                          <TextBlock Text="{Binding NumOfRelatedLinks}"
-                                                   FontSize="12"
-                                                   Margin="0"
-                                                   Padding="0"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center" />
-                                        </Grid>
-                                        <Button.ToolTip>
-                                          <TextBlock TextWrapping="Wrap"
-                                                   Width="150"
-                                                   Text="Set of related links to topics in the same directory." />
-                                        </Button.ToolTip>
-                                      </Button>
-                                    </DataTemplate>
-                                  </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-
-                                --><!-- Similar Topic Name cell --><!--
-                                <DataGridTextColumn Header="Similar Topics"
-                                                  Binding="{Binding Name}">
-                                  <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                      <Setter Property="FontWeight"
-                                            Value="SemiBold" />
-                                      <Setter Property="Margin"
-                                            Value="5 0 5 0" />
-                                      <Setter Property="Background" Value="Transparent"/>
-                                    </Style>
-                                  </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                --><!--<DataGridTextColumn Header="Keywords"
-                                                Binding="{Binding keywordsString}"
-                                                Width="*" />-->
-
-                                <!-- Keywords Cell --><!--
-                                <DataGridTemplateColumn Header="Keywords"
-                                                      Width="*">
-                                  <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                      <Grid>
-                                        <ListView ItemsSource="{Binding Path=Keywords}"
-                                                BorderThickness="0"
-                                                Background="Transparent"
-                                                VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                          <ListView.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ListViewItem}">
-                                              --><!--<Setter Property="Background"
-                                                    Value="{StaticResource c1}" />--><!--
-                                              <Setter Property="Margin"
-                                                    Value="0 0 5 0" />
-                                            </Style>
-                                          </ListView.ItemContainerStyle>
-                                          <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                              <WrapPanel IsItemsHost="True"></WrapPanel>
-                                            </ItemsPanelTemplate>
-                                          </ListView.ItemsPanel>
-                                        </ListView>
-                                      </Grid>
-                                    </DataTemplate>
-                                  </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                              </DataGrid.Columns>
-                            </DataGrid>
+                  <ListBox.ItemTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="25"/>
+                          <ColumnDefinition Width="*"/>
+                          <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <md:PackIcon Grid.Column="0" Kind="File" Margin="5 0 5 0" Height="15" Opacity="0.5"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=Name}"/>
+                        <Grid Grid.Column="2" Height="12" Margin="0 0 10 0">
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding relinksRatio}"/>
+                            <ColumnDefinition Width="{Binding xrefsRatio}"/>
+                            <ColumnDefinition Width="{Binding wordsRatio}"/>
+                          </Grid.ColumnDefinitions>
+                          <Grid Grid.Column="0">
+                            <Grid.ToolTip>
+                              <TextBlock Text="{Binding relinksRatioTooltip}" TextWrapping="Wrap" FontSize="14" FontWeight="SemiBold"/>
+                            </Grid.ToolTip>
+                            <Grid.Style>
+                              <Style TargetType="Grid">
+                                <Style.Triggers>
+                                  <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="#e7d1ff"></Setter>
+                                  </Trigger>
+                                  <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+                                  </Trigger>
+                                </Style.Triggers>
+                              </Style>
+                            </Grid.Style>
                           </Grid>
-                        </Expander>
-                        
-                      </DockPanel>
-                    </md:Card>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>-->
-            <ContentControl Grid.Row="1" MinHeight="200" Content="{Binding TopicCollection}"
-                    ContentTemplate="{StaticResource datagridTemplate}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-          <!--</DockPanel>-->
+                          <Grid Grid.Column="1">
+                            <Grid.ToolTip>
+                              <TextBlock Text="{Binding xrefsRatioTooltip}" TextWrapping="Wrap" FontSize="14" FontWeight="SemiBold"/>
+                            </Grid.ToolTip>
+                            <Grid.Style>
+                              <Style TargetType="Grid">
+                                <Style.Triggers>
+                                  <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="#d5b1fc"></Setter>
+                                  </Trigger>
+                                  <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+                                  </Trigger>
+                                </Style.Triggers>
+                              </Style>
+                            </Grid.Style>
+                          </Grid>
+                          <Grid Grid.Column="2">
+                            <Grid.ToolTip>
+                              <TextBlock Text="{Binding wordsRatioTooltip}" TextWrapping="Wrap" FontSize="14" FontWeight="SemiBold"/>
+                            </Grid.ToolTip>
+                            <Grid.Style>
+                              <Style TargetType="Grid">
+                                <Style.Triggers>
+                                  <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="#b181e6"></Setter>
+                                  </Trigger>
+                                  <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightGoldenrodYellow"></Setter>
+                                  </Trigger>
+                                </Style.Triggers>
+                              </Style>
+                            </Grid.Style>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+              </DockPanel>
 
-          </Grid>
+              <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" ShowsPreview="True" Background="#e3e3e3"/>
+              <StackPanel Grid.Row="2">
+                <Grid Height="20">
+                  <TextBlock Text="Similar Topics" FontSize="14" FontWeight="SemiBold" Foreground="white" HorizontalAlignment="Center"/>
+                  <Grid.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                      <GradientStop Color="#b295e8" Offset="0"/>
+                      <GradientStop Color="#947cc2" Offset="1.0"/>
+                    </LinearGradientBrush>
+                  </Grid.Background>
+                </Grid>
+                <ContentControl Content="{Binding TopicCollection}"
+                    ContentTemplate="{StaticResource datagridTemplate}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+              </StackPanel>
+            </Grid>
         </Border>
+
+          <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="3" ShowsPreview="True" Background="#e3e3e3"  Visibility="{Binding ResultsVisibility}"/>
+
+          <!-- Results Right Half section -->
+          <Grid Grid.Column="2"  Visibility="{Binding ResultsVisibility}">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="200"/> 
+              <!--<RowDefinition Height="Auto"/>-->
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Summary -->
+            <StackPanel
+               Grid.Row="0">
+              <Grid Height="20">
+                <Grid.Background>
+                  <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#b295e8" Offset="0"/>
+                    <GradientStop Color="#947cc2" Offset="1.0"/>
+                  </LinearGradientBrush>
+                </Grid.Background>
+                <TextBlock Text="Topic Summary" FontSize="14" FontWeight="SemiBold" Foreground="white" HorizontalAlignment="Center"/>
+              </Grid>
+            <ContentControl Content="{Binding TopicCollection}"
+                    ContentTemplate="{StaticResource summaryTemplate}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0 15 0 0"/>
+            </StackPanel>
+            
+            <!-- Tabs -->
+            <TabControl Grid.Row="1" x:Name="navTabs" Background="Transparent">
+      <TabItem x:Name="wordTab"
+               Header="Words"
+               Height="25"
+               Width="100" Background="Transparent" FontSize="14">
+                <ContentControl Content="{Binding TopicCollection}"
+                    ContentTemplate="{StaticResource wordsTemplate}" HorizontalAlignment="Stretch"/>
+      </TabItem>
+      <TabItem x:Name="xrefTab"
+               Header="Inline Links"
+               Height="25"
+               Width="100" Background="Transparent" FontSize="14">
+                <ContentControl Content="{Binding TopicCollection}"
+                    ContentTemplate="{StaticResource xrefsTemplate}" HorizontalAlignment="Stretch"/>
+              </TabItem>
+      <TabItem x:Name="relinkTab"
+               Header="Related Links"
+               Width="100" Background="Transparent" FontSize="14">
+                <ContentControl Content="{Binding TopicCollection}"
+                    ContentTemplate="{StaticResource relinksTemplate}" HorizontalAlignment="Stretch"/>
+              </TabItem>
+    </TabControl>
+          </Grid>
+        
+        </Grid>
       </Grid>
     </Grid>
   </DockPanel>

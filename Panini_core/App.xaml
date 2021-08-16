@@ -138,6 +138,8 @@
       </Setter>
       <Setter Property="Foreground" Value="Black"/>
       <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Padding" Value="5 0 5 0"/>
       <!--<Setter Property="Background" Value="#f3edff"/>-->
       <Setter Property="Height" Value="25"/>
     </Style>

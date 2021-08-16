@@ -11,3 +11,4 @@ D:\Dev\C sharp\Panini_core\TFIDF\obj\Debug\net5.0\TFIDF.csproj.CoreCompileInputs
 D:\Dev\C sharp\Panini_core\TFIDF\obj\Debug\net5.0\TFIDF.dll
 D:\Dev\C sharp\Panini_core\TFIDF\obj\Debug\net5.0\ref\TFIDF.dll
 D:\Dev\C sharp\Panini_core\TFIDF\obj\Debug\net5.0\TFIDF.pdb
+D:\Dev\C sharp\Panini_core\TFIDF\obj\Debug\net5.0\TFIDF.csproj.AssemblyReference.cache

@@ -14,7 +14,9 @@ namespace TFIDF
         private string text { get; set; }
         public int sentCount { get; set; }
         public List<string> xrefs { get; set; } = new List<string>();
+        public List<string> xrefTags { get; set; } = new List<string>();
         public List<string> relinks { get; set; } = new List<string>();
+        public List<string> relinkTags { get; set; } = new List<string>();
         public List<string> words = new List<string>();
         private List<double> tfidfVector = new List<double>();
         public string path { get; } = "";
@@ -101,6 +103,15 @@ namespace TFIDF
                     var anchor_tags = table_tag.Descendants("a");
                     foreach(var a_tag in anchor_tags)
                     {
+                        var hRef = a_tag.GetAttributeValue("href", "default");
+                        if(hRef == string.Empty)
+                        {
+                            relinkTags.Add(topicName);
+                        }
+                        else
+                        {
+                            relinkTags.Add(hRef);
+                        }
                         relinks.Add(Path.GetFileName(a_tag.GetAttributeValue("href", "default").Split('#')[0]));
                     }
                 }
@@ -111,7 +122,16 @@ namespace TFIDF
             foreach(var a_tag in all_a_tags)
             {
                 var a_link = Path.GetFileName(a_tag.GetAttributeValue("href", "No_href").Split('#')[0]);
-                if (!relinks.Contains(a_link) && a_link != "No_href") xrefs.Add(a_link);
+                if (!relinks.Contains(a_link) && a_link != "No_href") 
+                {
+                    var hRef = a_tag.GetAttributeValue("href", "No_href");
+                    if(hRef == string.Empty)
+                    {
+                        xrefTags.Add(topicName);
+                    }
+                    else { xrefTags.Add(hRef);}
+                    xrefs.Add(a_link);
+                }
             }
 
             Dictionary<string, List<string>> links = new Dictionary<string, List<string>>();

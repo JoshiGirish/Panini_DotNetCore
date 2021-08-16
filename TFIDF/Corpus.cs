@@ -32,6 +32,11 @@ namespace TFIDF
         public List<string> ignoreTopicNameStartsWith = new List<string> { "help-rc" };
         public List<string> ignoreTopicName = new List<string> { "Sitemap" };
         public Dictionary<string, List<string>> ignoreData;
+        public int wordsMax;
+        public int xrefsMax;
+        public int relinksMax;
+
+
         #endregion
 
         #region Constructor
@@ -257,7 +262,7 @@ namespace TFIDF
         }
         #endregion
 
-        #region Instantiate Topics
+        #region Instantiate Topic
         /// <summary>
         /// Instantiates the topic class for each file in the directory ignoring files which do not comply with the data stored in "ignoreData" dictionary.
         /// </summary>
@@ -292,7 +297,7 @@ namespace TFIDF
             // Update the lexicon
             Console.WriteLine(topic.words.Count);
             Lexicon.update_from(topic.words);
-            Console.WriteLine(Lexicon.vocabsize);
+            Console.WriteLine(Lexicon.words.Count());
         }
         #endregion
 
@@ -366,6 +371,16 @@ namespace TFIDF
                 var similarWords = Lexicon.words.OrderByDescending(word => targetTopic.tfidf.tfidfVector[word] * sourceTopic.tfidf.tfidfVector[word]).Take(numOfWords>10?10:numOfWords);
                 return similarWords.ToList();
             }
+        #endregion
+
+        #region Compute Max
+        public void compute_max()
+        {
+            // Compute the maximum words, xrefs, and related links from all the topics
+            wordsMax = topics.Select(topic => topic.words.Count).ToArray().Max();
+            xrefsMax = topics.Select(topic => topic.xrefs.Count).ToArray().Max();
+            relinksMax = topics.Select(topic => topic.relinks.Count).ToArray().Max();
+        }
         #endregion
     }
 }

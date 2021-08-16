@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XliTxxX9KzqKBHUq7zkeGXW5hwZfVQB6czMSBWjFNOEGggOzXd5jylmB2yDVfOhtvsddVoBDMMEby7seR+E0Vg==",
+  "dgSpecHash": "I/wz/jTrwysSsY1MSAK9FbA3OCSmnfIlR6x9nMOD/qObpykW8LaL0moEUfitVaJ3h/3NJDDylUKPcv247eDBgQ==",
   "success": true,
   "projectFilePath": "D:\\Dev\\C sharp\\Panini_core\\Panini_core\\Panini.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,8 @@
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack\\1.11.34\\htmlagilitypack.1.11.34.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack.netcore\\1.5.0.1\\htmlagilitypack.netcore.1.5.0.1.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\lemmagenerator\\1.1.0\\lemmagenerator.1.1.0.nupkg.sha512",
+    "C:\\Users\\Girish\\.nuget\\packages\\livecharts\\0.9.7\\livecharts.0.9.7.nupkg.sha512",
+    "C:\\Users\\Girish\\.nuget\\packages\\livecharts.wpf\\0.9.7\\livecharts.wpf.0.9.7.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\materialdesigncolors\\2.0.1\\materialdesigncolors.2.0.1.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\materialdesignthemes\\4.1.0\\materialdesignthemes.4.1.0.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\microsoft.ml\\1.6.0\\microsoft.ml.1.6.0.nupkg.sha512",
@@ -117,6 +119,26 @@
       "warningLevel": 1,
       "message": "Package 'LemmaGenerator 1.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0-windows7.0'. This package may not be fully compatible with your project.",
       "libraryId": "LemmaGenerator",
+      "targetGraphs": [
+        "net5.0-windows7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'LiveCharts 0.9.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "LiveCharts",
+      "targetGraphs": [
+        "net5.0-windows7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'LiveCharts.Wpf 0.9.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "LiveCharts.Wpf",
       "targetGraphs": [
         "net5.0-windows7.0"
       ]

@@ -9,12 +9,14 @@ namespace TFIDF
     public class TFIDF
     {
         public SortedDictionary<string, double> tfidfVector = new SortedDictionary<string, double>(); // size => no of words in lexicon
+        public SortedDictionary<string, double> tfVector = new SortedDictionary<string, double>(); // size => no of words in lexicon
+        public SortedDictionary<string, double> idfVector = new SortedDictionary<string, double>(); // size => no of words in lexicon
         public SortedDictionary<string, int> wordCountVector = new SortedDictionary<string, int>(); // size => no of words in lexicon
         public Dictionary<string, double> similarityScores = new Dictionary<string, double>(); // size => no of topics
 
         public TFIDF(Topic topic, List<Topic> topics)
         {
-            // This loops calculates the occurances of each word and adds it to the wordCountVector.
+            // This loop calculates the occurances of each word and adds it to the wordCountVector.
             // The maximum value of word count is used to normalize the term frequency value.
             foreach(var word in Lexicon.words)
             {
@@ -36,6 +38,9 @@ namespace TFIDF
 
                 // Caluculate TFIDF value
                 var tfidf = tf * idf;
+
+                tfVector.Add(word, tf);
+                idfVector.Add(word, idf);
                 tfidfVector.Add(word, tfidf);
             }
 

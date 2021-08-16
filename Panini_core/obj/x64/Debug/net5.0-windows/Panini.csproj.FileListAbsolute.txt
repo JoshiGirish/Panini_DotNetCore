@@ -71,3 +71,5 @@ D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.dll
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\ref\Panini.dll
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.pdb
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.genruntimeconfig.cache
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.Wpf.dll
