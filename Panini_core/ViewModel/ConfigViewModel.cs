@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using ILGPU;
+using ILGPU.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -23,6 +25,18 @@ namespace Panini.ViewModel
 
         public string IgnoreTopicNameStartsWith { get => string.Join(",", ignoreTopicNameStartsWith);  set { ignoreTopicNameStartsWith = value.Replace(" ", string.Empty).Split(',').ToList(); dataCache.corpus.ignoreTopicNameStartsWith = ignoreTopicNameStartsWith; RaisePropertyChanged(); } }
         private string _colorScheme = "Default";
+
+        private List<string> _accelerators;
+
+        public List<string> Devices
+        {
+            get { return _accelerators; }
+            set { _accelerators = value; RaisePropertyChanged(); }
+        }
+        public string AccleratorDevice
+        {
+            set { dataCache.Config["acclerator"] = value; }
+        }
 
         public string ColorScheme
         {
@@ -57,6 +71,7 @@ namespace Panini.ViewModel
 
         public ConfigViewModel()
         {
+            find_accelerators();
             PropertyChanged += update_config;
         }
 
@@ -67,6 +82,21 @@ namespace Panini.ViewModel
                                                                 {"contains", ignoreTopicNameContains},
                                                                 {"name", ignoreTopicName } };
         }
+
+        #region Get Accelerators
+        public void find_accelerators()
+        {
+            Devices = new List<string>();
+            Context cont = new Context();
+            foreach(var acceleratorId in Accelerator.Accelerators)
+            {
+                using (var accl = Accelerator.Create(cont, acceleratorId))
+                {
+                    Devices.Add($" [{accl.AcceleratorType}] - {accl.Name}");
+                }
+            }
+        }
+        #endregion
     }
     public class ColorSchemeConverter : IValueConverter
     {

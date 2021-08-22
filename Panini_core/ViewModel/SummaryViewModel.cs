@@ -462,7 +462,7 @@ namespace Panini.ViewModel
 
 			PreviewModel.Axes.Add(new OxyPlot.Axes.LinearColorAxis
 			{
-				Palette = OxyPalette.Interpolate(20, PreviewModel.DefaultColors.ToArray()).Reverse(),
+				Palette = OxyPalette.Interpolate(10, PreviewModel.DefaultColors.ToArray()).Reverse(),
 				Position = AxisPosition.Top,
 				Minimum = 0.0,
 				Maximum = 1.0,
@@ -519,7 +519,7 @@ namespace Panini.ViewModel
 			Model.Axes.Clear();
 			Model.Axes.Add(new OxyPlot.Axes.LinearColorAxis
             {
-				Palette = OxyPalette.Interpolate(20, Model.DefaultColors.ToArray()).Reverse(),
+				Palette = OxyPalette.Interpolate(10, Model.DefaultColors.ToArray()).Reverse(),
 				Position = AxisPosition.Top,
 				Minimum = 0.0,
 				Maximum = 1.0,
@@ -614,10 +614,11 @@ namespace Panini.ViewModel
 				case "HotCold":
 					return new List<OxyColor>
 				{
-                    OxyColor.FromRgb(237, 119, 119),
-                    OxyColor.FromRgb(119, 217, 237)
+                    OxyColor.FromRgb(255, 61, 155),
+					OxyColor.FromRgb(227, 227, 227),
+					OxyColor.FromRgb(66, 192, 255)
 				};
-
+					
 				case "Default":
 					return new List<OxyColor>
 				{

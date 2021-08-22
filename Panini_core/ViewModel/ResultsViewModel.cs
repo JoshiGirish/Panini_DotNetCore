@@ -89,6 +89,7 @@ namespace Panini.ViewModel
         }
 
         #endregion
+
         public string _status;
         public string Status
         {

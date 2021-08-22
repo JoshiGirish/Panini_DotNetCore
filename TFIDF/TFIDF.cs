@@ -18,7 +18,7 @@ namespace TFIDF
         {
             // This loop calculates the occurances of each word and adds it to the wordCountVector.
             // The maximum value of word count is used to normalize the term frequency value.
-            foreach(var word in Lexicon.words)
+            foreach (var word in Lexicon.words)
             {
                 var count = topic.words.Where(n => n == word).Count();
                 wordCountVector.Add(word, count);
