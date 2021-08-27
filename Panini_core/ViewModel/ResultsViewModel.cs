@@ -267,6 +267,7 @@ namespace Panini.ViewModel
             _dummyTopicCollection = TopicCollection;
             dataCache.TopicCollection = TopicCollection;
             ResultsVisibility = "Visible"; // display the results
+            dataCache.ViewState.Add("SummaryViewEnabled");
         }
         #endregion
 

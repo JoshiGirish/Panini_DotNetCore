@@ -18,6 +18,7 @@
           "MaterialDesignColors": "2.0.1",
           "MaterialDesignThemes": "4.1.0",
           "Microsoft.ML": "1.6.0",
+          "Microsoft.Toolkit": "7.0.2",
           "Microsoft.Xaml.Behaviors.Wpf": "1.1.31",
           "Newtonsoft.Json": "13.0.1",
           "OxyPlot.Wpf": "2.0.0",
@@ -240,6 +241,14 @@
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "Microsoft.Toolkit/7.0.2": {
+        "runtime": {
+          "lib/net5.0/Microsoft.Toolkit.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.2.1"
+          }
+        }
+      },
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -1109,6 +1118,13 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "Microsoft.Toolkit/7.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LaGLOfMz1ZcfR6ex4Cc2CzSFuyGTApIvSyZZmJqjiGZY5zZoqwPN1IpQUI2R0vbWDhA4VPBfiGMZR9NdgUbT4Q==",
+      "path": "microsoft.toolkit/7.0.2",
+      "hashPath": "microsoft.toolkit.7.0.2.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",

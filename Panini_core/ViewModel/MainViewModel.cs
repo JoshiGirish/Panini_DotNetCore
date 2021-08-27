@@ -9,6 +9,11 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Panini.Commands;
+using System.Collections.ObjectModel;
+using Microsoft.Toolkit.Collections;
+using System.Windows.Data;
+using System.Globalization;
+using System.Collections.Specialized;
 
 namespace Panini.ViewModel
 {
@@ -30,6 +35,7 @@ namespace Panini.ViewModel
 
         private Page _currentPage = new AboutPage();
 
+        private readonly DataCache dataCache = DataCache.Instance;
         public Page CurrentPage
         {
             get { return _currentPage; }
@@ -43,6 +49,13 @@ namespace Panini.ViewModel
             get { return _currentItem; }
             set { _currentItem = value; RaisePropertyChanged(); }
         }
+
+        public ObservableCollection<string> ViewState
+        {
+            get { return dataCache.ViewState; }
+            set { dataCache.ViewState = value; RaisePropertyChanged(); }
+        }
+
 
         #region Switch View command callback
         /// <summary>
@@ -85,6 +98,13 @@ namespace Panini.ViewModel
         }
         #endregion
 
+        #region Update View delegate
+        public void update_view_status(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ViewState = dataCache.ViewState;
+        }
+        #endregion
+
         public MainViewModel()
         {
             aboutVM = new AboutViewModel();
@@ -92,6 +112,8 @@ namespace Panini.ViewModel
             loadVM = new LoadViewModel();
             resultsVM = new ResultsViewModel();
             summaryVM = new SummaryViewModel();
+
+            dataCache.ViewState.CollectionChanged += update_view_status;
         }
 
         public BaseViewModel AboutViewModel { get { return aboutVM; } }
@@ -101,4 +123,17 @@ namespace Panini.ViewModel
         public BaseViewModel SummaryViewModel { get { return summaryVM; } }
     }
 
+    public class ViewStateConverter : IValueConverter
+    {
+        private readonly DataCache dataCache = DataCache.Instance;
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return dataCache.ViewState.Contains(parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value ? parameter : null;
+        }
+    }
 }

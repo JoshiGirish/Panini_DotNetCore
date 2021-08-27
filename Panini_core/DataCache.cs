@@ -1,6 +1,7 @@
 ﻿using Panini.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using TFIDF;
 
@@ -21,6 +22,7 @@ namespace Panini
         public EventHandler OnMessageChanged;
         public Dictionary<string, object> Config;
         public Dictionary<string, object> NLPData;
+        public ObservableCollection<string> ViewState;
 
         private DataCache()
         {
@@ -40,6 +42,10 @@ namespace Panini
             NLPData["numOfSentences"] = 0;
             NLPData["numOfTokens"] = 0;
 
+            // View state
+            ViewState = new ObservableCollection<string>();
+            ViewState.Add("AboutViewEnabled");
+            ViewState.Add("LoadViewEnabled");
         }
 
         public static DataCache Instance

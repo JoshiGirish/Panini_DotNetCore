@@ -84,6 +84,10 @@
               "target": "Package",
               "version": "[1.6.0, )"
             },
+            "Microsoft.Toolkit": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
             "Microsoft.Xaml.Behaviors.Wpf": {
               "target": "Package",
               "version": "[1.1.31, )"

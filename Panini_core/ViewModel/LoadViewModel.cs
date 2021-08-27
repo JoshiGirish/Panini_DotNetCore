@@ -153,11 +153,9 @@ namespace Panini.ViewModel
             {
                 Status = $"{fileCount} files found in the selected directory.";
                 StatusBarColor = StatusColors["Success"];
+                dataCache.ViewState.Add("ConfigViewEnabled");
+                dataCache.ViewState.Add("ResultsViewEnabled");
             }
-            ListOfFiles.CollectionChanged += ListOfFilesChanged;
-        }
-        private void ListOfFilesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
         }
         #endregion
 

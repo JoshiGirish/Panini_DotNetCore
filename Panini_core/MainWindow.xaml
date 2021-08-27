@@ -35,6 +35,7 @@ MinWidth="700"
     <vm:MainViewModel />
   </Window.DataContext>
   <Window.Resources>
+    <vm:ViewStateConverter x:Key="viewStateConverter"/>
     <!-- Base Style for all tab items -->
     <Style TargetType="{x:Type TabItem}">
       <Setter Property="Template">
@@ -99,6 +100,12 @@ MinWidth="700"
       <Grid.Resources>
         </Grid.Resources>
         <ListView BorderBrush="#cfcfcf" BorderThickness="1" Background="Transparent">
+            <!--<Style TargetType="ListViewItem">
+              <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                </Trigger>
+              </Style.Triggers>
+            </Style>-->
         <ListViewItem x:Name="About" 
                       Height="50" 
                       VerticalContentAlignment="Center"
@@ -118,9 +125,11 @@ MinWidth="700"
               </StackPanel>
             </ListViewItem.ToolTip>
           </ListViewItem>
+          
           <ListViewItem x:Name="Load" Height="50" VerticalContentAlignment="Center"
                       HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Center">
+                      HorizontalContentAlignment="Center"
+                        IsEnabled="{Binding ViewState, Converter={StaticResource ResourceKey=viewStateConverter}, ConverterParameter=LoadViewEnabled}" >
             <md:PackIcon Kind="Input"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
@@ -134,9 +143,11 @@ MinWidth="700"
               </StackPanel>
             </ListViewItem.ToolTip>
         </ListViewItem>
+
           <ListViewItem x:Name="Config" Height="50" VerticalContentAlignment="Center"
                       HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Center">
+                      HorizontalContentAlignment="Center"
+                        IsEnabled="{Binding ViewState, Converter={StaticResource ResourceKey=viewStateConverter}, ConverterParameter=ConfigViewEnabled}">
             <md:PackIcon Kind="Settings"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
@@ -150,9 +161,11 @@ MinWidth="700"
               </StackPanel>
             </ListViewItem.ToolTip>
         </ListViewItem>
+
           <ListViewItem x:Name="Results" Height="50" VerticalContentAlignment="Center"
                       HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Center">
+                      HorizontalContentAlignment="Center"
+                        IsEnabled="{Binding ViewState, Converter={StaticResource ResourceKey=viewStateConverter}, ConverterParameter=ResultsViewEnabled}">
             <md:PackIcon Kind="PlayBox"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
@@ -166,9 +179,11 @@ MinWidth="700"
               </StackPanel>
             </ListViewItem.ToolTip>
         </ListViewItem>
+
           <ListViewItem x:Name="Summary" Height="50" VerticalContentAlignment="Center"
                       HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Center">
+                      HorizontalContentAlignment="Center"
+                        IsEnabled="{Binding ViewState, Converter={StaticResource ResourceKey=viewStateConverter}, ConverterParameter=SummaryViewEnabled}">
             <md:PackIcon Kind="File"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">

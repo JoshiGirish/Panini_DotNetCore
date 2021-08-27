@@ -74,3 +74,4 @@ D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.genru
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.Wpf.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\ILGPU.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.Toolkit.dll

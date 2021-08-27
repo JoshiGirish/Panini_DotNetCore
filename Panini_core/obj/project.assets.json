@@ -271,6 +271,15 @@
           "lib/netstandard1.0/_._": {}
         }
       },
+      "Microsoft.Toolkit/7.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Microsoft.Toolkit.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Microsoft.Toolkit.dll": {}
+        }
+      },
       "Microsoft.Win32.Primitives/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1958,6 +1967,31 @@
         "microsoft.netcore.targets.1.1.0.nupkg.sha512",
         "microsoft.netcore.targets.nuspec",
         "runtime.json"
+      ]
+    },
+    "Microsoft.Toolkit/7.0.2": {
+      "sha512": "LaGLOfMz1ZcfR6ex4Cc2CzSFuyGTApIvSyZZmJqjiGZY5zZoqwPN1IpQUI2R0vbWDhA4VPBfiGMZR9NdgUbT4Q==",
+      "type": "package",
+      "path": "microsoft.toolkit/7.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "images/nuget.png",
+        "lib/net5.0/Microsoft.Toolkit.dll",
+        "lib/net5.0/Microsoft.Toolkit.pdb",
+        "lib/net5.0/Microsoft.Toolkit.xml",
+        "lib/netstandard1.4/Microsoft.Toolkit.dll",
+        "lib/netstandard1.4/Microsoft.Toolkit.pdb",
+        "lib/netstandard1.4/Microsoft.Toolkit.xml",
+        "lib/netstandard2.0/Microsoft.Toolkit.dll",
+        "lib/netstandard2.0/Microsoft.Toolkit.pdb",
+        "lib/netstandard2.0/Microsoft.Toolkit.xml",
+        "lib/netstandard2.1/Microsoft.Toolkit.dll",
+        "lib/netstandard2.1/Microsoft.Toolkit.pdb",
+        "lib/netstandard2.1/Microsoft.Toolkit.xml",
+        "license.md",
+        "microsoft.toolkit.7.0.2.nupkg.sha512",
+        "microsoft.toolkit.nuspec"
       ]
     },
     "Microsoft.Win32.Primitives/4.3.0": {
@@ -5508,6 +5542,7 @@
       "MaterialDesignColors >= 2.0.1",
       "MaterialDesignThemes >= 4.1.0",
       "Microsoft.ML >= 1.6.0",
+      "Microsoft.Toolkit >= 7.0.2",
       "Microsoft.Xaml.Behaviors.Wpf >= 1.1.31",
       "Newtonsoft.Json >= 13.0.1",
       "OxyPlot.Wpf >= 2.0.0",
@@ -5597,6 +5632,10 @@
           "Microsoft.ML": {
             "target": "Package",
             "version": "[1.6.0, )"
+          },
+          "Microsoft.Toolkit": {
+            "target": "Package",
+            "version": "[7.0.2, )"
           },
           "Microsoft.Xaml.Behaviors.Wpf": {
             "target": "Package",
