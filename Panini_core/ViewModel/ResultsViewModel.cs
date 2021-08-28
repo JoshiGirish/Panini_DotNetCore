@@ -354,33 +354,62 @@ namespace Panini.ViewModel
         public bool SearchCanExecute { get { return true; } }
         #endregion
 
-        #region Open Topic Command CallBack
+        #region Open Similar Topic Command CallBack
         /// <summary>
         /// This ICommand binds to the file icon of each TopicResultItem. It opens the corresponding topic HTML page in the default browser.
+        /// </summary>
+        private ICommand _openSimilarFile;
+
+        public ICommand OpenSimilarFile
+        {
+            get { return _openSimilarFile ?? (_openSimilarFile = new ParameterCommandHandler((grid) => open_similar_file(grid), () => { return true; })); }
+        }
+
+        public void open_similar_file(object gridObj)
+        {
+            DataGrid grid = (DataGrid)gridObj;
+            TopicResultItem item = (TopicResultItem)grid.SelectedItem;
+            launch(item.Path);
+            //System.Diagnostics.Process.Start($"{item.Path}");
+        }
+        #endregion
+
+
+        #region Open Topic Command CallBack
+        /// <summary>
+        /// This ICommand binds to the file icon of each topic heading in the detail view. It opens the corresponding topic HTML page in the default browser.
         /// </summary>
         private ICommand _openFile;
 
         public ICommand OpenFile
         {
-            get { return _openFile ?? (_openFile = new ParameterCommandHandler((grid) => open_file(grid), () => { return true; })); }
+            get { return _openFile ?? (_openFile = new ParameterCommandHandler((path) => open_file(path), () => { return true; })); }
         }
 
-        public void open_file(object gridObj)
+        public void open_file(object path)
         {
-            DataGrid grid = (DataGrid)gridObj;
-            TopicResultItem item = (TopicResultItem)grid.SelectedItem;
-            //System.Diagnostics.Process.Start($"{item.Path}");
+            launch((string)path);
+        }
+        #endregion
+
+        #region Launch file
+        /// <summary>
+        /// This method opens the file referenced by the path parameter.
+        /// </summary>
+        /// <param name="path"></param>
+        public void launch(string path)
+        {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Process.Start(new ProcessStartInfo($"{item.Path}") { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo($"{path}") { UseShellExecute = true });
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                Process.Start("xdg-open", $"{item.Path}");
+                Process.Start("xdg-open", $"{path}");
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                Process.Start("open", $"{item.Path}");
+                Process.Start("open", $"{path}");
             }
             else
             {

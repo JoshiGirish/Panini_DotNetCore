@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ILGPU.Runtime.CPU;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Panini.Models
     {
         private readonly DataCache dataCache = DataCache.Instance;
         public string Name {get; set;}
+        public string path { get; set; }
         public ObservableCollection<TopicResultItem> itemCollection { get; set; }
         public int wordsRatio { get; set; }
         public string wordsRatioTooltip { get; set; }
@@ -88,6 +90,7 @@ namespace Panini.Models
         public TopicItem(string name, string isVisible, bool isExpanded, ObservableCollection<TopicResultItem> itemCollection)
         {
             Name = name;
+            path = dataCache.corpus.concDict[Name].path;
             this.itemCollection = itemCollection;
             IsVisible = isVisible;
             IsExpanded = IsExpanded;
