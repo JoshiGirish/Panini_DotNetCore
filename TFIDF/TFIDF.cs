@@ -25,7 +25,7 @@ namespace TFIDF
             }
             int max = wordCountVector.Values.Max();
 
-            // This loops calculates the tfidf value for each word in the topic and adds it to the tfidfVector.
+            // This loop calculates the tfidf value for each word in the topic and adds it to the tfidfVector.
             foreach(var word in Lexicon.words)
             {
                 // Calculate term frequency

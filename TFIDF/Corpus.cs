@@ -262,6 +262,29 @@ namespace TFIDF
         }
         #endregion
 
+        #region Calculate TFIDF Scores (Parallel Processing)
+        public void calculate_tfidf_scores_parallel()
+        {
+            var nRows = concDict.Values.Count;
+            var nCols = Lexicon.words.Count();
+            var wordCountMatrix = new int[nRows, nCols];
+            var tfMatrix = new double[nRows, nCols];
+
+            // Generate matrix
+            for (var i = 0; i < nRows; i++)
+            {
+                var topic = concDict.Values.ToArray()[i];
+                var wordCounts = topic.tfidf.wordCountVector.Values.ToArray();
+                var maxCount = wordCounts.Max();
+                for (var j = 0; j < nCols; j++)
+                {
+                    wordCountMatrix[i, j] = wordCounts[j];
+                    tfMatrix[i, j] = wordCounts[j] / maxCount;
+                }
+            }
+        }
+        #endregion
+
         #region Instantiate Topic
         /// <summary>
         /// Instantiates the topic class for each file in the directory ignoring files which do not comply with the data stored in "ignoreData" dictionary.

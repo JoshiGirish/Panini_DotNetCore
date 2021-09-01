@@ -61,7 +61,7 @@
                 <Style TargetType="{x:Type DataGridCell}">
                     <Setter Property="BorderThickness"
                                         Value="0" />
-                  </Style>
+              </Style>
               </Grid.Resources>
               <DataGrid ItemsSource="{Binding itemCollection}"
                                     AutoGenerateColumns="False"
@@ -84,7 +84,7 @@
                   <DataGridTemplateColumn Width="25">
                     <DataGridTemplateColumn.CellTemplate>
                       <DataTemplate>
-                        <Button DataContext="Global"
+                        <Button x:Name="fileBtn" DataContext="Global"
                                             Background="Transparent"
                                             BorderBrush="Transparent"
                                             Command="{Binding DataContext.OpenSimilarFile, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
@@ -191,9 +191,31 @@
                   </DataGridTemplateColumn>
 
                   <!--Similar Topic Name cell-->
-                  <DataGridTextColumn Header="Similar Topics"
+                <DataGridTemplateColumn Header="Similar Topics">
+                  <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <TextBlock  x:Name="similarTopicName"
+                                    Text="{Binding Name}"
+                                    FontSize="12"
+                                    Margin="5 0 5 0"
+                                    Padding="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left" />
+
+                        <beh:Interaction.Triggers>
+                          <beh:EventTrigger EventName="MouseMove" SourceObject="{Binding ElementName=similarTopicName}">
+                            <beh:InvokeCommandAction Command="{Binding DataContext.DragDropCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"
+                                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"/>
+                          </beh:EventTrigger>
+                        </beh:Interaction.Triggers>
+                      </Grid>
+                    </DataTemplate> 
+                  </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!--<DataGridTextColumn Header="Similar Topics"
                                                   Binding="{Binding Name}">
-                    <DataGridTextColumn.ElementStyle>
+    <DataGridTextColumn.ElementStyle>
                       <Style TargetType="TextBlock">
                         <Setter Property="FontWeight"
                                             Value="SemiBold" />
@@ -202,7 +224,7 @@
                         <Setter Property="Background" Value="Transparent"/>
                       </Style>
                     </DataGridTextColumn.ElementStyle>
-                  </DataGridTextColumn>
+                  </DataGridTextColumn>-->
 
                   <!--Keywords Cell-->
                   <DataGridTemplateColumn Header="Keywords"
@@ -337,6 +359,17 @@
               </ControlTemplate>
             </Setter.Value>
           </Setter>
+
+          <Style.Triggers>
+            <Trigger Property="IsSelected"
+                        Value="True">
+              <Setter Property="Background"
+                        Value="#efe6ff" />
+              <Setter Property="Foreground"
+                        Value="Black" />
+            </Trigger>
+          </Style.Triggers>
+
         </Style>
       </DataTemplate.Resources>
       <DataGrid ItemsSource="{Binding WordsList}"

@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using LiveCharts;
 using LiveCharts.Wpf;
+using System.Text;
 
 namespace Panini.ViewModel
 {
@@ -246,6 +247,7 @@ namespace Panini.ViewModel
                                     .Select(top => new TopicResultItem()
                                     {
                                         Name = top.topicName,
+                                        sourceName = Path.GetFileNameWithoutExtension(top.topicName) + ".xml",
                                         Path = top.path,
                                         simScore = (float)dataCache.corpus.get_similarity_score(topic, top),
                                         words = dataCache.corpus.get_similar_words(topic, top, 100),
@@ -253,7 +255,7 @@ namespace Panini.ViewModel
                                         NumOfInlineLinks = top.xrefs.Count,
                                         NumOfRelatedLinks = top.relinks.Count,
                                         IsLinked = topic.get_all_link_names().Contains(top.topicName) == true ? "Visible" : "Collapsed"
-                                    });
+                                    });;
                 var itemColl = new ObservableCollection<TopicResultItem>();
                 foreach (var item in enumItems)
                 {
@@ -270,6 +272,8 @@ namespace Panini.ViewModel
             dataCache.ViewState.Add("SummaryViewEnabled");
         }
         #endregion
+
+
 
         // View Management Methods
         #region ExpandAll Command CallBack
@@ -374,7 +378,6 @@ namespace Panini.ViewModel
         }
         #endregion
 
-
         #region Open Topic Command CallBack
         /// <summary>
         /// This ICommand binds to the file icon of each topic heading in the detail view. It opens the corresponding topic HTML page in the default browser.
@@ -390,6 +393,33 @@ namespace Panini.ViewModel
         {
             launch((string)path);
         }
+        #endregion
+
+        #region DragDrop Command
+        private ICommand _dragDrop;
+        public ICommand DragDropCommand
+        {
+            get { return _dragDrop ?? (_dragDrop = new ParameterCommandHandler((grid) => drag_link_to_file(grid), () => { return true; })); }
+        }
+        public void drag_link_to_file(object gridObj)
+        {
+            DataGrid grid = (DataGrid)gridObj;
+            TopicResultItem item = (TopicResultItem)grid.SelectedItem;
+            
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                {
+                    DragDrop.DoDragDrop(new FrameworkElement(), item.Path.ToString(), DragDropEffects.Copy);
+                }
+                else
+                {
+                    var href = $"<link href=\"{item.sourceName}\"></link>";
+                    DragDrop.DoDragDrop(new FrameworkElement(), href, DragDropEffects.Copy);
+                }
+            }
+        }
+
         #endregion
 
         #region Launch file

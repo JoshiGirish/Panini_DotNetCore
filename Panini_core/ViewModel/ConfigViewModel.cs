@@ -7,6 +7,7 @@ using ILGPU.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Forms;
 
 namespace Panini.ViewModel
 {
@@ -68,6 +69,12 @@ namespace Panini.ViewModel
             set { _maxVocabSize = value; RaisePropertyChanged(); dataCache.Config["maxVocabSize"] = value;}
         }
 
+        #region Numeric Input Handler
+        public void numeric_input_handler(object sender, KeyPressEventArgs e)
+        {
+
+        }
+        #endregion
 
         public ConfigViewModel()
         {

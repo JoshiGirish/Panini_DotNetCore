@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Panini.Models
     public class TopicResultItem : BaseModel
     {
         public string Name { get; set; }
+        public string sourceName { get; set; }
         public string Path { get; set; }
         public float simScore { get; set; }
         public List<string> words { get; set; }
@@ -52,6 +54,7 @@ namespace Panini.Models
         public TopicResultItem(string name, string path, float simScore, List<string> words, List<string> keywords, string isLinked)
         {
             Name = name;
+            sourceName = System.IO.Path.GetFileNameWithoutExtension(name) + ".xml";
             Path = path;
             this.simScore = simScore;
             this.words = words;
