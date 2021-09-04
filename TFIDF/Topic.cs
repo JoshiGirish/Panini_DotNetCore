@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using HtmlAgilityPack.CssSelectors.NetCore;
 
 namespace TFIDF
 {
@@ -21,16 +22,37 @@ namespace TFIDF
         private List<double> tfidfVector = new List<double>();
         public string path { get; } = "";
         public TFIDF tfidf { get; set; }
+        //public enum SelectionMode
+        //{
+        //    InnerText,
+        //    CSSSelector
+        //}
+        public string Mode { get; set; }
+        public string InnerText { get; set; } = ""; // comma separated string
+        public string CSSSelector { get; set; } = "";
+        public int AncestorLevel { get; set; } = 0;
         #endregion
 
         #region Constructor
-        public Topic(string name, string filePath,  HtmlDocument html, Dictionary<string, List<string>> ignoreData)
+        public Topic(string name, string filePath,  HtmlDocument html, Dictionary<string, List<string>> ignoreData, Dictionary<string, string> selectionOptions, int level)
         {
             topicName = name;
             path = filePath;
             text = get_topic_text(html);
             words = get_all_words();
             sentCount = CountTokenizedSentences(get_topic_text(html));
+            Mode = selectionOptions["Mode"];
+            //if ((string)selectionOptions["Mode"] == "cssSelection")
+            //{
+            //    Mode = SelectionMode.CSSSelector;
+            //}
+            //else
+            //{
+            //    Mode = SelectionMode.InnerText;
+            //};
+            InnerText = selectionOptions["InnerText"];
+            CSSSelector = selectionOptions["CSSSelector"];
+            AncestorLevel = level;
             var links = get_existing_links(html);
             xrefs = links["xrefs"];
             relinks = links["relinks"];
@@ -91,31 +113,8 @@ namespace TFIDF
         /// <returns></returns>
         public Dictionary<string, List<string>> get_existing_links(HtmlDocument doc)
         {
-            string[] labels = { "See Also", "In Other Guides" };
-
             // Find the related links
-            var td_tags = doc.DocumentNode.Descendants("td");
-            foreach(var tag in td_tags)
-            {
-                if (labels.Contains(tag.InnerText))
-                {
-                    var table_tag = tag.ParentNode.ParentNode;
-                    var anchor_tags = table_tag.Descendants("a");
-                    foreach(var a_tag in anchor_tags)
-                    {
-                        var hRef = a_tag.GetAttributeValue("href", "default");
-                        if(hRef == string.Empty)
-                        {
-                            relinkTags.Add(topicName);
-                        }
-                        else
-                        {
-                            relinkTags.Add(hRef);
-                        }
-                        relinks.Add(Path.GetFileName(a_tag.GetAttributeValue("href", "default").Split('#')[0]));
-                    }
-                }
-            }
+            get_related_links(doc);
 
             // Find the inline links
             var all_a_tags = doc.DocumentNode.Descendants("a");
@@ -138,6 +137,91 @@ namespace TFIDF
             links.Add("xrefs", xrefs.clean_links());
             links.Add("relinks", relinks.clean_links());
             return links;
+        }
+        #endregion
+
+        #region Get Related Links
+        /// <summary>
+        /// Finds all related links from the HtmlDocument
+        /// </summary>
+        /// <param name="doc">Source HtmlDocument</param>
+        public void get_related_links(HtmlDocument doc)
+        {
+            HtmlNode parentTag = null;
+            switch (Mode){
+                case "cssSelection":
+                    parentTag = find_parent_tag_using_selector();
+                    break;
+
+                case "innerText":
+                    parentTag = find_parent_tag_using_innertext();
+                    break;
+
+                default:
+                    break;
+            }
+
+            if(parentTag != null) 
+            { 
+                foreach (var a_tag in parentTag.Descendants("a"))
+                {
+                    var hRef = a_tag.GetAttributeValue("href", "default");
+                    if (hRef == string.Empty)
+                    {
+                        relinkTags.Add(topicName);
+                    }
+                    else
+                    {
+                        relinkTags.Add(hRef);
+                    }
+                    relinks.Add(Path.GetFileName(a_tag.GetAttributeValue("href", "default").Split('#')[0]));
+                }
+            }
+
+
+
+            // Find the parent by CSS Selector
+            HtmlNode find_parent_tag_using_selector()
+            {
+                //var td_tags = doc.DocumentNode.Descendants("td");
+                var tags = doc.DocumentNode.Descendants();
+                IList<HtmlNode> nodes = doc.QuerySelectorAll(CSSSelector);
+                try
+                {
+                    if (nodes.Count != 0)
+                    {
+                        return AncestorLevel == 0 ? nodes[0] : get_nth_parent(nodes[0], AncestorLevel);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    return null;
+                }
+                
+            }
+
+            // Find the parent by InnerText
+            HtmlNode find_parent_tag_using_innertext()
+            {
+                HtmlNode parent = null;
+                string[] labels = InnerText.Replace(" ", string.Empty).Split(',').ToArray();
+                //var td_tags = doc.DocumentNode.Descendants("td");
+                var tags = doc.DocumentNode.Descendants();
+                foreach (var tag in tags)
+                {
+                    if (labels.Contains(tag.InnerText))
+                    {
+                        return AncestorLevel == 0 ? tag : get_nth_parent(tag, AncestorLevel);
+                    }
+                }
+                return parent;
+
+            }
+            
         }
         #endregion
 
@@ -189,6 +273,18 @@ namespace TFIDF
             return text.Split(new string[] { " ", "   ", "\r\n" }, StringSplitOptions.None)
                 .SelectMany(o => o.SplitAndKeep(".,;:\\/?!#$%()=+-*\"'–_`<>&^@{}[]|~'".ToArray())).Count();
                 //.Select(o => o.ToLower());
+        }
+        #endregion
+
+        #region Get nth Parent Node
+        public HtmlNode get_nth_parent(HtmlNode selectedTag, int level)
+        {
+            HtmlNode parent = selectedTag;
+            for (int i = 0; i < level; i++)
+            {
+                parent = parent.ParentNode;
+            }
+            return parent;
         }
         #endregion
 

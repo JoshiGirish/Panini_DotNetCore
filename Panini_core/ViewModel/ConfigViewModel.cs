@@ -20,14 +20,111 @@ namespace Panini.ViewModel
         private List<string> ignoreTopicNameStartsWith = new List<string> { "help-rc" };
         private List<string> ignoreTopicNameContains = new List<string> { "-ActBar", "-ContexMenus-" };
         private List<string> ignoreTopicName = new List<string> { "Sitemap" };
-        public string IgnoreTopicNameEndsWith { get => string.Join(",", ignoreTopicNameEndsWith); set { ignoreTopicNameEndsWith = value.Replace(" ", string.Empty).Split(',').ToList(); dataCache.corpus.ignoreTopicNameEndsWith = ignoreTopicNameEndsWith; RaisePropertyChanged(); } }
-        public string IgnoreTopicNameContains { get => string.Join(",",ignoreTopicNameContains); set { ignoreTopicNameContains = value.Replace(" ", string.Empty).Split(',').ToList(); dataCache.corpus.ignoreTopicNameContains = ignoreTopicNameContains; RaisePropertyChanged(); } }
-        public string IgnoreTopicName { get => string.Join(",",ignoreTopicName); set { ignoreTopicName = value.Replace(" ", string.Empty).Split(',').ToList(); dataCache.corpus.ignoreTopicName = ignoreTopicName; RaisePropertyChanged();  } }
+        public string IgnoreTopicNameEndsWith 
+        { 
+            get => string.Join(",", ignoreTopicNameEndsWith); 
+            set 
+            { 
+                ignoreTopicNameEndsWith = value.Replace(" ", string.Empty).Split(',').ToList(); 
+                dataCache.corpus.ignoreTopicNameEndsWith = ignoreTopicNameEndsWith; 
+                RaisePropertyChanged(); 
+            } 
+        }
+        public string IgnoreTopicNameContains 
+        { 
+            get => string.Join(",",ignoreTopicNameContains); 
+            set 
+            { 
+                ignoreTopicNameContains = value.Replace(" ", string.Empty).Split(',').ToList(); 
+                dataCache.corpus.ignoreTopicNameContains = ignoreTopicNameContains; 
+                RaisePropertyChanged(); 
+            } 
+        }
+        public string IgnoreTopicName 
+        { 
+            get => string.Join(",",ignoreTopicName); 
+            set 
+            { 
+                ignoreTopicName = value.Replace(" ", string.Empty).Split(',').ToList(); 
+                dataCache.corpus.ignoreTopicName = ignoreTopicName; 
+                RaisePropertyChanged();  
+            } 
+        }
 
-        public string IgnoreTopicNameStartsWith { get => string.Join(",", ignoreTopicNameStartsWith);  set { ignoreTopicNameStartsWith = value.Replace(" ", string.Empty).Split(',').ToList(); dataCache.corpus.ignoreTopicNameStartsWith = ignoreTopicNameStartsWith; RaisePropertyChanged(); } }
+        public string IgnoreTopicNameStartsWith 
+        { 
+            get => string.Join(",", ignoreTopicNameStartsWith);  
+            set 
+            { 
+                ignoreTopicNameStartsWith = value.Replace(" ", string.Empty).Split(',').ToList(); 
+                dataCache.corpus.ignoreTopicNameStartsWith = ignoreTopicNameStartsWith; 
+                RaisePropertyChanged(); 
+            } 
+        }
         private string _colorScheme = "Default";
 
         private List<string> _accelerators;
+
+        // Hyperlink configuration properties
+
+        private string _selectionMode = "InnerText";
+
+        public string SelectionMode
+        {
+            get { return _selectionMode; }
+            set { _selectionMode = value; RaisePropertyChanged(); }
+        }
+
+
+        #region Related Links Checkbox
+        private bool _isFindInlineLinksActive = true;
+
+        public bool IsFindInlineLinksActive
+        {
+            get { return _isFindInlineLinksActive; }
+            set { _isFindInlineLinksActive = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        #region Related Links Checkbox
+        private bool _isFindRelatedLinksActive = true;
+
+        public bool IsFindRelatedLinksActive
+        {
+            get { return _isFindRelatedLinksActive; }
+            set { _isFindRelatedLinksActive = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        #region Get Parent Checkbox
+        private bool _isGetParentTagActive = false;
+
+        public bool IsGetParentTagActive
+        {
+            get { return _isGetParentTagActive; }
+            set { _isGetParentTagActive = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        #region Get Tag by Inner Text
+        private string _queryString = "See Also, In Other Guides";
+
+        public string QueryString
+        {
+            get { return _queryString; }
+            set { _queryString = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        #region Get Parent Level
+        private int _parentLevel;
+
+        public int ParentLevel
+        {
+            get { return _parentLevel; }
+            set { _parentLevel = value; RaisePropertyChanged(); }
+        }
+        #endregion
 
         public List<string> Devices
         {
@@ -80,6 +177,7 @@ namespace Panini.ViewModel
         {
             find_accelerators();
             PropertyChanged += update_config;
+
         }
 
         private void update_config(object sender, PropertyChangedEventArgs e)
@@ -88,6 +186,18 @@ namespace Panini.ViewModel
                                                                 {"start", ignoreTopicNameStartsWith},
                                                                 {"contains", ignoreTopicNameContains},
                                                                 {"name", ignoreTopicName } };
+        
+            if (SelectionMode == "CSS")
+            {
+                dataCache.corpus.CSSSelector = QueryString;
+                dataCache.corpus.Mode = "cssSelection";
+            }
+            else
+            {
+                dataCache.corpus.InnerText = QueryString;
+                dataCache.corpus.Mode = "innerText";
+            }
+            dataCache.corpus.AncestorLevel = ParentLevel;
         }
 
         #region Get Accelerators
@@ -105,7 +215,7 @@ namespace Panini.ViewModel
         }
         #endregion
     }
-    public class ColorSchemeConverter : IValueConverter
+    public class BooleanValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "O3xNg+duY/bTFQRzs/QEPdTT88Dv09dXVdkc6VhFPhnsd2c1V1gJV5FNdIpVOyIL5v7X3hFTSdwbe+Ry4AMMGw==",
+  "dgSpecHash": "hRDkEgw+Oy+95GQQ5RtW+7ebCzlODkbpDDJKuWbFHJcigrmz0R7BuR9FhZCQN0kZmMlucOaXedaPzJpqM/KgJw==",
   "success": true,
   "projectFilePath": "D:\\Dev\\C sharp\\Panini_core\\Panini_core\\Panini.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Girish\\.nuget\\packages\\fluentwpf\\0.9.0\\fluentwpf.0.9.0.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\fontawesome.wpf\\4.7.0.9\\fontawesome.wpf.4.7.0.9.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack\\1.11.34\\htmlagilitypack.1.11.34.nupkg.sha512",
+    "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack.cssselectors.netcore\\1.2.1\\htmlagilitypack.cssselectors.netcore.1.2.1.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack.netcore\\1.5.0.1\\htmlagilitypack.netcore.1.5.0.1.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\ilgpu\\0.10.1\\ilgpu.0.10.1.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\lemmagenerator\\1.1.0\\lemmagenerator.1.1.0.nupkg.sha512",

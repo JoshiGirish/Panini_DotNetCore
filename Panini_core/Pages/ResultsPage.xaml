@@ -983,7 +983,7 @@
               </TabItem>
       <TabItem x:Name="relinkTab"
                Header="Related Links"
-               Width="100" Background="Transparent" FontSize="14">
+               Width="110" Background="Transparent" FontSize="14">
                 <ContentControl Content="{Binding TopicCollection}"
                     ContentTemplate="{StaticResource relinksTemplate}" HorizontalAlignment="Stretch"/>
               </TabItem>

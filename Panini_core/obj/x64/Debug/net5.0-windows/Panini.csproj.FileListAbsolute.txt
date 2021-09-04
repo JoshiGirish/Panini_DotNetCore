@@ -9,8 +9,12 @@ D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\ICSharpCode.
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\FluentWPF.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\FontAwesome.WPF.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\HtmlAgilityPack.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\HtmlAgilityPack.CssSelectors.NetCore.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\HtmlAgilityPack.NetCore.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\ILGPU.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LemmaSharp.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.Wpf.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\MaterialDesignColors.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\MaterialDesignThemes.Wpf.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.ML.Core.dll
@@ -22,6 +26,7 @@ D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.ML
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.ML.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.ML.CpuMath.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.ML.DataView.dll
+D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.Toolkit.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.Xaml.Behaviors.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Newtonsoft.Json.dll
 D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\OxyPlot.dll
@@ -71,7 +76,3 @@ D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.dll
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\ref\Panini.dll
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.pdb
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.genruntimeconfig.cache
-D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.dll
-D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\LiveCharts.Wpf.dll
-D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\ILGPU.dll
-D:\Dev\C sharp\Panini_core\Panini_core\bin\x64\Debug\net5.0-windows\Microsoft.Toolkit.dll

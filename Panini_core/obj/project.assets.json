@@ -44,6 +44,18 @@
           "lib/netstandard2.0/HtmlAgilityPack.dll": {}
         }
       },
+      "HtmlAgilityPack.CssSelectors.NetCore/1.2.1": {
+        "type": "package",
+        "dependencies": {
+          "HtmlAgilityPack": "1.6.16"
+        },
+        "compile": {
+          "lib/netstandard2.0/HtmlAgilityPack.CssSelectors.NetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/HtmlAgilityPack.CssSelectors.NetCore.dll": {}
+        }
+      },
       "HtmlAgilityPack.NetCore/1.5.0.1": {
         "type": "package",
         "dependencies": {
@@ -1598,6 +1610,7 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "HtmlAgilityPack": "1.11.34",
+          "HtmlAgilityPack.CssSelectors.NetCore": "1.2.1",
           "LemmaGenerator": "1.1.0",
           "Microsoft.ML": "1.6.0"
         },
@@ -1714,6 +1727,19 @@
         "lib/uap10.0/HtmlAgilityPack.dll",
         "lib/uap10.0/HtmlAgilityPack.pdb",
         "lib/uap10.0/HtmlAgilityPack.pri"
+      ]
+    },
+    "HtmlAgilityPack.CssSelectors.NetCore/1.2.1": {
+      "sha512": "ES2Ht+wpgaLmyyyCP9cl3AT5U2BtTOCZ2pdFL8GYa27V8IAD9U77KOcuvi61k+nDE4kpU+EjwaBJepVFqLpmGA==",
+      "type": "package",
+      "path": "htmlagilitypack.cssselectors.netcore/1.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "htmlagilitypack.cssselectors.netcore.1.2.1.nupkg.sha512",
+        "htmlagilitypack.cssselectors.netcore.nuspec",
+        "lib/netstandard1.5/HtmlAgilityPack.CssSelectors.NetCore.dll",
+        "lib/netstandard2.0/HtmlAgilityPack.CssSelectors.NetCore.dll"
       ]
     },
     "HtmlAgilityPack.NetCore/1.5.0.1": {

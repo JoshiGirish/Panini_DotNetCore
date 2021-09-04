@@ -10,268 +10,362 @@
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="800"
+      d:Background="White"
       Title="ConfigPage">
-  
+
   <!-- Set the datacontext to the viewmodel -->
   <Page.DataContext>
     <vm:ConfigViewModel />
   </Page.DataContext>
-  
+
   <!-- Page resources -->
   <Page.Resources>
-    <vm:ColorSchemeConverter x:Key="colorSchemeConverterKey" />
-    <Style x:Key="commonStyle" TargetType="Control">
-      <Setter Property="FontSize" Value="14"/>
-      <Setter Property="VerticalAlignment" Value="Center"/>
-      <Setter Property="Background" Value="Transparent"/>
+    <vm:BooleanValueConverter x:Key="converterKey" />
+    <Style x:Key="commonStyle"
+           TargetType="Control">
+      <Setter Property="FontSize"
+              Value="14" />
+      <Setter Property="VerticalAlignment"
+              Value="Center" />
+      <Setter Property="Background"
+              Value="Transparent" />
     </Style>
-    <Style BasedOn="{StaticResource commonStyle}" TargetType="Label"/>
-    <Style BasedOn="{StaticResource commonStyle}" TargetType="TextBox"/>
-    <Style BasedOn="{StaticResource commonStyle}" TargetType="CheckBox"/>
-    <Style BasedOn="{StaticResource commonStyle}" TargetType="RadioButton"/>
+    <Style BasedOn="{StaticResource commonStyle}"
+           TargetType="Label" />
+    <Style BasedOn="{StaticResource commonStyle}"
+           TargetType="TextBox" />
+    <Style BasedOn="{StaticResource commonStyle}"
+           TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource commonStyle}"
+           TargetType="RadioButton" />
   </Page.Resources>
-  
+
   <!-- Root -->
   <Grid Background="Transparent">
     <!--<Image Source="/Images/background.png"
            Stretch="Fill"
            Opacity="0.2">
     </Image>-->
-  <DockPanel>
-    
-    <!-- Status Bar(docked to the bottom) -->
-    <StatusBar Height="20"
-               DockPanel.Dock="Bottom">
-      <StatusBar.Background>
-        <SolidColorBrush Color="{Binding StatusBarColor}" />
-      </StatusBar.Background>
-      <StatusBarItem>
-        <TextBlock Text="{Binding Status}"
-                   Margin="10 0 0 0"
-                   VerticalAlignment="Center"
-                   FontSize="12"
-                   Padding="0 3 0 0" />
-      </StatusBarItem>
-    </StatusBar>
-    
-    <!-- Body -->
-    <Grid Background="Transparent">
-    <StackPanel Margin="10">
-      
-      <!-- Topic Section -->
-      <DockPanel Height="30">
-        <Label DockPanel.Dock="Left"
-               Content="Topic"
+    <DockPanel>
+
+      <!-- Status Bar(docked to the bottom) -->
+      <StatusBar Height="20"
+                 DockPanel.Dock="Bottom">
+        <StatusBar.Background>
+          <SolidColorBrush Color="{Binding StatusBarColor}" />
+        </StatusBar.Background>
+        <StatusBarItem>
+          <TextBlock Text="{Binding Status}"
+                     Margin="10 0 0 0"
+                     VerticalAlignment="Center"
+                     FontSize="12"
+                     Padding="0 3 0 0" />
+        </StatusBarItem>
+      </StatusBar>
+
+      <!-- Body -->
+      <Grid Background="Transparent">
+        <StackPanel Margin="10">
+
+          <!-- Topic Section -->
+          <DockPanel Height="30">
+            <Label DockPanel.Dock="Left"
+                   Content="Topic"
                    FontWeight="Bold"
-                   Margin="0 0 10 0" Foreground="#3b00a8"/>
-            <Separator Background="#3b00a8" Opacity="0.3"/>
-      </DockPanel>
-      <Grid Margin="0 10 0 20">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition MaxWidth="500" />
-          <ColumnDefinition MaxWidth="500" />
-        </Grid.ColumnDefinitions>
-        
-        <!-- Left Half of Topic Section -->
-        <StackPanel Margin="20 0 0 0">
-          <!--IgnoreStartsWith-->
-          <Grid>
+                   Margin="0 0 10 0"
+                   Foreground="#3b00a8" />
+            <Separator Background="#3b00a8"
+                       Opacity="0.3" />
+          </DockPanel>
+          <Grid Margin="0 10 0 20">
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="200" />
-              <ColumnDefinition Width="*"
-                                MaxWidth="300" />
+              <ColumnDefinition MaxWidth="500" />
+              <ColumnDefinition MaxWidth="500" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0">Ignore topics that startwith</Label>
-            <TextBox Grid.Column="1"
-                     x:Name="ignoreStartWith"
-                     Width="Auto"
-                     VerticalAlignment="Center"
-                     Text="{Binding Path=IgnoreTopicNameStartsWith, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-              <TextBox.ToolTip>
-                <ToolTip MaxWidth="300">
-                  <TextBlock TextWrapping="Wrap"
-                             Text="Enter comma separated substrings that appear at the start of the file names. &#x0a;For example, enter &quot;help&quot;, if the topic name is &quot;help-t-faq.html&quot;." />
-                </ToolTip>
-              </TextBox.ToolTip>
-            </TextBox>
-          </Grid>
-          <!--IgnoreEndWith-->
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="200" />
-              <ColumnDefinition Width="*"
-                                MaxWidth="300" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0">Ignore topics that endwith</Label>
-            <TextBox Grid.Column="1"
-                     x:Name="ignoreEndWith"
-                     Width="Auto"
-                     VerticalAlignment="Center"
+
+            <!-- Left Half of Topic Section -->
+            <StackPanel Margin="20 0 0 0">
+              <!--IgnoreStartsWith-->
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="*"
+                                    MaxWidth="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Ignore topics that startwith</Label>
+                <TextBox Grid.Column="1"
+                         x:Name="ignoreStartWith"
+                         Width="Auto"
+                         VerticalAlignment="Center"
+                         Text="{Binding Path=IgnoreTopicNameStartsWith, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                  <TextBox.ToolTip>
+                    <ToolTip MaxWidth="300">
+                      <TextBlock TextWrapping="Wrap"
+                                 Text="Enter comma separated substrings that appear at the start of the file names. &#x0a;For example, enter &quot;help&quot;, if the topic name is &quot;help-t-faq.html&quot;." />
+                    </ToolTip>
+                  </TextBox.ToolTip>
+                </TextBox>
+              </Grid>
+              <!--IgnoreEndWith-->
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="*"
+                                    MaxWidth="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Ignore topics that endwith</Label>
+                <TextBox Grid.Column="1"
+                         x:Name="ignoreEndWith"
+                         Width="Auto"
+                         VerticalAlignment="Center"
                          Text="{Binding Path=IgnoreTopicNameEndsWith, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-              <TextBox.ToolTip>
-                <ToolTip MaxWidth="300">
-                  <TextBlock TextWrapping="Wrap"
-                             Text="Enter comma separated substrings that appear at the end of the file names. &#x0a;For example, enter &quot;faq&quot;, if the topic name is &quot;help-t-faq.html&quot;." />
-                </ToolTip>
-              </TextBox.ToolTip>
-            </TextBox>
-          </Grid>
-          <!--IgnoreContains-->
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="200" />
-              <ColumnDefinition Width="*"
-                                MaxWidth="300" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0">Ignore topics that contain</Label>
-            <TextBox Grid.Column="1"
-                     x:Name="ignoreContains"
-                     Width="Auto"
-                     VerticalAlignment="Center"
+                  <TextBox.ToolTip>
+                    <ToolTip MaxWidth="300">
+                      <TextBlock TextWrapping="Wrap"
+                                 Text="Enter comma separated substrings that appear at the end of the file names. &#x0a;For example, enter &quot;faq&quot;, if the topic name is &quot;help-t-faq.html&quot;." />
+                    </ToolTip>
+                  </TextBox.ToolTip>
+                </TextBox>
+              </Grid>
+              <!--IgnoreContains-->
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="*"
+                                    MaxWidth="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Ignore topics that contain</Label>
+                <TextBox Grid.Column="1"
+                         x:Name="ignoreContains"
+                         Width="Auto"
+                         VerticalAlignment="Center"
                          Text="{Binding Path=IgnoreTopicNameContains, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-              <TextBox.ToolTip>
-                <ToolTip MaxWidth="300">
-                  <TextBlock TextWrapping="Wrap"
-                             Text="Enter comma separated substrings that appear in the file names. &#x0a;For example, enter &quot;-t-&quot;, if the topic name is &quot;help-t-faq.html&quot;." />
-                </ToolTip>
-              </TextBox.ToolTip>
-            </TextBox>
-          </Grid>
-          <!--Hyperlinks Section -->
-        </StackPanel>
-        
-        <!-- Right Half of Topic Section -->
-        <StackPanel Grid.Column="1"
-                    Orientation="Vertical"
-                    Margin="40 0 0 0">
-          <CheckBox x:Name="hyperlinkCheck"
-                    Content="Find hyperlinks from files">
-            <CheckBox.ToolTip>
-              <ToolTip MaxWidth="300">
-                <TextBlock TextWrapping="Wrap"
-                           Text="When selected hyperlinks (anchor tags) from the files will be visible in the results." />
-              </ToolTip>
-            </CheckBox.ToolTip>
-          </CheckBox>
-          <!--Inline Links Checkbox-->
-          <Grid Margin="20 10 0 0">
-            <CheckBox x:Name="inlineLinkCheck"
-                      IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}">Inline Links</CheckBox>
-          </Grid>
-          <!--Related Links Checkbox-->
-          <Grid Margin="20 10 0 0">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="100" />
-              <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <CheckBox x:Name="relatedLinkCheck"
-                      Grid.Column="0"
-                      IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}">Related Links</CheckBox>
-            <Grid Grid.Column="1"
-                  Margin="20 0 20 0">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-              </Grid.ColumnDefinitions>
-              <Label Content="Container"
-                     HorizontalAlignment="Right" />
-              <TextBox Grid.Column="1"
-                       IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}"
-                       VerticalAlignment="Center">
-                <TextBox.ToolTip>
+                  <TextBox.ToolTip>
+                    <ToolTip MaxWidth="300">
+                      <TextBlock TextWrapping="Wrap"
+                                 Text="Enter comma separated substrings that appear in the file names. &#x0a;For example, enter &quot;-t-&quot;, if the topic name is &quot;help-t-faq.html&quot;." />
+                    </ToolTip>
+                  </TextBox.ToolTip>
+                </TextBox>
+              </Grid>
+              <!--Hyperlinks Section -->
+            </StackPanel>
+
+            <!-- Right Half of Topic Section -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Vertical"
+                        Margin="40 0 0 0">
+              <CheckBox x:Name="hyperlinkCheck"
+                        Content="Find hyperlinks from files"
+                        IsChecked="True">
+                <CheckBox.ToolTip>
                   <ToolTip MaxWidth="300">
                     <TextBlock TextWrapping="Wrap"
-                               Text="Enter the classname of the container tag of the related links. " />
+                               Text="When selected hyperlinks (anchor tags) from the files will be visible in the results." />
                   </ToolTip>
-                </TextBox.ToolTip>
-              </TextBox>
-            </Grid>
+                </CheckBox.ToolTip>
+              </CheckBox>
+              <!--Inline Links Checkbox-->
+              <Grid Margin="20 10 0 0">
+                <CheckBox x:Name="inlineLinkCheck"
+                          IsChecked="{Binding IsFindInlineLinksActive}"
+                          IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}">Inline Links
+                  <CheckBox.ToolTip>
+                    <ToolTip>
+                      <TextBlock Text="Inline links appear inline with the topic description."
+                                 Width="300"
+                                 TextWrapping="Wrap" />
+                    </ToolTip>
+                  </CheckBox.ToolTip>
+                </CheckBox>
+              </Grid>
+              <!--Related Links area -->
+              <Grid Margin="20 5 0 0">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="30" />
+                  <RowDefinition Height="30" />
+                  <RowDefinition Height="30" />
+                  <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <!-- Related Links Checkbox -->
+                <Grid Grid.Row="0">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+                  <CheckBox x:Name="relatedLinkCheck"
+                            Grid.Column="0"
+                            IsChecked="{Binding IsFindRelatedLinksActive}"
+                            IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}">Related Links
+                    <CheckBox.ToolTip>
+                      <ToolTip>
+                        <TextBlock Text="Related links are links to similar topics. They appear in a separate section in the topic."
+                                   Width="300"
+                                   TextWrapping="Wrap" />
+                      </ToolTip>
+                    </CheckBox.ToolTip>
+                  </CheckBox>
+                </Grid>
+
+                <!-- Selection Method Radio Buttons -->
+                <Grid Grid.Row="1"
+                      Margin="10 0 0 0">
+                  <StackPanel Grid.Column="0"
+                              Orientation="Horizontal">
+                    <TextBlock Text="Select container using" 
+                               FontSize="14"
+                               VerticalAlignment="Center"
+                               Margin="0 0 10 0"/>
+                    <RadioButton Content="InnerText"
+                                 Margin="3"
+                                 VerticalAlignment="Center"
+                                 GroupName="Selectors"
+                                 IsChecked="{Binding SelectionMode,Converter={StaticResource ResourceKey=converterKey}, ConverterParameter=InnerText}" />
+                    <RadioButton Content="CSS Selector"
+                                 Margin="10 3"
+                                 VerticalAlignment="Center"
+                                 GroupName="Selectors"
+                                 IsChecked="{Binding SelectionMode,Converter={StaticResource ResourceKey=converterKey}, ConverterParameter=CSS}" />
+                  </StackPanel>
+                </Grid>
+
+                <!-- Get Container field -->
+                <Grid Grid.Row="2"
+                      Margin="10 0 0 0">
+                  <TextBox IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}"
+                           VerticalAlignment="Center"
+                           Text="{Binding QueryString}">
+                    <TextBox.ToolTip>
+                      <ToolTip MaxWidth="300">
+                        <TextBlock TextWrapping="Wrap"
+                                   Text="Enter the inner text of the tag to be selected. " />
+                      </ToolTip>
+                    </TextBox.ToolTip>
+                  </TextBox>
+                </Grid>
+
+                <!-- Parent Level field -->
+                <Grid Grid.Row="3"
+                      Margin="25 0 0 0">
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="getParentTagCheckbox"
+                            IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}" VerticalAlignment="Center"
+                              IsChecked="{Binding IsGetParentTagActive}">
+                      <CheckBox.ToolTip>
+                        <ToolTip MaxWidth="300">
+                        <TextBlock TextWrapping="Wrap"
+                                   Text="If selected, the specified level of parent will be considered as container. " />
+                        </ToolTip>
+                      </CheckBox.ToolTip>
+                    </CheckBox>
+                    <Label Content="Get Level-"
+                           HorizontalAlignment="Left" 
+                           Margin="0"
+                           Padding="0"/>
+                    <TextBox Grid.Column="1"
+                             IsEnabled="{Binding ElementName=getParentTagCheckbox, Path=IsChecked}"
+                             Text="{Binding ParentLevel}"
+                             VerticalAlignment="Center"
+                             Width="20"
+                             Margin="0">
+                      <TextBox.ToolTip>
+                        <ToolTip MaxWidth="300">
+                          <TextBlock TextWrapping="Wrap"
+                                     Text="Enter the nth parent to select as container. " />
+                        </ToolTip>
+                      </TextBox.ToolTip>
+                    </TextBox>
+                    <Label Content="parent."
+                           HorizontalAlignment="Left" />
+                  </StackPanel>
+                </Grid>
+              </Grid>
+            </StackPanel>
 
           </Grid>
-        </StackPanel>
-        
-      </Grid>
 
-      <!-- Results Section -->
-      <DockPanel Height="30">
-        <Label DockPanel.Dock="Left"
-               Content="Results"
+          <!-- Results Section -->
+          <DockPanel Height="30">
+            <Label DockPanel.Dock="Left"
+                   Content="Results"
                    FontWeight="Bold"
-                   Margin="0 0 10 0" Foreground="#3b00a8"/>
-            <Separator Background="#3b00a8"  Opacity="0.3"/>
+                   Margin="0 0 10 0"
+                   Foreground="#3b00a8" />
+            <Separator Background="#3b00a8"
+                       Opacity="0.3" />
           </DockPanel>
-      <Grid Margin="0 10 0 20">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition MaxWidth="500" />
-          <ColumnDefinition MaxWidth="500" />
-        </Grid.ColumnDefinitions>
-
-        <!-- Right Half of Results Section -->
-        <StackPanel Margin="20 0 0 0">
-          
-          <!--Number of Similar Topics -->
-          <Grid>
+          <Grid Margin="0 10 0 20">
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="200" />
-              <ColumnDefinition Width="*"
-                                MaxWidth="300" />
+              <ColumnDefinition MaxWidth="500" />
+              <ColumnDefinition MaxWidth="500" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   Content="Number of Similar Topics"
-                   VerticalAlignment="Center" />
-            <TextBox Grid.Column="1"
-                     Text="{Binding SimilarTopicCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                     VerticalAlignment="Center"
-                     Width="50"
-                     HorizontalAlignment="Left" />
-          </Grid>
 
-          <!-- Number of Keywords -->
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="200" />
-              <ColumnDefinition Width="*"
-                                MaxWidth="300" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   Content="Number of Keywords"
-                   VerticalAlignment="Center" />
-            <TextBox Grid.Column="1"
-                     Text="{Binding KeywordCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                     VerticalAlignment="Center"
-                     Width="50"
-                     HorizontalAlignment="Left" />
-          </Grid>
+            <!-- Right Half of Results Section -->
+            <StackPanel Margin="20 0 0 0">
+
+              <!--Number of Similar Topics -->
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="*"
+                                    MaxWidth="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Content="Number of Similar Topics"
+                       VerticalAlignment="Center" />
+                <TextBox Grid.Column="1"
+                         Text="{Binding SimilarTopicCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                         VerticalAlignment="Center"
+                         Width="50"
+                         HorizontalAlignment="Left" />
+              </Grid>
+
+              <!-- Number of Keywords -->
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="*"
+                                    MaxWidth="300" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Content="Number of Keywords"
+                       VerticalAlignment="Center" />
+                <TextBox Grid.Column="1"
+                         Text="{Binding KeywordCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                         VerticalAlignment="Center"
+                         Width="50"
+                         HorizontalAlignment="Left" />
+              </Grid>
 
               <!-- Max Vocab Size -->
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="200" />
                   <ColumnDefinition Width="*"
-                                MaxWidth="300" />
+                                    MaxWidth="300" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                   Content="Lexicon Max Vocab Size"
-                   VerticalAlignment="Center" />
+                       Content="Lexicon Max Vocab Size"
+                       VerticalAlignment="Center" />
                 <TextBox Grid.Column="1"
-                     Text="{Binding MaxVocabSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                     VerticalAlignment="Center"
-                     Width="50"
-                     HorizontalAlignment="Left" />
+                         Text="{Binding MaxVocabSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                         VerticalAlignment="Center"
+                         Width="50"
+                         HorizontalAlignment="Left" />
               </Grid>
 
             </StackPanel>
             <StackPanel Grid.Column="1"
-                    Margin="40 0 0 0">
+                        Margin="40 0 0 0">
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="200" />
                   <ColumnDefinition Width="*"
-                                MaxWidth="300" />
+                                    MaxWidth="300" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                   Content="Accelerator"
-                   VerticalAlignment="Top" />
+                       Content="Accelerator"
+                       VerticalAlignment="Top" />
                 <ListBox Grid.Column="1"
                          ItemsSource="{Binding Path=Devices}"
                          Height="45"
@@ -281,51 +375,61 @@
               </Grid>
             </StackPanel>
           </Grid>
-      
-      <!-- Summary Section -->
-      <DockPanel Height="30">
-        <Label DockPanel.Dock="Left"
-               Content="Summary"
-                   FontWeight="Bold" Margin="0 0 10 0" Foreground="#3b00a8"/>
-            <Separator Background="#3b00a8"  Opacity="0.3"/>
+
+          <!-- Summary Section -->
+          <DockPanel Height="30">
+            <Label DockPanel.Dock="Left"
+                   Content="Summary"
+                   FontWeight="Bold"
+                   Margin="0 0 10 0"
+                   Foreground="#3b00a8" />
+            <Separator Background="#3b00a8"
+                       Opacity="0.3" />
           </DockPanel>
-      <Grid Margin="0 10 0 20">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition/>
-          <ColumnDefinition MaxWidth="400" />
-        </Grid.ColumnDefinitions>
-
-        <!-- Left Half of Summary Section -->
-        <StackPanel Grid.Column="0" Margin="20 0 0 0">
-
-          <!-- Heatmap Color Scheme -->
-          <Grid Height="100">
+          <Grid Margin="0 10 0 20">
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="200" />
-              <ColumnDefinition Width="*"/>
+              <ColumnDefinition />
+              <ColumnDefinition MaxWidth="400" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Heatmap Color Scheme" />
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                  <RadioButton Content="Default"
-                           Margin="3"
-                           IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=colorSchemeConverterKey}, ConverterParameter=Default}" />
-                  <RadioButton Content="Hot"
-                           Margin="3"
-                           IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=colorSchemeConverterKey}, ConverterParameter=Hot}" />
-              <RadioButton Content="Cold"
-                           Margin="3"
-                           IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=colorSchemeConverterKey}, ConverterParameter=Cold}" />
-              <RadioButton Content="Hot-Cold"
-                           Margin="3"
-                           IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=colorSchemeConverterKey}, ConverterParameter=HotCold}" />
-            </StackPanel>
-            </Grid>
-          </StackPanel>
-        <StackPanel Grid.Column="1" />
-      </Grid>
-    </StackPanel>
 
-    <!--<Style x:Key="textStyleTextBox"
+            <!-- Left Half of Summary Section -->
+            <StackPanel Grid.Column="0"
+                        Margin="20 0 0 0">
+
+              <!-- Heatmap Color Scheme -->
+              <Grid Height="100">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Content="Heatmap Color Scheme" />
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal">
+                  <RadioButton Content="Default"
+                               Margin="3"
+                               GroupName="ColorScheme"
+                               IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=converterKey}, ConverterParameter=Default}" />
+                  <RadioButton Content="Hot"
+                               Margin="3"
+                               GroupName="ColorScheme"
+                               IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=converterKey}, ConverterParameter=Hot}" />
+                  <RadioButton Content="Cold"
+                               Margin="3"
+                               GroupName="ColorScheme"
+                               IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=converterKey}, ConverterParameter=Cold}" />
+                  <RadioButton Content="Hot-Cold"
+                               Margin="3"
+                               GroupName="ColorScheme"
+                               IsChecked="{Binding ColorScheme, Converter={StaticResource ResourceKey=converterKey}, ConverterParameter=HotCold}" />
+                </StackPanel>
+              </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="1" />
+          </Grid>
+        </StackPanel>
+
+        <!--<Style x:Key="textStyleTextBox"
              TargetType="TextBox">
         <Setter Property="Foreground"
                 Value="#333333" />
@@ -341,7 +445,7 @@
           </Trigger>
         </Style.Triggers>
       </Style>-->
-  </Grid>
-  </DockPanel>
+      </Grid>
+    </DockPanel>
   </Grid>
 </Page>

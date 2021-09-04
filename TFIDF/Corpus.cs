@@ -36,6 +36,11 @@ namespace TFIDF
         public int xrefsMax;
         public int relinksMax;
 
+        public string Mode = "innerText";
+        public string InnerText = "";
+        public string CSSSelector = "";
+        public int AncestorLevel = 0;
+
 
         #endregion
 
@@ -57,7 +62,6 @@ namespace TFIDF
                                                                 {"start", ignoreTopicNameStartsWith},
                                                                 {"contains", ignoreTopicNameContains},
                                                                 {"name", ignoreTopicName } };
-
 
             // Execute stages asynchronously on multiple threads
             //generate_topics_async();
@@ -130,11 +134,15 @@ namespace TFIDF
                                                                 {"start", ignoreTopicNameStartsWith},
                                                                 {"contains", ignoreTopicNameContains},
                                                                 {"name", ignoreTopicName } };
+            var selectionData = new Dictionary<string, string>() { {"Mode", Mode },
+                                                               { "InnerText", InnerText},
+                                                                {"CSSSelector", CSSSelector }};
+
             foreach (var file in Files)
             {
                 if (Topic.Is_valid(file.FullName, ignoreData))
                 {
-                    var topic = instantiate_topic(file, targetDir, ignoreData);
+                    var topic = instantiate_topic(file, targetDir, ignoreData, selectionData, AncestorLevel);
                     topics.Add(topic);
                     update_lexicon(topic);
                 }
@@ -192,6 +200,10 @@ namespace TFIDF
                                                                 {"contains", ignoreTopicNameContains},
                                                                 {"name", ignoreTopicName } };
 
+            var selectionData = new Dictionary<string, string>() { {"Mode", Mode },
+                                                               { "InnerText", InnerText},
+                                                                {"CSSSelector", CSSSelector }, };
+
             stopwatch = Stopwatch.StartNew();
 
             ParallelLoopResult readTopicResult = Parallel.ForEach(Files,
@@ -199,7 +211,8 @@ namespace TFIDF
                                                    {
                                                        if (Topic.Is_valid(file.FullName, ignoreData))
                                                        {
-                                                           var topic = instantiate_topic(file, targetDir, ignoreData);
+
+                                                           var topic = instantiate_topic(file, targetDir, ignoreData, selectionData, AncestorLevel);
                                                            if(topic.words != null)
                                                            {
                                                                concqueue.Enqueue(topic);
@@ -289,11 +302,12 @@ namespace TFIDF
         /// <summary>
         /// Instantiates the topic class for each file in the directory ignoring files which do not comply with the data stored in "ignoreData" dictionary.
         /// </summary>
-        /// <param name="file"></param>
-        /// <param name="directory"></param>
-        /// <param name="ignoreData"></param>
+        /// <param name="file">The file against which the topic instance is to be geenrated.</param>
+        /// <param name="directory">The directory of the file.</param>
+        /// <param name="ignoreData">Contains data to verify if the filename complies with configured options.</param>
+        /// <param name="selectionData">Contains data used for extracting related links from the file.</param>
         /// <returns></returns>
-        public Topic instantiate_topic(FileInfo file, string directory, Dictionary<string,List<string>> ignoreData)
+        public Topic instantiate_topic(FileInfo file, string directory, Dictionary<string,List<string>> ignoreData, Dictionary<string,string> selectionData, int level)
         {
             // Initialize Topic instance for each file
             var topicName = Path.GetFileNameWithoutExtension(file.FullName);
@@ -302,7 +316,7 @@ namespace TFIDF
             Console.WriteLine("\n\n ----------- " + topicName + "----------------\n");
             var doc = new HtmlDocument();
             doc.Load(path);
-            Topic topic = new Topic(fileName, path, doc, ignoreData);
+            Topic topic = new Topic(fileName, path, doc, ignoreData, selectionData, level);
             if(topic.words != null) topicNames.Add(topicName);
 
             return topic;
