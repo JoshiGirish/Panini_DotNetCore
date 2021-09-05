@@ -53,9 +53,7 @@ namespace TFIDF
             InnerText = selectionOptions["InnerText"];
             CSSSelector = selectionOptions["CSSSelector"];
             AncestorLevel = level;
-            var links = get_existing_links(html);
-            xrefs = links["xrefs"];
-            relinks = links["relinks"];
+            get_existing_links(html);
         }
         #endregion
 

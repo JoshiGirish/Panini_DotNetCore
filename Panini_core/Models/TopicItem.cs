@@ -11,6 +11,7 @@ namespace Panini.Models
 {
     public class TopicItem: BaseModel
     {
+        #region Property Declarations
         private readonly DataCache dataCache = DataCache.Instance;
         public string Name {get; set;}
         public string path { get; set; }
@@ -85,8 +86,9 @@ namespace Panini.Models
             get { return _relatedLinksModels; }
             set { _relatedLinksModels = value; RaisePropertyChanged(); }
         }
+        #endregion
 
-
+        #region Constructor
         public TopicItem(string name, string isVisible, bool isExpanded, ObservableCollection<TopicResultItem> itemCollection)
         {
             Name = name;
@@ -128,7 +130,12 @@ namespace Panini.Models
             }
             return names;
         }
+        #endregion
 
+        #region Compute Ratios
+        /// <summary>
+        /// This method computes the ratios required to generate the stacked bar chart in the topics list of the results view.
+        /// </summary>
         public void compute_ratios()
         {
             // Calculate fraction of words compared to max
@@ -153,5 +160,6 @@ namespace Panini.Models
             float maxrelinkCount = dataCache.corpus.relinksMax;
             relinksRatio = (relinkCount != 0 && maxrelinkCount != 0) ? (int)((relinkCount / maxrelinkCount)*partition*0.5) : 0;
         }
+        #endregion
     }
 }

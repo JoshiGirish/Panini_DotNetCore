@@ -57,10 +57,18 @@
                       </ControlTemplate>
                     </Setter.Value>
                   </Setter>
-                </Style>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Setter Property="BorderThickness"
+                  <Setter Property="BorderThickness"
                                         Value="0" />
+
+                <Style.Triggers>
+                  <Trigger Property="IsSelected"
+                           Value="True">
+                    <Setter Property="Background"
+                            Value="#efe6ff" />
+                    <Setter Property="Foreground"
+                            Value="Black" />
+                  </Trigger>
+                </Style.Triggers>
               </Style>
               </Grid.Resources>
               <DataGrid ItemsSource="{Binding itemCollection}"
@@ -195,7 +203,7 @@
                       <Grid>
                         <TextBlock  x:Name="similarTopicName"
                                     Text="{Binding Name}"
-                                    FontSize="12"
+                                    FontSize="14"
                                     Margin="5 0 5 0"
                                     Padding="0"
                                     VerticalAlignment="Center"
@@ -318,7 +326,7 @@
                                 MaxWidth="300" />
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
-                   Content="Number of inline links"
+                   Content="Total inline links"
                    VerticalAlignment="Center" />
           <TextBlock Grid.Column="1"
                      Text="{Binding Path=NumOfInlineLinks, Mode=OneWay}"
@@ -333,7 +341,7 @@
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
           <Label Grid.Column="0"
-                   Content="Number of related links"
+                   Content="Total related links"
                    VerticalAlignment="Center" />
           <TextBlock Grid.Column="1"
                      Text="{Binding Path=NumOfRelatedLinks, Mode=OneWay}"
@@ -482,6 +490,17 @@
               </ControlTemplate>
             </Setter.Value>
           </Setter>
+
+          <Style.Triggers>
+            <Trigger Property="IsSelected"
+                     Value="True">
+              <Setter Property="Background"
+                      Value="#efe6ff" />
+              <Setter Property="Foreground"
+                      Value="Black" />
+            </Trigger>
+          </Style.Triggers>
+
         </Style>
       </DataTemplate.Resources>
       <DataGrid ItemsSource="{Binding InlineLinksList}"
@@ -556,6 +575,16 @@
               </ControlTemplate>
             </Setter.Value>
           </Setter>
+
+          <Style.Triggers>
+            <Trigger Property="IsSelected"
+                     Value="True">
+              <Setter Property="Background"
+                      Value="#efe6ff" />
+              <Setter Property="Foreground"
+                      Value="Black" />
+            </Trigger>
+          </Style.Triggers>
         </Style>
       </DataTemplate.Resources>
       <DataGrid ItemsSource="{Binding RelatedLinksList}"
@@ -794,14 +823,13 @@
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"
+                              MinWidth="350" />
           </Grid.ColumnDefinitions>
         
         
         <!-- Results Left Half section -->
-        <Border Grid.Row="1"
-              BorderBrush="#f2f2f2"
-              BorderThickness="1">
+        <Border Grid.Row="1">
           <Grid Visibility="{Binding ResultsVisibility}">
             <Grid.RowDefinitions>
               <RowDefinition Height="*"/>
