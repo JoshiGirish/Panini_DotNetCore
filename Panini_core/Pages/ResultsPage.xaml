@@ -145,8 +145,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                       <DataTemplate>
                         <Button Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Visibility="{Binding IsLinked}">
+                                            BorderBrush="Transparent">
                           <Grid>
                             <TextBlock Text="{Binding NumOfInlineLinks}"
                                                    FontSize="12"
@@ -170,8 +169,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                       <DataTemplate>
                         <Button Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Visibility="{Binding IsLinked}">
+                                            BorderBrush="Transparent">
                           <Grid>
                             <TextBlock Text="{Binding NumOfRelatedLinks}"
                                                    FontSize="12"

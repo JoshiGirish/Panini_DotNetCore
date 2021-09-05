@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
+using System.IO;
 namespace Panini.Models
 {
     public class RelatedLinksModel: BaseModel
@@ -16,7 +12,7 @@ namespace Panini.Models
         public RelatedLinksModel(string topicName, string linkUri)
         {
             linkURI = linkUri.ToString();
-            linkedFile = linkUri.ToString().Split('#')[0];
+            linkedFile = Path.GetFileName(linkUri.ToString()).Split('#')[0];
         }
     }
 }
