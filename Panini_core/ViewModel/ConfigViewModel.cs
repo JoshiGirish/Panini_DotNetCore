@@ -75,27 +75,6 @@ namespace Panini.ViewModel
             set { _selectionMode = value; RaisePropertyChanged(); }
         }
 
-
-        #region Related Links Checkbox
-        private bool _isFindInlineLinksActive = true;
-
-        public bool IsFindInlineLinksActive
-        {
-            get { return _isFindInlineLinksActive; }
-            set { _isFindInlineLinksActive = value; RaisePropertyChanged(); }
-        }
-        #endregion
-
-        #region Related Links Checkbox
-        private bool _isFindRelatedLinksActive = true;
-
-        public bool IsFindRelatedLinksActive
-        {
-            get { return _isFindRelatedLinksActive; }
-            set { _isFindRelatedLinksActive = value; RaisePropertyChanged(); }
-        }
-        #endregion
-
         #region Get Parent Checkbox
         private bool _isGetParentTagActive = false;
 

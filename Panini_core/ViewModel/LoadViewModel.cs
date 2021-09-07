@@ -29,6 +29,17 @@ namespace Panini.ViewModel
             get { return _listOfFiles; }
             set { _listOfFiles = value; }
         }
+        private int _numOfFiles;
+
+        public int NumOfFiles;
+
+        private string _fileCountField;
+
+        public string FileCountField
+        {
+            get { return _fileCountField; }
+            set { _fileCountField = value; RaisePropertyChanged(); }
+        }
 
         private static ObservableCollection<TopicRow> _topicList;
         public static ObservableCollection<TopicRow> TopicList
@@ -151,8 +162,10 @@ namespace Panini.ViewModel
             }
             else
             {
-                Status = $"{fileCount} files found in the selected directory.";
-                StatusBarColor = StatusColors["Success"];
+                //Status = $"{fileCount} files found in the selected directory.";
+                NumOfFiles = fileCount;
+                FileCountField = $"File Count : {fileCount}";
+                //StatusBarColor = StatusColors["Success"];
                 dataCache.ViewState.Add("ConfigViewEnabled");
                 dataCache.ViewState.Add("ResultsViewEnabled");
             }

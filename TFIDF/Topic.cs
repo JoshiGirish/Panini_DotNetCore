@@ -206,12 +206,12 @@ namespace TFIDF
             HtmlNode find_parent_tag_using_innertext()
             {
                 HtmlNode parent = null;
-                string[] labels = InnerText.Replace(" ", string.Empty).Split(',').ToArray();
+                string[] labels = InnerText.Split(',').ToArray();
                 //var td_tags = doc.DocumentNode.Descendants("td");
                 var tags = doc.DocumentNode.Descendants();
                 foreach (var tag in tags)
                 {
-                    if (labels.Contains(tag.InnerText))
+                    if (labels.Contains(tag.GetDirectInnerText()) && tag.GetType() == typeof(HtmlNode))
                     {
                         return AncestorLevel == 0 ? tag : get_nth_parent(tag, AncestorLevel);
                     }

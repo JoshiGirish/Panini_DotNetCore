@@ -693,14 +693,15 @@
     <!-- Body -->
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="30" />
-        <RowDefinition Height="50"/>
+        <RowDefinition Height="40" />
+        <!--<RowDefinition Height="50"/>-->
         <RowDefinition Height="1*" />
       </Grid.RowDefinitions>
 
       <!-- Toolbar and SearchBox -->
       <StackPanel Grid.Row="0"
-                  Orientation="Horizontal">
+                  Orientation="Horizontal"
+                  Margin="0 0 0 10">
         <Button Width="30"
                 Margin="10 0 0 0"
                 Command="{Binding Run}"
@@ -748,7 +749,7 @@
       </StackPanel>
 
       <!-- Timing Debug Information (hide this section in release build) -->
-      <Grid Grid.Row="1" Opacity="0.5">
+      <!--<Grid Grid.Row="1" Opacity="0.5">
         <Grid.ColumnDefinitions>
           <ColumnDefinition/>
           <ColumnDefinition/>
@@ -784,7 +785,7 @@
           <TextBlock Grid.Column="1" Text="{Binding SimScoreComputationTime}" FontSize="35" Height="46" HorizontalAlignment="Center"/>
         </Grid>
         </Border>
-      </Grid>
+      </Grid>-->
 
         <!-- Processing Information -->
         <Grid Grid.Row="2"

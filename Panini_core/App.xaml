@@ -109,6 +109,8 @@
       <Setter Property="Background"
               Value="Transparent" />
       <Setter Property="FontSize" Value="14"/>
+      <Setter Property="Height"
+              Value="35" />
     </Style>
 
     <Style TargetType="{x:Type Label}">

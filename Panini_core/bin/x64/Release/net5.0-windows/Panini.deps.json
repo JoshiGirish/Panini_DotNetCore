@@ -12,10 +12,13 @@
           "FluentWPF": "0.9.0",
           "FontAwesome.WPF": "4.7.0.9",
           "HtmlAgilityPack.NetCore": "1.5.0.1",
+          "ILGPU": "0.10.1",
           "LemmaGenerator": "1.1.0",
+          "LiveCharts.Wpf": "0.9.7",
           "MaterialDesignColors": "2.0.1",
           "MaterialDesignThemes": "4.1.0",
           "Microsoft.ML": "1.6.0",
+          "Microsoft.Toolkit": "7.0.2",
           "Microsoft.Xaml.Behaviors.Wpf": "1.1.31",
           "Newtonsoft.Json": "13.0.1",
           "OxyPlot.Wpf": "2.0.0",
@@ -58,6 +61,17 @@
           }
         }
       },
+      "HtmlAgilityPack.CssSelectors.NetCore/1.2.1": {
+        "dependencies": {
+          "HtmlAgilityPack": "1.11.34"
+        },
+        "runtime": {
+          "lib/netstandard2.0/HtmlAgilityPack.CssSelectors.NetCore.dll": {
+            "assemblyVersion": "1.2.1.0",
+            "fileVersion": "1.2.1.0"
+          }
+        }
+      },
       "HtmlAgilityPack.NetCore/1.5.0.1": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -77,11 +91,44 @@
           }
         }
       },
+      "ILGPU/0.10.1": {
+        "dependencies": {
+          "System.Collections.Immutable": "1.7.0",
+          "System.Memory": "4.5.4",
+          "System.Reflection.Metadata": "1.8.0",
+          "System.Runtime.CompilerServices.Unsafe": "4.7.1"
+        },
+        "runtime": {
+          "lib/netstandard2.1/ILGPU.dll": {
+            "assemblyVersion": "0.10.1.0",
+            "fileVersion": "0.10.1.0"
+          }
+        }
+      },
       "LemmaGenerator/1.1.0": {
         "runtime": {
           "lib/net20/LemmaSharp.dll": {
             "assemblyVersion": "4.12.5287.29676",
             "fileVersion": "4.12.5287.29676"
+          }
+        }
+      },
+      "LiveCharts/0.9.7": {
+        "runtime": {
+          "lib/net45/LiveCharts.dll": {
+            "assemblyVersion": "0.9.7.0",
+            "fileVersion": "0.9.7.0"
+          }
+        }
+      },
+      "LiveCharts.Wpf/0.9.7": {
+        "dependencies": {
+          "LiveCharts": "0.9.7"
+        },
+        "runtime": {
+          "lib/net45/LiveCharts.Wpf.dll": {
+            "assemblyVersion": "0.9.7.0",
+            "fileVersion": "0.9.7.0"
           }
         }
       },
@@ -110,8 +157,8 @@
           "Microsoft.ML.DataView": "1.6.0",
           "Newtonsoft.Json": "13.0.1",
           "System.CodeDom": "4.4.0",
-          "System.Collections.Immutable": "1.5.0",
-          "System.Memory": "4.5.3",
+          "System.Collections.Immutable": "1.7.0",
+          "System.Memory": "4.5.4",
           "System.Reflection.Emit.Lightweight": "4.3.0",
           "System.Threading.Channels": "4.7.1"
         },
@@ -193,8 +240,8 @@
       },
       "Microsoft.ML.DataView/1.6.0": {
         "dependencies": {
-          "System.Collections.Immutable": "1.5.0",
-          "System.Memory": "4.5.3"
+          "System.Collections.Immutable": "1.7.0",
+          "System.Memory": "4.5.4"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.ML.DataView.dll": {
@@ -205,6 +252,14 @@
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "Microsoft.Toolkit/7.0.2": {
+        "runtime": {
+          "lib/net5.0/Microsoft.Toolkit.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.2.1"
+          }
+        }
+      },
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -382,7 +437,7 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
-      "System.Collections.Immutable/1.5.0": {},
+      "System.Collections.Immutable/1.7.0": {},
       "System.Console/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -535,7 +590,7 @@
           "System.Threading": "4.3.0"
         }
       },
-      "System.Memory/4.5.3": {},
+      "System.Memory/4.5.4": {},
       "System.Net.Http/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -634,6 +689,7 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Reflection.Metadata/1.8.0": {},
       "System.Reflection.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -662,6 +718,7 @@
           "Microsoft.NETCore.Targets": "1.1.0"
         }
       },
+      "System.Runtime.CompilerServices.Unsafe/4.7.1": {},
       "System.Runtime.Extensions/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -946,6 +1003,7 @@
       "TFIDF/1.0.0": {
         "dependencies": {
           "HtmlAgilityPack": "1.11.34",
+          "HtmlAgilityPack.CssSelectors.NetCore": "1.2.1",
           "LemmaGenerator": "1.1.0",
           "Microsoft.ML": "1.6.0"
         },
@@ -989,6 +1047,13 @@
       "path": "htmlagilitypack/1.11.34",
       "hashPath": "htmlagilitypack.1.11.34.nupkg.sha512"
     },
+    "HtmlAgilityPack.CssSelectors.NetCore/1.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ES2Ht+wpgaLmyyyCP9cl3AT5U2BtTOCZ2pdFL8GYa27V8IAD9U77KOcuvi61k+nDE4kpU+EjwaBJepVFqLpmGA==",
+      "path": "htmlagilitypack.cssselectors.netcore/1.2.1",
+      "hashPath": "htmlagilitypack.cssselectors.netcore.1.2.1.nupkg.sha512"
+    },
     "HtmlAgilityPack.NetCore/1.5.0.1": {
       "type": "package",
       "serviceable": true,
@@ -996,12 +1061,33 @@
       "path": "htmlagilitypack.netcore/1.5.0.1",
       "hashPath": "htmlagilitypack.netcore.1.5.0.1.nupkg.sha512"
     },
+    "ILGPU/0.10.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Xlf5hHHEekw6M47rqfVOTS/cciH0Tz6zeUXFOnA9yaAn3LyL506N9qxEGflW1Zk8RnYZ7SHreB52+ip60pZs0A==",
+      "path": "ilgpu/0.10.1",
+      "hashPath": "ilgpu.0.10.1.nupkg.sha512"
+    },
     "LemmaGenerator/1.1.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-K6beYwJIcRS4lyqjaq7wS8FSrMxG9f0n0dBp+xRhnswnB+WR45AGvLBZ1So1x9RBjHGDCjqYBJ1hktJG0qegRQ==",
       "path": "lemmagenerator/1.1.0",
       "hashPath": "lemmagenerator.1.1.0.nupkg.sha512"
+    },
+    "LiveCharts/0.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-p4xyBrUaNNfkWZSNsIle0r51cyVyFg0Yi0uBRZM5GQtdFiA/7guZHlffFyNUILIdux10Ch2hUaJpcZENVU9aaQ==",
+      "path": "livecharts/0.9.7",
+      "hashPath": "livecharts.0.9.7.nupkg.sha512"
+    },
+    "LiveCharts.Wpf/0.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lv6YZoK0B4yWykMq5b9grZXtIbTj+OWu4sVN9GDpdgV6zffu64m4d5CW8KSjfSl9rB8VU649x1NZvhoU67hCDg==",
+      "path": "livecharts.wpf/0.9.7",
+      "hashPath": "livecharts.wpf.0.9.7.nupkg.sha512"
     },
     "MaterialDesignColors/2.0.1": {
       "type": "package",
@@ -1051,6 +1137,13 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "Microsoft.Toolkit/7.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LaGLOfMz1ZcfR6ex4Cc2CzSFuyGTApIvSyZZmJqjiGZY5zZoqwPN1IpQUI2R0vbWDhA4VPBfiGMZR9NdgUbT4Q==",
+      "path": "microsoft.toolkit/7.0.2",
+      "hashPath": "microsoft.toolkit.7.0.2.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
@@ -1241,12 +1334,12 @@
       "path": "system.collections.concurrent/4.3.0",
       "hashPath": "system.collections.concurrent.4.3.0.nupkg.sha512"
     },
-    "System.Collections.Immutable/1.5.0": {
+    "System.Collections.Immutable/1.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-EXKiDFsChZW0RjrZ4FYHu9aW6+P4MCgEDCklsVseRfhoO0F+dXeMSsMRAlVXIo06kGJ/zv+2w1a2uc2+kxxSaQ==",
-      "path": "system.collections.immutable/1.5.0",
-      "hashPath": "system.collections.immutable.1.5.0.nupkg.sha512"
+      "sha512": "sha512-RVSM6wZUo6L2y6P3vN6gjUtyJ2IF2RVtrepF3J7nrDKfFQd5u/SnSUFclchYQis8/k5scHy9E+fVeKVQLnnkzw==",
+      "path": "system.collections.immutable/1.7.0",
+      "hashPath": "system.collections.immutable.1.7.0.nupkg.sha512"
     },
     "System.Console/4.3.0": {
       "type": "package",
@@ -1353,12 +1446,12 @@
       "path": "system.linq.expressions/4.3.0",
       "hashPath": "system.linq.expressions.4.3.0.nupkg.sha512"
     },
-    "System.Memory/4.5.3": {
+    "System.Memory/4.5.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
-      "path": "system.memory/4.5.3",
-      "hashPath": "system.memory.4.5.3.nupkg.sha512"
+      "sha512": "sha512-1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw==",
+      "path": "system.memory/4.5.4",
+      "hashPath": "system.memory.4.5.4.nupkg.sha512"
     },
     "System.Net.Http/4.3.0": {
       "type": "package",
@@ -1423,6 +1516,13 @@
       "path": "system.reflection.extensions/4.3.0",
       "hashPath": "system.reflection.extensions.4.3.0.nupkg.sha512"
     },
+    "System.Reflection.Metadata/1.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RRnWHNjNmb14+S+INsYe1A0b+q05uzLNzENcKe1GCkXT2gaKCjPxVc5TsLVgFZdAAPREnLHFohVbo6bGzEWFlA==",
+      "path": "system.reflection.metadata/1.8.0",
+      "hashPath": "system.reflection.metadata.1.8.0.nupkg.sha512"
+    },
     "System.Reflection.Primitives/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1450,6 +1550,13 @@
       "sha512": "sha512-JufQi0vPQ0xGnAczR13AUFglDyVYt4Kqnz1AZaiKZ5+GICq0/1MH/mO/eAJHt/mHW1zjKBJd7kV26SrxddAhiw==",
       "path": "system.runtime/4.3.0",
       "hashPath": "system.runtime.4.3.0.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/4.7.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zOHkQmzPCn5zm/BH+cxC1XbUS3P4Yoi3xzW7eRgVpDR2tPGSzyMZ17Ig1iRkfJuY0nhxkQQde8pgePNiA7z7TQ==",
+      "path": "system.runtime.compilerservices.unsafe/4.7.1",
+      "hashPath": "system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
     },
     "System.Runtime.Extensions/4.3.0": {
       "type": "package",

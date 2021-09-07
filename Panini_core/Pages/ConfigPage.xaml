@@ -9,7 +9,7 @@
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d"
       d:DesignHeight="450"
-      d:DesignWidth="800"
+      d:DesignWidth="1200"
       d:Background="White"
       Title="ConfigPage">
 
@@ -66,17 +66,6 @@
       <!-- Body -->
       <Grid Background="Transparent">
         <StackPanel Margin="10">
-
-          <!-- Topic Section -->
-          <DockPanel Height="30">
-            <Label DockPanel.Dock="Left"
-                   Content="Topic"
-                   FontWeight="Bold"
-                   Margin="0 0 10 0"
-                   Foreground="#3b00a8" />
-            <Separator Background="#3b00a8"
-                       Opacity="0.3" />
-          </DockPanel>
           <Grid Margin="0 10 0 20">
             <Grid.ColumnDefinitions>
               <ColumnDefinition MaxWidth="500" />
@@ -84,9 +73,19 @@
             </Grid.ColumnDefinitions>
 
             <!-- Left Half of Topic Section -->
-            <StackPanel Margin="20 0 0 0">
+            <StackPanel>
+        <!-- Topic Section -->
+        <DockPanel Height="30">
+          <Label DockPanel.Dock="Left"
+                 Content="Topic"
+                 FontWeight="Bold"
+                 Margin="0 0 10 0"
+                 Foreground="#3b00a8" />
+          <Separator Background="#3b00a8"
+                     Opacity="0.3" />
+              </DockPanel>
               <!--IgnoreStartsWith-->
-              <Grid>
+              <Grid Margin="20 10 0 0">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="200" />
                   <ColumnDefinition Width="*"
@@ -107,7 +106,7 @@
                 </TextBox>
               </Grid>
               <!--IgnoreEndWith-->
-              <Grid>
+              <Grid Margin="20 0 0 0">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="200" />
                   <ColumnDefinition Width="*"
@@ -128,7 +127,7 @@
                 </TextBox>
               </Grid>
               <!--IgnoreContains-->
-              <Grid>
+              <Grid Margin="20 0 0 0">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="200" />
                   <ColumnDefinition Width="*"
@@ -152,76 +151,42 @@
             </StackPanel>
 
             <!-- Right Half of Topic Section -->
+            <!-- Links Section -->
             <StackPanel Grid.Column="1"
                         Orientation="Vertical"
                         Margin="40 0 0 0">
-              <CheckBox x:Name="hyperlinkCheck"
-                        Content="Find hyperlinks from files"
-                        IsChecked="True">
-                <CheckBox.ToolTip>
-                  <ToolTip MaxWidth="300">
-                    <TextBlock TextWrapping="Wrap"
-                               Text="When selected hyperlinks (anchor tags) from the files will be visible in the results." />
-                  </ToolTip>
-                </CheckBox.ToolTip>
-              </CheckBox>
-              <!--Inline Links Checkbox-->
+              <DockPanel Height="30">
+              <Label DockPanel.Dock="Left"
+                     Content="Links"
+                     FontWeight="Bold"
+                     Margin="0 0 10 0"
+                     Foreground="#3b00a8" />
+              <Separator Background="#3b00a8"
+                         Opacity="0.3" />
+              </DockPanel>
+    <!--Related Links area -->
               <Grid Margin="20 10 0 0">
-                <CheckBox x:Name="inlineLinkCheck"
-                          IsChecked="{Binding IsFindInlineLinksActive}"
-                          IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}">Inline Links
-                  <CheckBox.ToolTip>
-                    <ToolTip>
-                      <TextBlock Text="Inline links appear inline with the topic description."
-                                 Width="300"
-                                 TextWrapping="Wrap" />
-                    </ToolTip>
-                  </CheckBox.ToolTip>
-                </CheckBox>
-              </Grid>
-              <!--Related Links area -->
-              <Grid Margin="20 5 0 0">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="30" />
                   <RowDefinition Height="30" />
                   <RowDefinition Height="30" />
-                  <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
-                <!-- Related Links Checkbox -->
-                <Grid Grid.Row="0">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120" />
-                    <ColumnDefinition />
-                  </Grid.ColumnDefinitions>
-                  <CheckBox x:Name="relatedLinkCheck"
-                            Grid.Column="0"
-                            IsChecked="{Binding IsFindRelatedLinksActive}"
-                            IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}">Related Links
-                    <CheckBox.ToolTip>
-                      <ToolTip>
-                        <TextBlock Text="Related links are links to similar topics. They appear in a separate section in the topic."
-                                   Width="300"
-                                   TextWrapping="Wrap" />
-                      </ToolTip>
-                    </CheckBox.ToolTip>
-                  </CheckBox>
-                </Grid>
 
                 <!-- Selection Method Radio Buttons -->
-                <Grid Grid.Row="1"
+                <Grid Grid.Row="0"
                       Margin="10 0 0 0">
                   <StackPanel Grid.Column="0"
                               Orientation="Horizontal">
-                    <TextBlock Text="Select container using" 
+                    <TextBlock Text="Select related links container using" 
                                FontSize="14"
                                VerticalAlignment="Center"
                                Margin="0 0 10 0"/>
-                    <RadioButton Content="InnerText"
+                    <RadioButton Content="Inner text"
                                  Margin="3"
                                  VerticalAlignment="Center"
                                  GroupName="Selectors"
                                  IsChecked="{Binding SelectionMode,Converter={StaticResource ResourceKey=converterKey}, ConverterParameter=InnerText}" />
-                    <RadioButton Content="CSS Selector"
+                    <RadioButton Content="CSS selector"
                                  Margin="10 3"
                                  VerticalAlignment="Center"
                                  GroupName="Selectors"
@@ -230,7 +195,7 @@
                 </Grid>
 
                 <!-- Get Container field -->
-                <Grid Grid.Row="2"
+                <Grid Grid.Row="1"
                       Margin="10 0 0 0">
                   <TextBox IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}"
                            VerticalAlignment="Center"
@@ -245,7 +210,7 @@
                 </Grid>
 
                 <!-- Parent Level field -->
-                <Grid Grid.Row="3"
+                <Grid Grid.Row="2"
                       Margin="25 0 0 0">
                   <StackPanel Orientation="Horizontal">
                     <CheckBox x:Name="getParentTagCheckbox"
@@ -287,7 +252,7 @@
           <!-- Results Section -->
           <DockPanel Height="30">
             <Label DockPanel.Dock="Left"
-                   Content="Results"
+                   Content="Analysis"
                    FontWeight="Bold"
                    Margin="0 0 10 0"
                    Foreground="#3b00a8" />
@@ -311,13 +276,21 @@
                                     MaxWidth="300" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                       Content="Number of Similar Topics"
+                       Content="Number of similar topics"
                        VerticalAlignment="Center" />
                 <TextBox Grid.Column="1"
                          Text="{Binding SimilarTopicCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                          VerticalAlignment="Center"
                          Width="50"
-                         HorizontalAlignment="Left" />
+                         HorizontalAlignment="Left">
+                  <TextBox.ToolTip>
+                    <ToolTip>
+                      <TextBlock Text="Represents the number of most similar topics to be proposed in the results table for each topic."
+                                 TextWrapping="Wrap"
+                                 MaxWidth="300" />
+                    </ToolTip>
+                  </TextBox.ToolTip>
+                </TextBox>
               </Grid>
 
               <!-- Number of Keywords -->
@@ -328,13 +301,21 @@
                                     MaxWidth="300" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                       Content="Number of Keywords"
+                       Content="Number of keywords"
                        VerticalAlignment="Center" />
                 <TextBox Grid.Column="1"
                          Text="{Binding KeywordCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                          VerticalAlignment="Center"
                          Width="50"
-                         HorizontalAlignment="Left" />
+                         HorizontalAlignment="Left">
+                  <TextBox.ToolTip>
+                    <ToolTip>
+                      <TextBlock Text="Represents the number of most popular common words between the topic being analyzed and the similar topic suggestion. These words are displayed in a separate column of the results table."
+                               TextWrapping="Wrap"
+                               MaxWidth="300" />
+                  </ToolTip>
+                  </TextBox.ToolTip>
+                </TextBox>
               </Grid>
 
               <!-- Max Vocab Size -->
@@ -345,13 +326,22 @@
                                     MaxWidth="300" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                       Content="Lexicon Max Vocab Size"
+                       Content="Lexicon max vocab size"
                        VerticalAlignment="Center" />
                 <TextBox Grid.Column="1"
                          Text="{Binding MaxVocabSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                          VerticalAlignment="Center"
                          Width="50"
-                         HorizontalAlignment="Left" />
+                         HorizontalAlignment="Left">
+                  <TextBox.ToolTip>
+                    <ToolTip>
+                      <TextBlock Text="Represents the maximum count of words in the lexicon. Similarity between topics is computed using the number of occurances of these words. Higher max value gives more accurate results but the computation time is longer." 
+                                 TextWrapping="Wrap"
+                                 MaxWidth="300"/>
+                    </ToolTip>
+                  </TextBox.ToolTip>
+                </TextBox>
+
               </Grid>
 
             </StackPanel>
@@ -397,7 +387,7 @@
                         Margin="20 0 0 0">
 
               <!-- Heatmap Color Scheme -->
-              <Grid Height="100">
+              <Grid Height="30">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="200" />
                   <ColumnDefinition Width="*" />
