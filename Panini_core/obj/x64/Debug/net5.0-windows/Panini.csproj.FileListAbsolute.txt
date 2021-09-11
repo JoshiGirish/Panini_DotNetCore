@@ -49,9 +49,6 @@ D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\Config
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\LoadPage.g.cs
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\ResultsPage.g.cs
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\SummaryPage.g.cs
-D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\AboutView.g.cs
-D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\Input.g.cs
-D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\TabsView.g.cs
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\App.g.cs
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\GeneratedInternalTypeHelper.g.cs
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini_MarkupCompile.cache
@@ -63,9 +60,6 @@ D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\Config
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\LoadPage.baml
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\ResultsPage.baml
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Pages\SummaryPage.baml
-D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\AboutView.baml
-D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\Input.baml
-D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Views\TabsView.baml
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.g.resources
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.GeneratedMSBuildEditorConfig.editorconfig
 D:\Dev\C sharp\Panini_core\Panini_core\obj\x64\Debug\net5.0-windows\Panini.AssemblyInfoInputs.cache

@@ -1,0 +1,1412 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Panini</name>
+    </assembly>
+    <members>
+        <member name="T:Panini.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+        </member>
+        <member name="M:Panini.Commands.ButtonCommandHandler.#ctor(System.Action,System.Func{System.Boolean})">
+            <summary>
+            Creates instance of the command handler
+            </summary>
+            <param name="action">Action to be executed by the command</param>
+            <param name="canExecute">A bolean property to containing current permissions to execute the command</param>
+        </member>
+        <member name="E:Panini.Commands.ButtonCommandHandler.CanExecuteChanged">
+            <summary>
+            Wires CanExecuteChanged event 
+            </summary>
+        </member>
+        <member name="M:Panini.Commands.ButtonCommandHandler.CanExecute(System.Object)">
+            <summary>
+            Forcess checking if execute is allowed
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Panini.Commands.ParameterCommandHandler.#ctor(System.Action{System.Object},System.Func{System.Boolean})">
+            <summary>
+            Creates instance of the command handler
+            </summary>
+            <param name="action">Action to be executed by the command</param>
+            <param name="canExecute">A bolean property to containing current permissions to execute the command</param>
+        </member>
+        <member name="E:Panini.Commands.ParameterCommandHandler.CanExecuteChanged">
+            <summary>
+            Wires CanExecuteChanged event 
+            </summary>
+        </member>
+        <member name="M:Panini.Commands.ParameterCommandHandler.CanExecute(System.Object)">
+            <summary>
+            Forcess checking if execute is allowed
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Panini.MainWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:Panini.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Panini.Models.BaseModel">
+            <summary>
+            This is the base model class.
+            </summary>
+        </member>
+        <member name="E:Panini.Models.BaseModel.PropertyChanged">
+            <summary>
+            Property change event.
+            </summary>
+            <value>Occurs when a property value changes.</value>
+        </member>
+        <member name="M:Panini.Models.BaseModel.RaisePropertyChanged(System.String)">
+            <summary>
+            This method is called by the Set accessor of each property. The <c>CallerMemberName</c> attribute 
+            that is applied to the optional <paramref name="name"/> parameter causes the property 
+            name of the caller to be substituted as an argument.
+            </summary>
+            <param name="name">Name of the property that raised the <see cref="E:Panini.Models.BaseModel.PropertyChanged"/> event.</param>
+        </member>
+        <member name="T:Panini.Models.InlineLinksModel">
+            <summary>
+            Model for displaying inline link data.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.InlineLinksModel.linkedFile">
+            <summary>
+            Linked target topic.
+            </summary>
+            <value>Name of the linked topic extracted from the <c>href</c> attribute value of the link.</value>
+        </member>
+        <member name="P:Panini.Models.InlineLinksModel.linkURI">
+            <summary>
+            Link URI
+            </summary>
+            <value>URI extracted from the <c>href</c> attribute of the link.</value>
+        </member>
+        <member name="F:Panini.Models.InlineLinksModel.dataCache">
+            <summary>
+            Single instance of <see cref="T:Panini.DataCache"/>.
+            </summary>
+            <value>Used for sharing resources between view models.</value>
+        </member>
+        <member name="M:Panini.Models.InlineLinksModel.#ctor(System.String,System.String)">
+            <summary>
+            Instantiates the <see cref="T:Panini.Models.InlineLinksModel"/> class for inline link.
+            </summary>
+            <param name="topicName">The name of the topic that contains the inline link</param>
+            <param name="linkUri">URI of the inline link.</param>
+        </member>
+        <member name="T:Panini.Models.LinksInfo">
+            <summary>
+            Model for displaying the summary of links in the <c>Summary View</c>.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.NumOfExistingRelLinks">
+            <summary>
+            Total number of existing links in all valid topics.
+            </summary>
+            <value>Total number of existing links in all valid topics.</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.NumOfExistingInlineLinks">
+            <summary>
+            Total number of inline links from all the valid topics.
+            </summary>
+            <value>Total number of inline links from all the valid topics.</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.NumOfProposedLinks">
+            <summary>
+            Total number of links proposed by the NLP system.
+            </summary>
+            <value>Total number of links proposed by the NLP system.</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.NumOfExistingLinks">
+            <summary>
+            Total number of existing links from all the topics (related links +  inline links).
+            </summary>
+            <value>Total number of existing links from all the topics (related links +  inline links).</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.NumOfMatchingLinks">
+            <summary>
+            Total number of matching (common) links, that is, the links that are both proposed by the system and also exist in the topics.
+            </summary>
+            <value>Total number of matching (common) links, that is, the links that are both proposed by the system and also exist in the topics.</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.NumOfLinksNeedsIntegration">
+            <summary>
+            Total number of links that need to be integrated in the topics.
+            </summary>
+            <value>Total number of links that need to be integrated in the topics.</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.NumOfObsoleteLinks">
+            <summary>
+            Total number of links that need to be replaced.
+            </summary>
+            <value>Total number of links that need to be replaced.</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.IsExpanded">
+            <summary>
+            Binds to the IsExpanded property of the expander in the Summary Page.
+            </summary>
+            <value>Binds to the IsExpanded property of the expander in the Summary Page.</value>
+        </member>
+        <member name="P:Panini.Models.LinksInfo.IsVisible">
+            <summary>
+            Controls the visibility of the expander which displays the links summary.
+            </summary>
+            <value>Controls the visibility of the expander which displays the links summary.</value>
+        </member>
+        <member name="T:Panini.Models.NLPData">
+            <summary>
+            Model for displaying the summary of NLP information.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.NLPData.Tokenizer">
+            <summary>
+            Tokenizer used for tokenizing the sentences.
+            </summary>
+            <value>Tokenizer used for tokenizing the sentences.</value>
+        </member>
+        <member name="P:Panini.Models.NLPData.Tagger">
+            <summary>
+            POS tagger used to tag the words in the sentences.
+            </summary>
+            <value>POS tagger used to tag the words in the sentences.</value>
+        </member>
+        <member name="P:Panini.Models.NLPData.SimilarityMeasure">
+            <summary>
+            Similarity measure (TF-IDF) used for co-relating the topics.
+            </summary>
+            <value>Similarity measure (TF-IDF) used for co-relating the topics.</value>
+        </member>
+        <member name="P:Panini.Models.NLPData.TfIdfVectorLength">
+            <summary>
+            Size of the TF-IDF vector array for each topic.
+            </summary>
+            <value>Size of the TF-IDF vector array for each topic.</value>
+        </member>
+        <member name="P:Panini.Models.NLPData.NumOfSentences">
+            <summary>
+            Total number of sentences in all the topics.
+            </summary>
+            <value>Total number of sentences in all the topics.</value>
+        </member>
+        <member name="P:Panini.Models.NLPData.NumOfTokens">
+            <summary>
+            Total number of tokens in the lexicon.
+            </summary>
+            <value>Total number of tokens in the lexicon.</value>
+        </member>
+        <member name="P:Panini.Models.NLPData.IsVisible">
+            <summary>
+            Visibility property of the NLP Data expander in the Summary page.
+            </summary>
+            <value>Visibility property of the NLP Data expander in the Summary page.</value>
+        </member>
+        <member name="P:Panini.Models.NLPData.IsExpanded">
+            <summary>
+            IsExpanded property of the NLP Data expander in the Summary page.
+            </summary>
+            <value>IsExpanded property of the NLP Data expander in the Summary page.</value>
+        </member>
+        <member name="T:Panini.Models.RelatedLinksModel">
+            <summary>
+            Model for displaying the related links data.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.RelatedLinksModel.linkedFile">
+            <summary>
+            Linked target topic.
+            </summary>
+            <value>Name of the linked topic extracted from the <c>href</c> attribute value of the link.</value>
+        </member>
+        <member name="P:Panini.Models.RelatedLinksModel.linkURI">
+            <summary>
+            Link URI
+            </summary>
+            <value>URI extracted from the <c>href</c> attribute of the link.</value>
+        </member>
+        <member name="F:Panini.Models.RelatedLinksModel.dataCache">
+            <summary>
+            Single instance of <see cref="T:Panini.DataCache"/>.
+            </summary>
+            <value>Used for sharing resources between view models.</value>
+        </member>
+        <member name="M:Panini.Models.RelatedLinksModel.#ctor(System.String,System.String)">
+            <summary>
+            Instantiates the <see cref="T:Panini.Models.RelatedLinksModel"/> class for related link.
+            </summary>
+            <param name="topicName">The name of the topic that contains the related link</param>
+            <param name="linkUri">URI of the related link.</param>
+        </member>
+        <member name="F:Panini.Models.TopicItem.dataCache">
+            <summary>
+            Single instance of <see cref="T:Panini.DataCache"/>.
+            </summary>
+            <value>Used for sharing resources between view models.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.Name">
+            <summary>
+            Name of the topic.
+            </summary>
+            <value>Name of the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.path">
+            <summary>
+            Path of the topic.
+            </summary>
+            <value>Path of the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.itemCollection">
+            <summary>
+            Collection of <see cref="T:Panini.Models.TopicResultItem"/> instances.
+            </summary>
+            <value>Collection used for displaying the similar topic suggetions.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.wordsRatio">
+            <summary>
+            Ratio of number of words of the topic to the total number of words in the corpus.
+            </summary>
+            <value>Ratio of words of the topic to the total words in the corpus.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.wordsRatioTooltip">
+            <summary>
+            Tooltip for displaying the <see cref="P:Panini.Models.TopicItem.wordsRatio"/>.
+            </summary>
+            <value>Tooltip for displaying the <see cref="P:Panini.Models.TopicItem.wordsRatio"/>.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.xrefsRatio">
+            <summary>
+            Ratio of number of inline links in the topic to the total number of inline links in all topics.
+            </summary>
+            <value>Ratio of number of inline links in the topic to the total number of inline links in all topics.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.xrefsRatioTooltip">
+            <summary>
+            Tooltip for displaying the <see cref="P:Panini.Models.TopicItem.xrefsRatio"/>.
+            </summary>
+            <value>Tooltip for displaying the <see cref="P:Panini.Models.TopicItem.xrefsRatio"/>.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.relinksRatio">
+            <summary>
+            Ratio of number of related links in the topic to the total number of relted links in all topics.
+            </summary>
+            <value>Ratio of number of related links in the topic to the total number of relted links in all topics.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.relinksRatioTooltip">
+            <summary>
+            Tooltip for displaying the <see cref="P:Panini.Models.TopicItem.relinksRatio"/>.
+            </summary>
+            <value>Tooltip for displaying the <see cref="P:Panini.Models.TopicItem.relinksRatio"/>.</value>
+        </member>
+        <member name="F:Panini.Models.TopicItem.partition">
+            <summary>
+            The partition size (grid width) for stacked bar display.
+            </summary>
+            <value>The partition size (grid width) for stacked bar display.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.NumOfSentences">
+            <summary>
+            Number of sentences in the topic.
+            </summary>
+            <value>Number of sentences in the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.NumOfUniqueWords">
+            <summary>
+            Number of words in the topic.
+            </summary>
+            <value>Number of words in the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.NumOfInlineLinks">
+            <summary>
+            Number of inline links in the topic.
+            </summary>
+            <value>Number of inline links in the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.NumOfRelatedLinks">
+            <summary>
+            Number of related links in the topic.
+            </summary>
+            <value>Number of related links in the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.IsVisible">
+            <summary>
+            Controls the visibility of the topic in the <c>Topics List</c> section of the results view.
+            </summary>
+            <value>Controls the visibility of the topic in the <c>Topics List</c> section of the results view.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.WordsList">
+            <summary>
+            Words common to the topic and the lexicon.
+            </summary>
+            <value>Words common to the topic and the lexicon.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.InlineLinksList">
+            <summary>
+            List of inline links in the topic.
+            </summary>
+            <value>List of inline links in the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.RelatedLinksList">
+            <summary>
+            List of related links in the topic.
+            </summary>
+            <value>List of related links in the topic.</value>
+        </member>
+        <member name="M:Panini.Models.TopicItem.#ctor(System.String,System.String,System.Collections.ObjectModel.ObservableCollection{Panini.Models.TopicResultItem})">
+            <summary>
+            Instantiates the <see cref="T:Panini.Models.TopicItem"/> class for a given topic.
+            </summary>
+            <param name="name">Display name of the topic.</param>
+            <param name="isVisible">Visibility of the topic in the <c>Topics List</c> of the results view.
+            <para>This flag is used to hide topic from the list when the list is filter against a search query.</para></param>
+            <param name="itemCollection">A collection of <see cref="T:Panini.Models.TopicResultItem"/> instances for displaying them as 
+            similar topic suggestions in the <c>Similar Topics</c> section of the results view.</param>
+        </member>
+        <member name="M:Panini.Models.TopicItem.ToString">
+            <summary>
+            Overrides the <c>ToString()</c> method of the class, to display the name of the topic instead.
+            </summary>
+            <returns>The name of the topic to which the <see cref="T:Panini.Models.TopicItem"/> class instance is associated.</returns>
+        </member>
+        <member name="M:Panini.Models.TopicItem.get_topic_names">
+            <summary>
+            Gets the topic names from the similar topic suggestions.
+            </summary>
+            <returns>Names of the similar topics.</returns>
+        </member>
+        <member name="M:Panini.Models.TopicItem.compute_ratios">
+            <summary>
+            Computes the ratios required to generate the stacked bar chart in the topics list of the results view.
+            </summary>
+        </member>
+        <member name="T:Panini.Models.TopicResultItem">
+            <summary>
+            Model for displaying an entry in the table of <c>Similar Topics</c> section in the results view.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.Name">
+            <summary>
+            Name of the similar topic.
+            </summary>
+            <value>Name of the similar topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.sourceName">
+            <summary>
+            Name of the similar topic with <c>XML</c> extension.
+            </summary>
+            <value>Name of the similar topic with <c>XML</c> extension.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.Path">
+            <summary>
+            Path of the similar topic.
+            </summary>
+            <value>Path of the similar topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.simScore">
+            <summary>
+            Similarity scores of the similar topic.
+            </summary>
+            <value>Similarity scores of the similar topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.words">
+            <summary>
+            Common keywords from the similar topic.
+            </summary>
+            <value>Common keywords from the similar topic.
+            <para>This list contains top <c>100</c> common keywords.</para></value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.NumOfInlineLinks">
+            <summary>
+            Number of inline links in the similar topic.
+            </summary>
+            <value>Number of inline links in the similar topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.NumOfRelatedLinks">
+            <summary>
+            Number of related links in the similar topic.
+            </summary>
+            <value>Number of related links in the similar topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.IsLinked">
+            <summary>
+            Flag to represent if the similar topic is already linked to the topic.
+            </summary>
+            <value>Flag to represent if the similar topic is already linked to the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.Keywords">
+            <summary>
+            Keywords displayed for the similar topic.
+            </summary>
+            <value>NKeywords displayed for the similar topic.
+            <para>The number of keywords is specified by the user in the settings view.</para></value>
+        </member>
+        <member name="M:Panini.Models.TopicResultItem.#ctor">
+            <summary>
+            Instantiates the <see cref="T:Panini.Models.TopicResultItem"/> class for each similar topic recommendation.
+            </summary>
+        </member>
+        <member name="T:Panini.Models.TopicRow">
+            <summary>
+            Model for displaying a row in list of topics displayed in <c>Load View</c>.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.TopicRow.TopicName">
+            <summary>
+            Name of the topic.
+            </summary>
+            <value>The name of the topic to be displayed in the list.</value>
+        </member>
+        <member name="T:Panini.Models.TopicsInfo">
+            <summary>
+            Model for displaying the summary of topics in <c>Summary View</c>.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.TopicsInfo.Path">
+            <summary>
+            Root path of the web-topics.
+            </summary>
+            <value>Root path of the web-topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicsInfo.NumTopics">
+            <summary>
+            Number of topics found at the root path.
+            </summary>
+            <value>Number of topics found at the root path.</value>
+        </member>
+        <member name="P:Panini.Models.TopicsInfo.NumOfValidTopics">
+            <summary>
+            Number of valid topics considered for TF-IDF analysis.
+            </summary>
+            <value>Number of valid topics considered for TF-IDF analysis.</value>
+        </member>
+        <member name="P:Panini.Models.TopicsInfo.NumOfIgnoredTopics">
+            <summary>
+            Number of ignored topics based on the settings in the settings view.
+            </summary>
+            <value> Number of ignored topics based on the settings in the settings view.</value>
+        </member>
+        <member name="P:Panini.Models.TopicsInfo.IsExpanded">
+            <summary>
+            Binds to the IsExpanded property of the expander in the Summary Page.
+            </summary>
+            <value>Binds to the IsExpanded property of the expander in the Summary Page.</value>
+        </member>
+        <member name="P:Panini.Models.TopicsInfo.IsVisible">
+            <summary>
+            Controls the visibility of the expander which displays the topics summary.
+            </summary>
+            <value>Controls the visibility of the expander which displays the topics summary.</value>
+        </member>
+        <member name="T:Panini.Models.WordsListModel">
+            <summary>
+            Model for displaying the words data in the <c>Results View</c>.
+            </summary>
+        </member>
+        <member name="P:Panini.Models.WordsListModel.word">
+            <summary>
+            Word in the topic.
+            </summary>
+            <value>Word in the topic.</value>
+        </member>
+        <member name="P:Panini.Models.WordsListModel.tf">
+            <summary>
+            Term-Frequency of the word.
+            </summary>
+            <value>Term-Frequency of the word.</value>
+        </member>
+        <member name="P:Panini.Models.WordsListModel.idf">
+            <summary>
+            Inverse Document-Frequency of the word.
+            </summary>
+            <value>Inverse Document-Frequency of the word.</value>
+        </member>
+        <member name="P:Panini.Models.WordsListModel.tfidf">
+            <summary>
+            Term-Frequency Inverse Document-Frequency of the word.
+            </summary>
+            <value>Term-Frequency Inverse Document-Frequency of the word.</value>
+        </member>
+        <member name="M:Panini.Models.WordsListModel.#ctor(System.String,System.String)">
+            <summary>
+            Instantiates <see cref="T:Panini.Models.WordsListModel"/> class instance for each word.
+            </summary>
+            <param name="topicName">Name of the topic to which the word belongs.</param>
+            <param name="token">Word for which the model is to be instantiated.</param>
+        </member>
+        <member name="T:Panini.Pages.AboutPage">
+            <summary>
+            Interaction logic for AboutPage.xaml
+            </summary>
+            <summary>
+            AboutPage
+            </summary>
+        </member>
+        <member name="M:Panini.Pages.AboutPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Panini.Pages.ConfigPage">
+            <summary>
+            Interaction logic for Process.xaml
+            </summary>
+            <summary>
+            ConfigPage
+            </summary>
+        </member>
+        <member name="M:Panini.Pages.ConfigPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Panini.Pages.LoadPage">
+            <summary>
+            Interaction logic for InputPage.xaml
+            </summary>
+            <summary>
+            LoadPage
+            </summary>
+        </member>
+        <member name="M:Panini.Pages.LoadPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Panini.Pages.ResultsPage">
+            <summary>
+            Interaction logic for ResultsPage.xaml
+            </summary>
+            <summary>
+            ResultsPage
+            </summary>
+        </member>
+        <member name="M:Panini.Pages.ResultsPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Panini.Pages.SummaryPage">
+            <summary>
+            Interaction logic for SummaryPage.xaml
+            </summary>
+            <summary>
+            SummaryPage
+            </summary>
+        </member>
+        <member name="M:Panini.Pages.SummaryPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Panini.ViewModel.AboutViewModel">
+            <summary>
+            Manages the behavior of <c>About View</c>.
+            </summary>
+        </member>
+        <member name="T:Panini.ViewModel.BaseViewModel">
+            <summary>
+            Base view model to inherit from
+            </summary>
+        </member>
+        <member name="E:Panini.ViewModel.BaseViewModel.PropertyChanged">
+            <summary>
+            Property change event.
+            </summary>
+            <value>Occurs when a property value changes.</value>
+        </member>
+        <member name="M:Panini.ViewModel.BaseViewModel.RaisePropertyChanged(System.String)">
+            <summary>
+            This method is called by the Set accessor of each property. The <c>CallerMemberName</c> attribute 
+            that is applied to the optional <paramref name="name"/> parameter causes the property 
+            name of the caller to be substituted as an argument.
+            </summary>
+            <param name="name">Name of the property that raised the <see cref="E:Panini.ViewModel.BaseViewModel.PropertyChanged"/> event.</param>
+        </member>
+        <member name="F:Panini.ViewModel.BaseViewModel.StatusColors">
+            <summary>
+            Colors for status bar.
+            </summary>
+            <value>A dictionary of status colors representing default, error, warning, and success.</value>
+        </member>
+        <member name="T:Panini.ViewModel.BooleanValueConverter">
+            <summary>
+            Value converter class for binding values of radio buttons.
+            </summary>
+        </member>
+        <member name="T:Panini.ViewModel.ConfigViewModel">
+            <summary>
+            Manages the behavior of the <c>Settings View</c>.
+            </summary>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel.dataCache">
+            <summary>
+            Single instance of <see cref="T:Panini.DataCache"/>.
+            </summary>
+            <value>Used for sharing resources between view models.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel.ignoreTopicNameEndsWith">
+            <summary>
+            A list of ending strings to invalidate web-topics.
+            </summary>
+            <value>Represents a set of substrings which when matched at the end of the web-topic names, results in the topic being ignored from the TFIDF analysis.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel.ignoreTopicNameStartsWith">
+            <summary>
+            A list of starting strings to ivalidate web-topics.
+            </summary>
+            <value>Represents a set of substrings which when matched at the beginning of the web-topic names, results in the topic being ignored from the TFIDF analysis.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel.ignoreTopicNameContains">
+            <summary>
+            A list of strings to invalidate web-topics.
+            </summary>
+            <value>Represents a set of substrings which when matched anywhere in the web-topic names, results in the topic being ignored from the TFIDF analysis.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel.ignoreTopicName">
+            <summary>
+            A list of topic names used to invalidate web-topics.
+            </summary>
+            <value>Represents a set of substrings which when matched at the end of the web-topic names, results in the topic being ignored from the TFIDF analysis.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.IgnoreTopicNameEndsWith">
+            <summary>
+            A list of ending strings to invalidate web-topics.
+            </summary>
+            <value>This property binds the text of the <c>ignoreEndWith</c> text box in the settings view.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.IgnoreTopicNameContains">
+            <summary>
+            A list of strings to invalidate web-topics.
+            </summary>
+            <value>This property binds the text in the <c>ignoreContains</c> text box in the settings view.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.IgnoreTopicName">
+            <summary>
+            A list of strings to invalidate web-topics.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.IgnoreTopicNameStartsWith">
+            <summary>
+            A list of starting strings to ivalidate web-topics.
+            </summary>
+            <value>This property binds the text in the <c>ignoreStartWith</c> text box in the settings view.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel._colorScheme">
+            <summary>
+            Color scheme backing field.
+            </summary>
+            <value>Backing field for the color scheme of the heatmap.
+            <para>The default value is <c>Default</c>.</para></value>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel._accelerators">
+            <summary>
+            Accelerators backing field.
+            </summary>
+            <value>Backing field for the accelerators proposed for parallel computing.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.SelectionMode">
+            <summary>
+            Selection mode backing field. This property binds to the selected item of <c>Selectors</c> radio button group in the settings view.
+            </summary>
+            <value>Selection mode for the parent container tag which encapsulates are related links.
+            <list type="bullet">
+                <item><term><c>InnerText</c></term>
+                    <description>Lets you select the tag using the <c>innerText</c> attribute value of the tag.</description>    
+                </item>
+                <item><term><c>CSS</c></term>
+                    <description>Lets you select the tag using the <c>CSS Selector</c>.</description>
+                </item>
+            </list>
+            <para>The default value is <c>InnerText</c>.</para></value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.IsGetParentTagActive">
+            <summary>
+            Flag to look for parent element when selecting the container for related links. This property binds to <c>getParentTagCheckbox</c> in the settings view.
+            </summary>
+            <value>
+                <list type="bullet">
+                    <item><term><c>true</c></term>
+                        <description>Looks for a parent tag of the selected tag, as the container for related links.</description>
+                    </item>
+                    <item><term><c>false</c></term>
+                        <description>Considers the selected tag as container for related links.</description>
+                    </item>
+                </list>
+            </value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.QueryString">
+            <summary>
+            String input for passing the innert text or the CSS selector. This property binds to <c>queryTextBox</c> in the settings view.
+            </summary>
+            <value>Represents following two scenarios:
+                <list type="bullet">
+                    <item><description>When <see cref="P:Panini.ViewModel.ConfigViewModel.SelectionMode"/> is <c>InnerText</c>, this property expects the headings of the related links section e.g. <c>See Also</c> or <c>Related Topics</c>.</description></item>
+                    <item><description>When <see cref="P:Panini.ViewModel.ConfigViewModel.SelectionMode"/> is <c>CSS</c>, this property expects the CSS selector of the parent element of the related links e.g. <c>#See_also</c>.</description></item>
+                </list>
+            </value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.ParentLevel">
+            <summary>
+            The parent level of the selected tag. This property binds to the text of <c>parentLevel</c> text box in the settings view.
+            </summary>
+            <value>The <c>n</c>th level parent of the selected tag to be considered as the container for related links.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.Devices">
+            <summary>
+            List of accelerators devices. This property binds to <c>acceleratorsList</c> list box in the settings view.
+            </summary>
+            <value>List of accelerators available for parallel computing e.g. <c>CPU</c> or <c>GPU</c>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.AccleratorDevice">
+            <summary>
+            Selected accelerator. This property binds to the selected item of <c>acceleratorsList</c> list box in the settings view.
+            </summary>
+            <value>The selected accelerator for parallel computing e.g. <c>CPU</c> or <c>GPU</c>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.ColorScheme">
+            <summary>
+            Color scheme of the heatmap. This property binds to <c>ColorScheme</c> radio button group.
+            </summary>
+            <value>Color scheme of the heatmap of similarity scores.
+                <list type="bullet">
+                    <item><term><c>Default</c></term>
+                        <description>Uses a purple gradient color pallete.</description>
+                    </item>
+                    <item><term><c>Hot</c></term>
+                        <description>Uses a red gradient color pallete.</description>
+                    </item>
+                    <item><term><c>Cold</c></term>
+                        <description>Uses a blue gradient color pallete.</description>
+                    </item>
+                    <item><term><c>HotCold</c></term>
+                        <description>Uses a mixed gradient color pallete of red and blue colors.</description>
+                    </item>
+                </list>
+            </value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.KeywordCount">
+            <summary>
+            Number of keywords to be displayed in the results. This property binds to <c>keywordCount</c> text box in the settings view.
+            </summary>
+            <value>The default value is <c>5</c>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.SimilarTopicCount">
+            <summary>
+            Number of similar topic suggestions to be displayed in the results. This property binds to <c>similarTopicCount</c> text box in the settings view.
+            </summary>
+            <value>The default value is <c>5</c>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.MaxVocabSize">
+            <summary>
+            Maximum vocabulary size of the lexicon. This property binds to <c>vocabSize</c> text box in the settings view.
+            </summary>
+            <value>Represents the maximum number of words allowed to be part of the lexicon. The <c>n</c> most popular words from all topic are extracted and used for TFIDF and Similarity score computation.
+            <para>Important: The larger the <c>MaxVocabSize</c> the longer will be the TFIDF vectors and the longer it will take to compute the scores.</para></value>
+        </member>
+        <member name="M:Panini.ViewModel.ConfigViewModel.#ctor">
+            <summary>
+            Initializes the settings view with default values.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.ConfigViewModel.update_config(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            Event handler for updating configuration settings when the <see cref="P:Panini.ViewModel.ConfigViewModel.SelectionMode"/> is changed.
+            </summary>
+            <param name="sender">Event source.</param>
+            <param name="e">Object containing the event data.</param>
+        </member>
+        <member name="M:Panini.ViewModel.ConfigViewModel.find_accelerators">
+            <summary>
+            Finds the available accelerators for parallel computing of the scores.
+            </summary>
+        </member>
+        <member name="T:Panini.ViewModel.LoadViewModel">
+            <summary>
+            Manages the behavior of <c>Load View</c>.
+            </summary>
+        </member>
+        <member name="F:Panini.ViewModel.LoadViewModel.dataCache">
+            <summary>
+            Single instance of <see cref="T:Panini.DataCache"/>.
+            </summary>
+            <value>Used for sharing resources between view models.</value>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.ListOfFiles">
+            <summary>
+            A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the laod view.
+            </summary>
+            <value>The names of the files read from the the selected directory are stored in this list.</value>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.FileCountField">
+            <summary>
+            File count. This property binds to the text of <c>fileCountField</c> text block in the load view.
+            </summary>
+            <value>Message containing the number of files found in the selected directory.</value>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.TopicList">
+            <summary>
+            A collection of <see cref="T:Panini.Models.TopicRow"/> instances.
+            </summary>
+            <value>Contains the <see cref="T:Panini.Models.TopicRow"/> instance for each topic read from the directory.</value>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.Status">
+            <summary>
+            Status message. This property binds to <c>status</c> text block in the load view.
+            </summary>
+            <value>String representation of the status message to be displayed in the status bar at the bottom.</value>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.StatusBarColor">
+            <summary>
+            Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+            </summary>
+            <value>Color of the status bar.</value>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.DirectoryPath">
+            <summary>
+            Path of the directory. This property binds to the text of <c>dirPath</c> text box in the load view.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.SelectDirectory">
+            <summary>
+            Selects a folder from local storage. This ICommand binds to <c>browseBtn</c> in the laod view. 
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.LoadViewModel.Browse">
+            <summary>
+            Command handler for <see cref="P:Panini.ViewModel.LoadViewModel.SelectDirectory"/>.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.LoadViewModel.LoadTopics">
+            <summary>
+            Parses the <c>HTML</c> files. This <c>ICommand</c> binds to the <c>loadBtn</c> button in the load view. 
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.LoadViewModel.Load">
+            <summary>
+            Command handler for <see cref="P:Panini.ViewModel.LoadViewModel.LoadTopics"/>. This method launches a new thread for reading the web-topics from the directory.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.LoadViewModel.task">
+            <summary>
+            Thread task that reads the files from the directory.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.LoadViewModel.#ctor">
+            <summary>
+            Initializes the load view.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.LoadViewModel.initialize_datacache(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            Initializes the properties of the singleton <see cref="T:Panini.DataCache"/> Instance.
+            </summary>
+        </member>
+        <member name="T:Panini.ViewModel.MainViewModel">
+            <summary>
+            Manages the behavior of all views.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.CurrentItem">
+            <summary>
+            Current view.
+            </summary>
+            <value>Represents the selected view.</value>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.ViewState">
+            <summary>
+            State which stores the enabled views.
+            </summary>
+            <value>Collection of enabled views.</value>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.SwitchView">
+            <summary>
+            Changes the current view depending on the selected navigation item.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.MainViewModel.update_view_status(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            Delegate for updating the view state, when <see cref="P:Panini.ViewModel.MainViewModel.ViewState"/> collection changes.
+            </summary>
+            <param name="sender">Source element</param>
+            <param name="e">Object that stores the event data.</param>
+        </member>
+        <member name="M:Panini.ViewModel.MainViewModel.#ctor">
+            <summary>
+            Initializes all <c>View Model</c> instances.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.AboutViewModel">
+            <summary>
+            <c>About View</c> model.
+            </summary>
+            <value>View model for handling behavior of <c>About View</c>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.baseViewModel">
+            <summary>
+            <c>Base View</c> model.
+            </summary>
+            <value>View model from which other view models inherit.</value>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.LoadViewModel">
+            <summary>
+            <c>Laod View</c> model.
+            </summary>
+            <value>View model for handling behavior of <c>Load View</c>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.ResultsViewModel">
+            <summary>
+            <c>Results View</c> model.
+            </summary>
+            <value>View model for handling behavior of <c>Results View</c>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.MainViewModel.SummaryViewModel">
+            <summary>
+            <c>Summary View</c> model.
+            </summary>
+            <value>View model for handling behavior of <c>Summary View</c>.</value>
+        </member>
+        <member name="T:Panini.ViewModel.ResultsViewModel">
+            <summary>
+            Manages the behavior of <c>Results View</c>.
+            </summary>
+        </member>
+        <member name="F:Panini.ViewModel.ResultsViewModel.dataCache">
+            <summary>
+            Single instance of <see cref="T:Panini.DataCache"/>.
+            </summary>
+            <value>Used for sharing resources between view models.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.TopicCollection">
+            <summary>
+            Collection of <see cref="T:Panini.Models.TopicItem"/> instances.
+            </summary>
+            <value>A list of <see cref="T:Panini.Models.TopicItem"/> instances for each similar topic suggestion.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.selectedResultItem">
+            <summary>
+            Selected similar topic.
+            </summary>
+            <value>The <see cref="T:Panini.Models.TopicResultItem"/></value> instance corresponding to the selected similar topic instance.
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.maxVisibleSimilarTopics">
+            <summary>
+            Maximum visible similar topics.
+            </summary>
+            <value>The highest number of topics to be suggested under the <c>Similar Topics</c> section in the results view.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.ProgressBarVisibility">
+            <summary>
+            Controls visibility of the progress bar.
+            </summary>
+            <value>Controls visibility of the progress bar that appears in the status bar when creating lexicon and computing scores.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.ResultsVisibility">
+            <summary>
+            Controls visibility of sections in results view.
+            </summary>
+            <value>Controls visiblity of the <c>Topics List</c>, <c>Similar Topics</c>, and <c>Topic Summary</c> sections in the results view.
+            <para>The sections must be hidden during the processing phase.</para></value>
+        </member>
+        <member name="F:Panini.ViewModel.ResultsViewModel._processingMessageVisibility">
+            <summary>
+            Flag to display the processing prompt.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.ProcessingMessageVisibility">
+            <summary>
+            Controls visibility of the processing message.
+            </summary>
+            <value>Controls the visibility of the processing message in the results view when the topics are being processed and score are being computed.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.ProcessingStage">
+            <summary>
+            Current processing stage message.
+            </summary>
+            <value>Current processing stage message from the following:
+                <list type="bullet">
+                    <item>
+                        <term><c>Generating Lexicon and Topic Instances</c></term>
+                    </item>
+                    <item>
+                        <term><c>Calculating TFIDF Scores</c></term>
+                    </item>
+                    <item>
+                        <term><c>Calculating Cosine Similarity Scores</c></term>
+                    </item>
+                </list>
+            </value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.Status">
+            <summary>
+            Status message. This property binds to <c>status</c> text block in the load view.
+            </summary>
+            <value>String representation of the status message to be displayed in the status bar at the bottom.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.StatusBarColor">
+            <summary>
+            Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+            </summary>
+            <value>Color of the status bar.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ResultsViewModel.stopwatch">
+            <summary>
+            Stopwatch.
+            </summary>
+            <value>Stopwatch for timing the processing stages.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.TopicGenerationTime">
+            <summary>
+            Topic generation and lexicon creation time.
+            </summary>
+            <value>Time (in secs) required to instantiate <see cref="T:TFIDF.Topic"/> classes and create <see cref="T:TFIDF.Lexicon"/>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.TFIDFComputationTime">
+            <summary>
+            TFIDF score computation time.
+            </summary>
+            <value>Time (in secs) required to instantiate <see cref="N:TFIDF"/> classes for each topic and compute TFIDF scores.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.SimScoreComputationTime">
+            <summary>
+            Similarity score computation time.
+            </summary>
+            <value>Time (in secs) required to compute cosine similarity scores for each topic.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ResultsViewModel._run">
+            <summary>
+            This ICommand binds to the Run (Play icon) command in the ResultsPage.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.Run">
+            <summary>
+            Command that invokes the execution of the analysis.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.RunCanExecute">
+            <summary>
+            Run command execution flag.
+            </summary>
+            <value>Determines if the <see cref="P:Panini.ViewModel.ResultsViewModel.Run"/> command can execute in its current state.</value>
+        </member>
+        <member name="M:Panini.ViewModel.ResultsViewModel.RunCallback">
+            <summary>
+            Command handler for <see cref="P:Panini.ViewModel.ResultsViewModel.Run"/> command.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.ResultsViewModel.compute_results">
+            <summary>
+            This method invokes the topic creation, TF-IDF computation, and similarity score computation methods on the corpus.
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.SearchText">
+            <summary>
+            Search text.
+            </summary>
+            <value>Represents the string entered by the user for search a topic in the <c>Topics List</c> section of the results view.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.Search">
+            <summary>
+            Topic search command.
+            </summary>
+            <value>Command to update the <see cref="P:Panini.ViewModel.ResultsViewModel.TopicCollection"/> depending on the <see cref="P:Panini.ViewModel.ResultsViewModel.SearchText"/>.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.SearchCanExecute">
+            <summary>
+            Search command execution flag.
+            </summary>
+            <value>Determines if the <see cref="P:Panini.ViewModel.ResultsViewModel.Search"/> command can execute in its current state.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.OpenSimilarFile">
+            <summary>
+            Command to open topic.
+            </summary>
+            <value>Command to open the corresponding <c>HTML</c> page of the topic in the default browser.</value>
+        </member>
+        <member name="M:Panini.ViewModel.ResultsViewModel.open_similar_file(System.Object)">
+            <summary>
+            Opens the similar topic corresponding the selected row of the <paramref name="gridObj"/> datagrid.
+            </summary>
+            <param name="gridObj">The datagrid of the table displayed in the <c>Similar Topics</c> section of the results view.</param>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.OpenFile">
+            <summary>
+            Command that opens a topic.
+            </summary>
+            <value>Command that handles the opening of the a topic from a give path.</value>
+        </member>
+        <member name="M:Panini.ViewModel.ResultsViewModel.open_file(System.Object)">
+            <summary>
+            Opens the file from the given <paramref name="path"/>.
+            </summary>
+            <param name="path">The path of the file to be launched.</param>
+        </member>
+        <member name="P:Panini.ViewModel.ResultsViewModel.DragDropCommand">
+            <summary>
+            Command for handling drag-drop.
+            </summary>
+            <value>Command that handles the drag and drop of topics as links, 
+            when done from the names of similar topic suggestions in the <c>Similar Topics</c> section of the results view.</value>
+        </member>
+        <member name="M:Panini.ViewModel.ResultsViewModel.drag_link_to_file(System.Object)">
+            <summary>
+            Handles drag and drop of a topic represented by the selected row in the <paramref name="gridObj"/> datagrid.
+            </summary>
+            <param name="gridObj">The datagrid of the table displayed in the <c>Similar Topics</c> section.</param>
+        </member>
+        <member name="M:Panini.ViewModel.ResultsViewModel.launch(System.String)">
+            <summary>
+            Opens the file referenced by the <paramref name="path"/> parameter.
+            </summary>
+            <param name="path">The path of the file to be launched.</param>
+        </member>
+        <member name="T:Panini.ViewModel.SummaryViewModel">
+            <summary>
+            Manages the behavior of <c>Summary View</c>.
+            </summary>
+        </member>
+        <member name="F:Panini.ViewModel.SummaryViewModel.dataCache">
+            <summary>
+            Single instance of <see cref="T:Panini.DataCache"/>.
+            </summary>
+            <value>Used for sharing resources between view models.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.TopicsSummary">
+            <summary>
+            Summary info of all topics.
+            </summary>
+            <value>The <see cref="T:Panini.Models.TopicsInfo"/> class instance that stores the summary information of topics in the corpus.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.NLPDataInstance">
+            <summary>
+            NLP data of the performed ananlysis
+            </summary>
+            <value>The <see cref="T:Panini.Models.NLPData"/> class instance that stores the NLP related information like tokenizer, 
+            TFIDF vector length, similarity measure, number of total sentences and words in all topics.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.LinksSummary">
+            <summary>
+            Links data of all topics.
+            </summary>
+            <value>The <see cref="T:Panini.Models.LinksInfo"/> class instance that stores the information 
+            about links like total number of existing links (inline and related links), proposed links, matching links.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.Model">
+            <summary>
+            Plot model for the heatmap.
+            </summary>
+            <value>The handle of the plot for configuring axes and series of the plot.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.PreviewModel">
+            <summary>
+            Preview model.
+            </summary>
+            <value>The plot model corresponding to the preview part of the heatmap.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.IsHeatMapExpanded">
+            <summary>
+            State of the heatmap expander.
+            </summary>
+            <value>If <c>true</c> the headmap expander is expanded, else it is collpased.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.IsHeatmapVisible">
+            <summary>
+            Visibility of the heatmap expander.
+            </summary>
+            <value>If <c>true</c> the headmap expander is visibile, else it is collpased.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.VerticalSliderPosition">
+            <summary>
+            Vertical slider postition.
+            </summary>
+            <value>The position of the vertical slider on the preview part of the heatmap.
+            <para>This position is used for computing the part of the window to be displayed in the main heat map.</para></value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.HorizontalSliderPosition">
+            <summary>
+            Horizontal slider postition.
+            </summary>
+            <value>The position of the horizontal slider on the preview part of the heatmap.
+            <para>This position is used for computing the part of the window to be displayed in the main heat map.</para></value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.SliderMax">
+            <summary>
+            Slider max value.
+            </summary>
+            <value>The maximum value for each slider on the heatmap preview.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.KernelSize">
+            <summary>
+            Kernel size.
+            </summary>
+            <value>The window size of the heatmap.
+            <para>The default value is <c>10</c>.</para></value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.IsPreviewVisible">
+            <summary>
+            Visibility of the heatmap preview expander.
+            </summary>
+            <value>If <c>true</c> the headmap preview expander is visibile, else it is collpased.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.IsPreviewExpanded">
+            <summary>
+            State of the heatmap preview expander.
+            </summary>
+            <value>If <c>true</c> the headmap preview expander is expanded, else it is collpased.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.HeatmapHeight">
+            <summary>
+            Height of the heatmap.
+            </summary>
+            <value>The height of the main heatmap in pixels.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.HeatMapWidth">
+            <summary>
+            Width of the heatmap.
+            </summary>
+            <value>The width of the main heatmap in pixels.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.Run">
+            <summary>
+            Run command.
+            </summary>
+            <value>Command to start the generation of report and heatmap.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.RunCanExecute">
+            <summary>
+            Run command execution flag.
+            </summary>
+            <value>Determines if the <see cref="P:Panini.ViewModel.SummaryViewModel.Run"/> command can execute in its current state.</value>
+        </member>
+        <member name="P:Panini.ViewModel.SummaryViewModel.GenerateHeatMapData">
+            <summary>
+            Command to generate heatmap data.
+            </summary>
+            <value>Generates the heatmap data and refreshes it in the view.</value>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.generate_topics_info">
+            <summary>
+            Generates summary information on topics, which includes the total number of topics in the directory, number of valid and igonred topics.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.generate_links_info">
+            <summary>
+            Generates summary information on links in topics, which includes number of exiting links (inline and reltaed links).
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_count_of_all_rel_links">
+            <summary>
+            Counts the total related links in all the topics.
+            </summary>
+            <returns>The total number of related links in all the topics of the corpus.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_count_of_all_inline_links">
+            <summary>
+            Counts all inline links in topics of the corpus.
+            </summary>
+            <returns>The total number of inline links present in all topics of the corpus.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_count_of_all_proposed_links">
+            <summary>
+            Counts all links proposed as similar topics in the results.
+            </summary>
+            <returns>The total number of inline links present in all topics of the corpus.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_count_of_all_existing_links">
+            <summary>
+            Counts all links in topics of the corpus.
+            </summary>
+            <returns>The total number of links (inline + related) present in all topics of the corpus.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_count_of_all_matching_links">
+            <summary>
+            Counts all proposed as similar topics which are already linked in the topics.
+            </summary>
+            <returns>The total number of similar topic suggestions which are already linked in the topics.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_count_of_all_links_to_be_integrated">
+            <summary>
+            Counts the similar topics which can be integrated as links in the topics.
+            </summary>
+            <returns>The difference between the total number of suggested similar topics and the matching links that link to some of suggested similar topics.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_count_of_all_obsolete_links">
+            <summary>
+            Counts the obsolete links in all topics of the corpus.
+            </summary>
+            <returns>The total number of links which can be removed/replaced depending on better link proposals to other similar topics.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_full_heatmap_data">
+            <summary>
+            Gets the heatmap data (axis labels and similarity scores) when the number of topics is less than or 
+            equal to the window size in the preview. In this case, the preview heatmap is not generated as the 
+            number of topics is low enough to fit in main heatmap.
+            </summary>
+            <returns>The axis labels and similarity scores for plotting the main heatmap.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.generate_preview_map">
+            <summary>
+            Generates and updates the heatmap preview.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.generate_heat_map">
+            <summary>
+            Generates and updates the main heatmap.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.refresh_heat_map">
+            <summary>
+            Refreshes both the heatmaps.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_color_scheme">
+            <summary>
+            Gets the colors corresponding to the scheme of the heatmap configured by the user in the settings view.
+            </summary>
+            <returns>The list of colors used by the color pallete of the heatmap.</returns>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.generate_nlp_data">
+            <summary>
+            Generates the summary NLP information to be displayed in the summary view.
+            </summary>
+        </member>
+        <member name="M:Panini.ViewModel.SummaryViewModel.get_partial_heatmap_data">
+            <summary>
+            Gets the partical data of the heatmap depending on the horizontal and vertical slider positions on the heatmap preview.
+            </summary>
+            <returns>The axis labels and similarity scores for the partial window to be displayed in the main heatmap.</returns>
+        </member>
+        <member name="T:Panini.ViewModel.ViewStateConverter">
+            <summary>
+            The class that is used for conversion of view state.
+            </summary>
+        </member>
+        <member name="T:Panini_core.App">
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:Panini_core.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Panini_core.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+    </members>
+</doc>

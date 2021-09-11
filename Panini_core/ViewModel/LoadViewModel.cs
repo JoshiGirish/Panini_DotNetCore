@@ -19,29 +19,49 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Panini.ViewModel
 {
-    class LoadViewModel : BaseViewModel
+    /// <summary>
+    /// Manages the behavior of <c>Load View</c>.
+    /// </summary>
+    public class LoadViewModel : BaseViewModel
     {
         #region Property Declaration
+        /// <summary>
+        /// Single instance of <see cref="DataCache"/>.
+        /// </summary>
+        /// <value>Used for sharing resources between view models.</value>
         private readonly DataCache dataCache = DataCache.Instance;
+
         private ObservableCollection<string> _listOfFiles;
+        /// <summary>
+        /// A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the laod view.
+        /// </summary>
+        /// <value>The names of the files read from the the selected directory are stored in this list.</value>
         public ObservableCollection<string> ListOfFiles
         {
             get { return _listOfFiles; }
             set { _listOfFiles = value; }
         }
-        private int _numOfFiles;
 
-        public int NumOfFiles;
+        private int NumOfFiles = 0;
 
         private string _fileCountField;
 
+        /// <summary>
+        /// File count. This property binds to the text of <c>fileCountField</c> text block in the load view.
+        /// </summary>
+        /// <value>Message containing the number of files found in the selected directory.</value>
         public string FileCountField
         {
             get { return _fileCountField; }
             set { _fileCountField = value; RaisePropertyChanged(); }
         }
 
+
         private static ObservableCollection<TopicRow> _topicList;
+        /// <summary>
+        /// A collection of <see cref="TopicRow"/> instances.
+        /// </summary>
+        /// <value>Contains the <see cref="TopicRow"/> instance for each topic read from the directory.</value>
         public static ObservableCollection<TopicRow> TopicList
         {
             get { return _topicList; }
@@ -52,7 +72,10 @@ namespace Panini.ViewModel
         }
 
         public string _status;
-
+        /// <summary>
+        /// Status message. This property binds to <c>status</c> text block in the load view.
+        /// </summary>
+        /// <value>String representation of the status message to be displayed in the status bar at the bottom.</value>
         public string Status
         {
             get { return _status; }
@@ -64,7 +87,10 @@ namespace Panini.ViewModel
         }
 
         private Color _statusBarColor = new Color();
-
+        /// <summary>
+        /// Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+        /// </summary>
+        /// <value>Color of the status bar.</value>
         public Color StatusBarColor
         {
             get { return _statusBarColor; }
@@ -77,6 +103,9 @@ namespace Panini.ViewModel
         private string directory { get; set; }
 
         private static string _path;
+        /// <summary>
+        /// Path of the directory. This property binds to the text of <c>dirPath</c> text box in the load view.
+        /// </summary>
         public string DirectoryPath
         {
             get { return _path; }
@@ -89,10 +118,10 @@ namespace Panini.ViewModel
         #endregion
 
         #region Browse Command CallBack
-        /// <summary>
-        /// This ICommand binds to the browse (directory) button. It lets you select a folder from local storage.
-        /// </summary>
         private ICommand _selectDirectory;
+        /// <summary>
+        /// Selects a folder from local storage. This ICommand binds to <c>browseBtn</c> in the laod view. 
+        /// </summary>
         public ICommand SelectDirectory
         {
             get
@@ -100,6 +129,9 @@ namespace Panini.ViewModel
                 return _selectDirectory ?? (_selectDirectory = new ButtonCommandHandler(() => Browse(), () => {return true;}));
             }
         }
+        /// <summary>
+        /// Command handler for <see cref="SelectDirectory"/>.
+        /// </summary>
         private void Browse()
         {
 
@@ -116,10 +148,10 @@ namespace Panini.ViewModel
         #endregion
 
         #region Load Topics Command CallBack
+       private ICommand _loadTopics;
         /// <summary>
-        /// This ICommand binds to the ShowTopics button. It parses the HTML files.
+        /// Parses the <c>HTML</c> files. This <c>ICommand</c> binds to the <c>loadBtn</c> button in the load view. 
         /// </summary>
-        private ICommand _loadTopics;
         public ICommand LoadTopics
         {
             get
@@ -128,7 +160,9 @@ namespace Panini.ViewModel
             }
         }
 
-        static ConcurrentQueue<Corpus> cq = new ConcurrentQueue<Corpus>();
+        /// <summary>
+        /// Command handler for <see cref="LoadTopics"/>. This method launches a new thread for reading the web-topics from the directory.
+        /// </summary>
         private void Load()
         {
             ListOfFiles.Clear();
@@ -142,6 +176,9 @@ namespace Panini.ViewModel
             createThread.IsBackground = true;
             createThread.Start();
         }
+        /// <summary>
+        /// Thread task that reads the files from the directory.
+        /// </summary>
         private void task()
         {
             dataCache.corpus = new Corpus(DirectoryPath, (int)dataCache.Config["maxVocabSize"]);
@@ -173,6 +210,9 @@ namespace Panini.ViewModel
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Initializes the load view.
+        /// </summary>
         public LoadViewModel()
         {
             StatusBarColor = StatusColors["Default"];
@@ -184,7 +224,7 @@ namespace Panini.ViewModel
 
         #region Initialize DataCache Properties
         /// <summary>
-        /// This method initializes the properties of the singleton DataCache Instance.
+        /// Initializes the properties of the singleton <see cref="DataCache"/> Instance.
         /// </summary>
         private void initialize_datacache(object sender, NotifyCollectionChangedEventArgs e)
         {

@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Panini.Models
 {
+    /// <summary>
+    /// Model for displaying the summary of links in the <c>Summary View</c>.
+    /// </summary>
     public class LinksInfo : BaseModel
     {
         #region Number of Exiting Related Links
-        /// <summary>
-        /// This property stores the total number of existing links in all valid topics.
-        /// </summary>
         private int _numOfExistingRelLinks;
-
+        /// <summary>
+        /// Total number of existing links in all valid topics.
+        /// </summary>
+        /// <value>Total number of existing links in all valid topics.</value>
         public int NumOfExistingRelLinks
         {
             get { return _numOfExistingRelLinks; }
@@ -22,11 +25,11 @@ namespace Panini.Models
         #endregion
 
         #region Number of Existing Inline Links
-        /// <summary>
-        /// This property stores the total number of inline links from all the valid topics.
-        /// </summary>
         private int _numOfExistingInlineLinks;
-
+        /// <summary>
+        /// Total number of inline links from all the valid topics.
+        /// </summary>
+        /// <value>Total number of inline links from all the valid topics.</value>
         public int NumOfExistingInlineLinks
         {
             get { return _numOfExistingInlineLinks; }
@@ -35,11 +38,11 @@ namespace Panini.Models
         #endregion
 
         #region Number of Proposed Links
-        /// <summary>
-        /// This property stores the total number of links proposed by the NLP system.
-        /// </summary>
         private int _numOfProposedLinks;
-
+        /// <summary>
+        /// Total number of links proposed by the NLP system.
+        /// </summary>
+        /// <value>Total number of links proposed by the NLP system.</value>
         public int NumOfProposedLinks
         {
             get { return _numOfProposedLinks; }
@@ -49,11 +52,11 @@ namespace Panini.Models
         #endregion
 
         #region Number of Existing Links
-        /// <summary>
-        /// This property stores the total number of existing links from all the topics (related links +  inline links).
-        /// </summary>
         private int _numOfExistingLinks;
-
+        /// <summary>
+        /// Total number of existing links from all the topics (related links +  inline links).
+        /// </summary>
+        /// <value>Total number of existing links from all the topics (related links +  inline links).</value>
         public int NumOfExistingLinks
         {
             get { return _numOfExistingLinks; }
@@ -63,11 +66,12 @@ namespace Panini.Models
         #endregion
 
         #region Number of Matching Links
-        /// <summary>
-        /// This property stores the total number of matching (common) links, that is, the links that are both proposed by the system and also exist in the topics.
-        /// </summary>
+        
         private int _numOfMatchingLinks;
-
+        /// <summary>
+        /// Total number of matching (common) links, that is, the links that are both proposed by the system and also exist in the topics.
+        /// </summary>
+        /// <value>Total number of matching (common) links, that is, the links that are both proposed by the system and also exist in the topics.</value>
         public int NumOfMatchingLinks
         {
             get { return _numOfMatchingLinks; }
@@ -77,11 +81,12 @@ namespace Panini.Models
         #endregion
 
         #region Number of Links to be Integrated
-        /// <summary>
-        /// This property stores the total number of links that need to be integrated in the topics.
-        /// </summary>
+        
         private int _numOfLinksNeedsIntegration;
-
+        /// <summary>
+        /// Total number of links that need to be integrated in the topics.
+        /// </summary>
+        /// <value>Total number of links that need to be integrated in the topics.</value>
         public int NumOfLinksNeedsIntegration
         {
             get { return _numOfLinksNeedsIntegration; }
@@ -91,11 +96,12 @@ namespace Panini.Models
         #endregion
 
         #region Number of Links to be Removed
-        /// <summary>
-        /// This property stores the total number of links that need to be replaced.
-        /// </summary>
+        
         private int _numOfObseleteLinks;
-
+        /// <summary>
+        /// Total number of links that need to be replaced.
+        /// </summary>
+        /// <value>Total number of links that need to be replaced.</value>
         public int NumOfObsoleteLinks
         {
             get { return _numOfObseleteLinks; }
@@ -105,11 +111,12 @@ namespace Panini.Models
         #endregion
 
         #region IsExpanded Flag
-        /// <summary>
-        /// This property binds to the IsExpanded property of the expandeder in the SummaryPage.
-        /// </summary>
+        
         private bool _isExpanded;
-
+        /// <summary>
+        /// Binds to the IsExpanded property of the expander in the Summary Page.
+        /// </summary>
+        /// <value>Binds to the IsExpanded property of the expander in the Summary Page.</value>
         public bool IsExpanded
         {
             get { return _isExpanded; }
@@ -120,7 +127,10 @@ namespace Panini.Models
 
         #region IsVisible Property
         private string _isVisible = "Collapsed";
-
+        /// <summary>
+        /// Controls the visibility of the expander which displays the links summary.
+        /// </summary>
+        /// <value>Controls the visibility of the expander which displays the links summary.</value>
         public string IsVisible
         {
             get { return _isVisible; }

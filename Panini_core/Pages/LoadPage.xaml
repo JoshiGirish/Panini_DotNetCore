@@ -41,10 +41,11 @@
     <!-- Status Bar (docked to the bottom) -->
     <StatusBar Height="20" DockPanel.Dock="Bottom">
       <StatusBar.Background>
-        <SolidColorBrush Color="{Binding StatusBarColor}" />
+        <SolidColorBrush x:Name="statusColorBrush" Color="{Binding StatusBarColor}" />
       </StatusBar.Background>
       <StatusBarItem>
-        <TextBlock Text="{Binding Status}"
+        <TextBlock x:Name="status"
+                    Text="{Binding Status}"
                    Margin="10 0 0 0"
                    VerticalAlignment="Center"
                    FontSize="12"
@@ -74,7 +75,8 @@
           <ColumnDefinition Width="250" />
           <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0"
+        <Button x:Name="browseBtn"
+                Grid.Column="0"
                 Margin="5 0"
                 Command="{Binding SelectDirectory}"
                 VerticalAlignment="Center"
@@ -84,7 +86,8 @@
                  Height="25" />-->
           <md:PackIcon Kind="Folder" Height="25" Width="25"/>
         </Button>
-        <TextBox Text="{Binding DirectoryPath}" Grid.Column="1"
+        <TextBox x:Name="dirPath"
+                  Text="{Binding DirectoryPath}" Grid.Column="1"
                  VerticalAlignment="Center"
                  Height="20"
                  FontStyle="Italic"
@@ -95,7 +98,8 @@
                  Width="400"
                  MaxWidth="500"
                  HorizontalAlignment="Left" />
-        <TextBlock Grid.Column="2"
+        <TextBlock x:Name="fileCountField"
+                    Grid.Column="2"
           Text="{Binding FileCountField}" 
                    FontSize="14"
                    HorizontalAlignment="Right"
@@ -112,7 +116,8 @@
       
       <!-- Files Listbox -->
       <Grid DockPanel.Dock="Top">
-        <ListBox ItemsSource="{Binding ListOfFiles}"
+        <ListBox x:Name="filesList"
+                  ItemsSource="{Binding ListOfFiles}"
                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
                  Background="Transparent"
                  FontSize="14">

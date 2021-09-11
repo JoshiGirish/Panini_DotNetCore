@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "u91pYIwK6n+lvVa1cnQsV4AJvARnFSM/hclhcrm2nYV01XhJZhUqPnPODAYvWUiUSMJjTVdnbp3xdu4QjcrHTw==",
+  "dgSpecHash": "w9EVbNf9yrsp+S3ASFPJCvVR312mNvHRVr+epioGDkJrId0H+FCY5tLAXni5ZvaQUYt/nI/GVRT3P7+Y5GUMpQ==",
   "success": true,
   "projectFilePath": "D:\\Dev\\C sharp\\Panini_core\\TFIDF\\TFIDF.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Girish\\.nuget\\packages\\docfx.console\\2.58.3\\docfx.console.2.58.3.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack\\1.11.34\\htmlagilitypack.1.11.34.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack.cssselectors.netcore\\1.2.1\\htmlagilitypack.cssselectors.netcore.1.2.1.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\lemmagenerator\\1.1.0\\lemmagenerator.1.1.0.nupkg.sha512",

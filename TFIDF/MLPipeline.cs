@@ -7,10 +7,22 @@ using System.Threading.Tasks;
 
 namespace TFIDF
 {
-    class MLPipeline
+    /// <summary>
+    /// The class that creates the machine learning pipeline.
+    /// </summary>
+    public class MLPipeline
     {
+        /// <summary>
+        /// Prediction engine for making predictions.
+        /// </summary>
+        /// <value>The ML engine used for predictions using previously trained model.</value>
         public PredictionEngine<TextData, TransformedTextData> mlengine;
 
+        #region Constructor
+        /// <summary>
+        /// Creates a machine learning engine for transforming text data. 
+        /// The engine takes text data, tokenizes it into words, and removes the stop words.
+        /// </summary>
         public MLPipeline()
         {
             // Initialize ML pipeline
@@ -22,15 +34,6 @@ namespace TFIDF
             var textTransformer = textPipeline.Fit(emptyDataView);
             mlengine = mlcontext.Model.CreatePredictionEngine<TextData, TransformedTextData>(textTransformer);
         }
-    }
-
-    public class TextData
-    {
-        public string Text { get; set;}
-    }
-
-    public class TransformedTextData
-    {
-        public string[] Words { get; set; }
+        #endregion
     }
 }

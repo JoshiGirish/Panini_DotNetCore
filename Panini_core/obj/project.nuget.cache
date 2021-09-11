@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "hRDkEgw+Oy+95GQQ5RtW+7ebCzlODkbpDDJKuWbFHJcigrmz0R7BuR9FhZCQN0kZmMlucOaXedaPzJpqM/KgJw==",
+  "dgSpecHash": "OfYoqrnIHPiKuB48ZBHUnL79LDz2Tj0MeiBvk3ao0zKSSerWYpO7ayssIjN6vZDWQ9M/WLXLSFkcU4PdYPpkvg==",
   "success": true,
   "projectFilePath": "D:\\Dev\\C sharp\\Panini_core\\Panini_core\\Panini.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Girish\\.nuget\\packages\\avalonedit\\6.1.2.30\\avalonedit.6.1.2.30.nupkg.sha512",
+    "C:\\Users\\Girish\\.nuget\\packages\\docfx.console\\2.58.3\\docfx.console.2.58.3.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\fluentwpf\\0.9.0\\fluentwpf.0.9.0.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\fontawesome.wpf\\4.7.0.9\\fontawesome.wpf.4.7.0.9.nupkg.sha512",
     "C:\\Users\\Girish\\.nuget\\packages\\htmlagilitypack\\1.11.34\\htmlagilitypack.1.11.34.nupkg.sha512",

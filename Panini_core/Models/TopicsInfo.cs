@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace Panini.Models
 {
+    /// <summary>
+    /// Model for displaying the summary of topics in <c>Summary View</c>.
+    /// </summary>
     public class TopicsInfo : BaseModel
     {
         #region Path property
 
-        /// <summary>
-        /// Define the root path of the published topics
-        /// </summary>
+        
         private string _path;
-
+        /// <summary>
+        /// Root path of the web-topics.
+        /// </summary>
+        /// <value>Root path of the web-topic.</value>
         public string Path
         {
             get { return _path; }
@@ -24,11 +28,11 @@ namespace Panini.Models
 
         #region Total Topics property
 
-        /// <summary>
-        /// The total number of topics found in the the root path
-        /// </summary>
         private int _numTopics = 0;
-
+        /// <summary>
+        /// Number of topics found at the root path.
+        /// </summary>
+        /// <value>Number of topics found at the root path.</value>
         public int NumTopics
         {
             get { return _numTopics; }
@@ -38,11 +42,11 @@ namespace Panini.Models
         #endregion
 
         #region Valid Topics property
-        /// <summary>
-        /// Number of valid topics considered for TF-IDF analysis
-        /// </summary>
         private int _numOfValidTopics = 0;
-
+        /// <summary>
+        /// Number of valid topics considered for TF-IDF analysis.
+        /// </summary>
+        /// <value>Number of valid topics considered for TF-IDF analysis.</value>
         public int NumOfValidTopics
         {
             get { return _numOfValidTopics; }
@@ -52,11 +56,11 @@ namespace Panini.Models
         #endregion
 
         #region Ignored Topics property
-        /// <summary>
-        /// Number of Ignored topics based on the settings in the Config tab
-        /// </summary>
         private int _numOfIgnoredTopics = 0;
-
+        /// <summary>
+        /// Number of ignored topics based on the settings in the settings view.
+        /// </summary>
+        /// <value> Number of ignored topics based on the settings in the settings view.</value>
         public int NumOfIgnoredTopics
         {
             get { return _numOfIgnoredTopics; }
@@ -67,7 +71,10 @@ namespace Panini.Models
 
         #region IsExpanded Property
         private bool _isExpanded = false;
-
+        /// <summary>
+        /// Binds to the IsExpanded property of the expander in the Summary Page.
+        /// </summary>
+        /// <value>Binds to the IsExpanded property of the expander in the Summary Page.</value>
         public bool IsExpanded
         {
             get { return _isExpanded; }
@@ -77,7 +84,10 @@ namespace Panini.Models
 
         #region IsVisible Property
         private string _isVisible = "Collapsed";
-
+        /// <summary>
+        /// Controls the visibility of the expander which displays the topics summary.
+        /// </summary>
+        /// <value>Controls the visibility of the expander which displays the topics summary.</value>
         public string IsVisible
         {
             get { return _isVisible; }

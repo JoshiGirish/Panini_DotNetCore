@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Panini.Pages;
@@ -11,13 +9,14 @@ using System.Windows.Input;
 using Panini.Commands;
 using System.Collections.ObjectModel;
 using Microsoft.Toolkit.Collections;
-using System.Windows.Data;
-using System.Globalization;
 using System.Collections.Specialized;
 
 namespace Panini.ViewModel
 {
-    class MainViewModel : BaseViewModel
+    /// <summary>
+    /// Manages the behavior of all views.
+    /// </summary>
+    public class MainViewModel : BaseViewModel
     {
 
         private readonly AboutViewModel aboutVM;
@@ -44,12 +43,20 @@ namespace Panini.ViewModel
 
         private ListViewItem _currentItem;
 
+        /// <summary>
+        /// Current view.
+        /// </summary>
+        /// <value>Represents the selected view.</value>
         public ListViewItem CurrentItem
         {
             get { return _currentItem; }
             set { _currentItem = value; RaisePropertyChanged(); }
         }
 
+        /// <summary>
+        /// State which stores the enabled views.
+        /// </summary>
+        /// <value>Collection of enabled views.</value>
         public ObservableCollection<string> ViewState
         {
             get { return dataCache.ViewState; }
@@ -58,11 +65,10 @@ namespace Panini.ViewModel
 
 
         #region Switch View command callback
-        /// <summary>
-        /// This command changes the view depending on the selected navigation item.
-        /// </summary>
         private ICommand _switchView;
-
+        /// <summary>
+        /// Changes the current view depending on the selected navigation item.
+        /// </summary>
         public ICommand SwitchView
         {
             get { return _switchView ?? (_switchView = new ParameterCommandHandler((obj) => SwitchPage(obj), () => { return true; })); }
@@ -99,12 +105,20 @@ namespace Panini.ViewModel
         #endregion
 
         #region Update View delegate
+        /// <summary>
+        /// Delegate for updating the view state, when <see cref="ViewState"/> collection changes.
+        /// </summary>
+        /// <param name="sender">Source element</param>
+        /// <param name="e">Object that stores the event data.</param>
         public void update_view_status(object sender, NotifyCollectionChangedEventArgs e)
         {
             ViewState = dataCache.ViewState;
         }
         #endregion
 
+        /// <summary>
+        /// Initializes all <c>View Model</c> instances.
+        /// </summary>
         public MainViewModel()
         {
             aboutVM = new AboutViewModel();
@@ -116,24 +130,30 @@ namespace Panini.ViewModel
             dataCache.ViewState.CollectionChanged += update_view_status;
         }
 
+        /// <summary>
+        /// <c>About View</c> model.
+        /// </summary>
+        /// <value>View model for handling behavior of <c>About View</c>.</value>
         public BaseViewModel AboutViewModel { get { return aboutVM; } }
+        /// <summary>
+        /// <c>Base View</c> model.
+        /// </summary>
+        /// <value>View model from which other view models inherit.</value>
         public BaseViewModel baseViewModel { get { return configVM; } }
+        /// <summary>
+        /// <c>Laod View</c> model.
+        /// </summary>
+        /// <value>View model for handling behavior of <c>Load View</c>.</value>
         public BaseViewModel LoadViewModel { get { return loadVM; } }
+        /// <summary>
+        /// <c>Results View</c> model.
+        /// </summary>
+        /// <value>View model for handling behavior of <c>Results View</c>.</value>
         public BaseViewModel ResultsViewModel { get { return resultsVM; } }
+        /// <summary>
+        /// <c>Summary View</c> model.
+        /// </summary>
+        /// <value>View model for handling behavior of <c>Summary View</c>.</value>
         public BaseViewModel SummaryViewModel { get { return summaryVM; } }
-    }
-
-    public class ViewStateConverter : IValueConverter
-    {
-        private readonly DataCache dataCache = DataCache.Instance;
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return dataCache.ViewState.Contains(parameter);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (bool)value ? parameter : null;
-        }
     }
 }

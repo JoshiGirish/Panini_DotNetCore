@@ -19,6 +19,7 @@
     <Import Project="$(NuGetPackageRoot)microsoft.ml\1.6.0\build\netstandard2.0\Microsoft.ML.props" Condition="Exists('$(NuGetPackageRoot)microsoft.ml\1.6.0\build\netstandard2.0\Microsoft.ML.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Pkgdocfx_console Condition=" '$(Pkgdocfx_console)' == '' ">C:\Users\Girish\.nuget\packages\docfx.console\2.58.3</Pkgdocfx_console>
     <PkgMicrosoft_Xaml_Behaviors_Wpf Condition=" '$(PkgMicrosoft_Xaml_Behaviors_Wpf)' == '' ">C:\Users\Girish\.nuget\packages\microsoft.xaml.behaviors.wpf\1.1.31</PkgMicrosoft_Xaml_Behaviors_Wpf>
     <PkgMaterialDesignThemes Condition=" '$(PkgMaterialDesignThemes)' == '' ">C:\Users\Girish\.nuget\packages\materialdesignthemes\4.1.0</PkgMaterialDesignThemes>
     <PkgLiveCharts_Wpf Condition=" '$(PkgLiveCharts_Wpf)' == '' ">C:\Users\Girish\.nuget\packages\livecharts.wpf\0.9.7</PkgLiveCharts_Wpf>

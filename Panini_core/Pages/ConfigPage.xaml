@@ -197,7 +197,8 @@
                 <!-- Get Container field -->
                 <Grid Grid.Row="1"
                       Margin="10 0 0 0">
-                  <TextBox IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}"
+                  <TextBox x:Name="queryTextBox"
+                           IsEnabled="{Binding ElementName=hyperlinkCheck, Path=IsChecked}"
                            VerticalAlignment="Center"
                            Text="{Binding QueryString}">
                     <TextBox.ToolTip>
@@ -227,7 +228,8 @@
                            HorizontalAlignment="Left" 
                            Margin="0"
                            Padding="0"/>
-                    <TextBox Grid.Column="1"
+                    <TextBox x:Name="parentLevel"
+                              Grid.Column="1"
                              IsEnabled="{Binding ElementName=getParentTagCheckbox, Path=IsChecked}"
                              Text="{Binding ParentLevel}"
                              VerticalAlignment="Center"
@@ -278,7 +280,8 @@
                 <Label Grid.Column="0"
                        Content="Number of similar topics"
                        VerticalAlignment="Center" />
-                <TextBox Grid.Column="1"
+                <TextBox x:Name="similarTopicCount"
+                          Grid.Column="1"
                          Text="{Binding SimilarTopicCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                          VerticalAlignment="Center"
                          Width="50"
@@ -303,7 +306,8 @@
                 <Label Grid.Column="0"
                        Content="Number of keywords"
                        VerticalAlignment="Center" />
-                <TextBox Grid.Column="1"
+                <TextBox x:Name="keywordCount"
+                          Grid.Column="1"
                          Text="{Binding KeywordCount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                          VerticalAlignment="Center"
                          Width="50"
@@ -328,7 +332,8 @@
                 <Label Grid.Column="0"
                        Content="Lexicon max vocab size"
                        VerticalAlignment="Center" />
-                <TextBox Grid.Column="1"
+                <TextBox x:Name="vocabSize"
+                          Grid.Column="1"
                          Text="{Binding MaxVocabSize, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                          VerticalAlignment="Center"
                          Width="50"
@@ -356,7 +361,8 @@
                 <Label Grid.Column="0"
                        Content="Accelerator"
                        VerticalAlignment="Top" />
-                <ListBox Grid.Column="1"
+                <ListBox x:Name="acceleratorsList"
+                          Grid.Column="1"
                          ItemsSource="{Binding Path=Devices}"
                          Height="45"
                          Background="Transparent"

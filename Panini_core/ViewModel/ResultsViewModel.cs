@@ -24,29 +24,49 @@ using System.Text;
 
 namespace Panini.ViewModel
 {
-    class ResultsViewModel : BaseViewModel
+    /// <summary>
+    /// Manages the behavior of <c>Results View</c>.
+    /// </summary>
+    public class ResultsViewModel : BaseViewModel
     {
         // Declaration
         #region Property Declarations
+        /// <summary>
+        /// Single instance of <see cref="DataCache"/>.
+        /// </summary>
+        /// <value>Used for sharing resources between view models.</value>
         private readonly DataCache dataCache = DataCache.Instance;
+
+
         private BindingList<TopicItem> _topicCollection = new BindingList<TopicItem>();
+        /// <summary>
+        /// Collection of <see cref="TopicItem"/> instances.
+        /// </summary>
+        /// <value>A list of <see cref="TopicItem"/> instances for each valid topic in the corpus.</value>
         public BindingList<TopicItem> TopicCollection
         { get => _topicCollection; set { _topicCollection = value; RaisePropertyChanged(); } }
 
         private BindingList<TopicItem> _dummyTopicCollection = new BindingList<TopicItem>();
 
+        /// <summary>
+        /// Selected similar topic.
+        /// </summary>
+        /// <value>The <see cref="TopicResultItem"/></value> instance corresponding to the selected similar topic instance.
         public TopicResultItem selectedResultItem { get; set; }
+
+        /// <summary>
+        /// Maximum visible similar topics.
+        /// </summary>
+        /// <value>The highest number of topics to be suggested under the <c>Similar Topics</c> section in the results view.</value>
         public int maxVisibleSimilarTopics { get { return maxVisibleSimilarTopics; } set { maxVisibleSimilarTopics = value; RaisePropertyChanged(); } }
         private float _progress;
         
-
-
         #region ProgressBar Visibility
-        /// <summary>
-        /// Progress bar in the status bar.
-        /// </summary>
         private string _progressBarVisibility = "Collapsed";
-
+        /// <summary>
+        /// Controls visibility of the progress bar.
+        /// </summary>
+        /// <value>Controls visibility of the progress bar that appears in the status bar when creating lexicon and computing scores.</value>
         public string ProgressBarVisibility
         {
             get { return _progressBarVisibility; }
@@ -55,11 +75,12 @@ namespace Panini.ViewModel
         #endregion
 
         #region Results Visibility
-        /// <summary>
-        /// Controls visiblity of the result topic list and the details view.
-        /// </summary>
         private string _resultsVisibility = "Collapsed";
-
+        /// <summary>
+        /// Controls visibility of sections in results view.
+        /// </summary>
+        /// <value>Controls visiblity of the <c>Topics List</c>, <c>Similar Topics</c>, and <c>Topic Summary</c> sections in the results view.
+        /// <para>The sections must be hidden during the processing phase.</para></value>
         public string ResultsVisibility
         {
             get { return _resultsVisibility; }
@@ -72,7 +93,10 @@ namespace Panini.ViewModel
         /// Flag to display the processing prompt.
         /// </summary>
         private string _processingMessageVisibility = "Collapsed";
-
+        /// <summary>
+        /// Controls visibility of the processing message.
+        /// </summary>
+        /// <value>Controls the visibility of the processing message in the results view when the topics are being processed and score are being computed.</value>
         public string ProcessingMessageVisibility
         {
             get { return _processingMessageVisibility; }
@@ -82,7 +106,22 @@ namespace Panini.ViewModel
 
         #region Processing Stage
         private string _processingStage;
-
+        /// <summary>
+        /// Current processing stage message.
+        /// </summary>
+        /// <value>Current processing stage message from the following:
+        ///     <list type="bullet">
+        ///         <item>
+        ///             <term><c>Generating Lexicon and Topic Instances</c></term>
+        ///         </item>
+        ///         <item>
+        ///             <term><c>Calculating TFIDF Scores</c></term>
+        ///         </item>
+        ///         <item>
+        ///             <term><c>Calculating Cosine Similarity Scores</c></term>
+        ///         </item>
+        ///     </list>
+        /// </value>
         public string ProcessingStage
         {
             get { return _processingStage; }
@@ -91,7 +130,11 @@ namespace Panini.ViewModel
 
         #endregion
 
-        public string _status;
+        private string _status;
+        /// <summary>
+        /// Status message. This property binds to <c>status</c> text block in the load view.
+        /// </summary>
+        /// <value>String representation of the status message to be displayed in the status bar at the bottom.</value>
         public string Status
         {
             get { return _status; }
@@ -103,7 +146,10 @@ namespace Panini.ViewModel
         }
 
         private Color _statusBarColor = new Color();
-
+        /// <summary>
+        /// Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+        /// </summary>
+        /// <value>Color of the status bar.</value>
         public Color StatusBarColor
         {
             get { return _statusBarColor; }
@@ -114,24 +160,32 @@ namespace Panini.ViewModel
             }
         }
 
-        public float Progress
-        {
-            get { return _progress; }
-            set { _progress = value; RaisePropertyChanged(); }
-        }
 
-        private TextEditor _textEditor;
+        //public float Progress
+        //{
+        //    get { return _progress; }
+        //    set { _progress = value; RaisePropertyChanged(); }
+        //}
 
-        public TextEditor XMLEditor
-        {
-            get { return _textEditor; }
-            set { _textEditor = value; RaisePropertyChanged(); }
-        }
+        //private TextEditor _textEditor;
 
+        //public TextEditor XMLEditor
+        //{
+        //    get { return _textEditor; }
+        //    set { _textEditor = value; RaisePropertyChanged(); }
+        //}
+
+        /// <summary>
+        /// Stopwatch.
+        /// </summary>
+        /// <value>Stopwatch for timing the processing stages.</value>
         public Stopwatch stopwatch = new Stopwatch();
 
         private long _topicGenerationTime;
-
+        /// <summary>
+        /// Topic generation and lexicon creation time.
+        /// </summary>
+        /// <value>Time (in secs) required to instantiate <see cref="Topic"/> classes and create <see cref="Lexicon"/>.</value>
         public long TopicGenerationTime
         {
             get { return _topicGenerationTime; }
@@ -139,7 +193,10 @@ namespace Panini.ViewModel
         }
 
         private long _tfidfComputationTime;
-
+        /// <summary>
+        /// TFIDF score computation time.
+        /// </summary>
+        /// <value>Time (in secs) required to instantiate <see cref="TFIDF"/> classes for each topic and compute TFIDF scores.</value>
         public long TFIDFComputationTime
         {
             get { return _tfidfComputationTime; }
@@ -147,7 +204,10 @@ namespace Panini.ViewModel
         }
 
         private long _simScoreComputationTime;
-
+        /// <summary>
+        /// Similarity score computation time.
+        /// </summary>
+        /// <value>Time (in secs) required to compute cosine similarity scores for each topic.</value>
         public long SimScoreComputationTime
         {
             get { return _simScoreComputationTime; }
@@ -162,13 +222,22 @@ namespace Panini.ViewModel
         /// This ICommand binds to the Run (Play icon) command in the ResultsPage.
         /// </summary>
         private ICommand _run;
+        /// <summary>
+        /// Command that invokes the execution of the analysis.
+        /// </summary>
         public ICommand Run
         {
             get { return _run ?? (_run = new ButtonCommandHandler(() => RunCallback(), () => RunCanExecute)); }
         }
-
+        /// <summary>
+        /// Run command execution flag.
+        /// </summary>
+        /// <value>Determines if the <see cref="Run"/> command can execute in its current state.</value>
         public bool RunCanExecute { get { return true; }}
 
+        /// <summary>
+        /// Command handler for <see cref="Run"/> command.
+        /// </summary>
         private void RunCallback()
         {
             dataCache.corpus.reset_corpus((int)dataCache.Config["maxVocabSize"]);
@@ -263,7 +332,7 @@ namespace Panini.ViewModel
                 }
                 App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        TopicCollection.Add(new TopicItem(topic.topicName, "Visible", true ,itemColl));
+                        TopicCollection.Add(new TopicItem(topic.topicName, "Visible",itemColl));
                     });
             }
             _dummyTopicCollection = TopicCollection;
@@ -276,52 +345,52 @@ namespace Panini.ViewModel
 
 
         // View Management Methods
-        #region ExpandAll Command CallBack
-        /// <summary>
-        /// This ICommand binds to the ExpandAll button in the ResultsPage. All topic expanders are expanded.
-        /// </summary>
-        private ICommand _expandAll;
-        public ICommand ExpandAll
-        {
-            get { return _expandAll ?? (_expandAll = new ButtonCommandHandler(() => ExpandAllCallback(), () => ExpandAllCanExecute)); }
-        }
+        //#region ExpandAll Command CallBack
+        //private ICommand _expandAll;
+        ///// <summary>
+        ///// This ICommand binds to the ExpandAll button in the ResultsPage. All topic expanders are expanded.
+        ///// </summary>
+        //public ICommand ExpandAll
+        //{
+        //    get { return _expandAll ?? (_expandAll = new ButtonCommandHandler(() => ExpandAllCallback(), () => ExpandAllCanExecute)); }
+        //}
 
-        private void ExpandAllCallback()
-        {
-            Parallel.ForEach(TopicCollection, (topItem) =>
-            {
-                topItem.IsExpanded = true;
-            });
-        }
-        public bool ExpandAllCanExecute { get { return true; } }
-        #endregion
+        //private void ExpandAllCallback()
+        //{
+        //    Parallel.ForEach(TopicCollection, (topItem) =>
+        //    {
+        //        topItem.IsExpanded = true;
+        //    });
+        //}
+        //public bool ExpandAllCanExecute { get { return true; } }
+        //#endregion
 
-        #region CollapseAll Command CallBack
-        /// <summary>
-        /// This ICommand binds to the CollapseAll button on the ResultsPage. It collapses all the topic expanders at once.
-        /// </summary>
-        private ICommand _collapseAll;
-        public ICommand CollapseAll
-        {
-            get { return _collapseAll ?? (_collapseAll = new ButtonCommandHandler(() => CollapseAllCallBack(), () => CollapseAllCanExecute)); }
-        }
+        //#region CollapseAll Command CallBack
+        ///// <summary>
+        ///// This ICommand binds to the CollapseAll button on the ResultsPage. It collapses all the topic expanders at once.
+        ///// </summary>
+        //private ICommand _collapseAll;
+        //public ICommand CollapseAll
+        //{
+        //    get { return _collapseAll ?? (_collapseAll = new ButtonCommandHandler(() => CollapseAllCallBack(), () => CollapseAllCanExecute)); }
+        //}
 
-        private void CollapseAllCallBack()
-        {
-            foreach (var topItem in TopicCollection)
-            {
-                topItem.IsExpanded = false;
-            }
-        }
-        public bool CollapseAllCanExecute { get { return true; } }
-        #endregion
+        //private void CollapseAllCallBack()
+        //{
+        //    foreach (var topItem in TopicCollection)
+        //    {
+        //        topItem.IsExpanded = false;
+        //    }
+        //}
+        //public bool CollapseAllCanExecute { get { return true; } }
+        //#endregion
 
         #region Search Command CallBack
-        /// <summary>
-        /// This ICommand updates the TopicCollection depending on the search query. The topic expander headers which do not contain the search text are hidden (Visibility => Collapsed)
-        /// </summary>
         private string _searchText = string.Empty;
-
+        /// <summary>
+        /// Search text.
+        /// </summary>
+        /// <value>Represents the string entered by the user for search a topic in the <c>Topics List</c> section of the results view.</value>
         public string SearchText
         {
             get { return _searchText; }
@@ -329,7 +398,10 @@ namespace Panini.ViewModel
         }
 
         private ICommand _search;
-
+        /// <summary>
+        /// Topic search command.
+        /// </summary>
+        /// <value>Command to update the <see cref="TopicCollection"/> depending on the <see cref="SearchText"/>.</value>
         public ICommand Search
         {
             get { return _search ?? (_search = new ButtonCommandHandler(() => TopicCollection_CollectionChanged(), () => SearchCanExecute)); }
@@ -355,20 +427,28 @@ namespace Panini.ViewModel
                 }
             }
         }
+        /// <summary>
+        /// Search command execution flag.
+        /// </summary>
+        /// <value>Determines if the <see cref="Search"/> command can execute in its current state.</value>
         public bool SearchCanExecute { get { return true; } }
         #endregion
 
         #region Open Similar Topic Command CallBack
-        /// <summary>
-        /// This ICommand binds to the file icon of each TopicResultItem. It opens the corresponding topic HTML page in the default browser.
-        /// </summary>
         private ICommand _openSimilarFile;
-
+        /// <summary>
+        /// Command to open topic.
+        /// </summary>
+        /// <value>Command to open the corresponding <c>HTML</c> page of the topic in the default browser.</value>
         public ICommand OpenSimilarFile
         {
             get { return _openSimilarFile ?? (_openSimilarFile = new ParameterCommandHandler((grid) => open_similar_file(grid), () => { return true; })); }
         }
 
+        /// <summary>
+        /// Opens the similar topic corresponding the selected row of the <paramref name="gridObj"/> datagrid.
+        /// </summary>
+        /// <param name="gridObj">The datagrid of the table displayed in the <c>Similar Topics</c> section of the results view.</param>
         public void open_similar_file(object gridObj)
         {
             DataGrid grid = (DataGrid)gridObj;
@@ -379,16 +459,20 @@ namespace Panini.ViewModel
         #endregion
 
         #region Open Topic Command CallBack
-        /// <summary>
-        /// This ICommand binds to the file icon of each topic heading in the detail view. It opens the corresponding topic HTML page in the default browser.
-        /// </summary>
         private ICommand _openFile;
-
+        /// <summary>
+        /// Command that opens a topic.
+        /// </summary>
+        /// <value>Command that handles the opening of the a topic from a give path.</value>
         public ICommand OpenFile
         {
             get { return _openFile ?? (_openFile = new ParameterCommandHandler((path) => open_file(path), () => { return true; })); }
         }
 
+        /// <summary>
+        /// Opens the file from the given <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">The path of the file to be launched.</param>
         public void open_file(object path)
         {
             launch((string)path);
@@ -397,10 +481,20 @@ namespace Panini.ViewModel
 
         #region DragDrop Command
         private ICommand _dragDrop;
+        /// <summary>
+        /// Command for handling drag-drop.
+        /// </summary>
+        /// <value>Command that handles the drag and drop of topics as links, 
+        /// when done from the names of similar topic suggestions in the <c>Similar Topics</c> section of the results view.</value>
         public ICommand DragDropCommand
         {
             get { return _dragDrop ?? (_dragDrop = new ParameterCommandHandler((grid) => drag_link_to_file(grid), () => { return true; })); }
         }
+
+        /// <summary>
+        /// Handles drag and drop of a topic represented by the selected row in the <paramref name="gridObj"/> datagrid.
+        /// </summary>
+        /// <param name="gridObj">The datagrid of the table displayed in the <c>Similar Topics</c> section.</param>
         public void drag_link_to_file(object gridObj)
         {
             DataGrid grid = (DataGrid)gridObj;
@@ -410,7 +504,13 @@ namespace Panini.ViewModel
             {
                 if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                 {
-                    DragDrop.DoDragDrop(new FrameworkElement(), item.Path.ToString(), DragDropEffects.Copy);
+                    try
+                    {
+                        DragDrop.DoDragDrop(new FrameworkElement(), item.Path.ToString(), DragDropEffects.Copy);
+                    } catch (NullReferenceException)
+                    {
+                        // Do nothing if item is not selected
+                    }
                 }
                 else
                 {
@@ -424,9 +524,9 @@ namespace Panini.ViewModel
 
         #region Launch file
         /// <summary>
-        /// This method opens the file referenced by the path parameter.
+        /// Opens the file referenced by the <paramref name="path"/> parameter.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">The path of the file to be launched.</param>
         public void launch(string path)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -449,35 +549,35 @@ namespace Panini.ViewModel
         #endregion
 
         // Config Methods
-        #region Update Keywords Method
-        /// <summary>
-        /// This method updates the keywords in the TopicResultItem of the ResultsPage based on the Keyword count config setting.
-        /// </summary>
-        private ICommand _updateKeywords;
-        public ICommand UpdateKeywords
-        {
-            get { return _updateKeywords ?? (_updateKeywords = new ButtonCommandHandler(() => update_similar_words(), () => { return true; })); }
-        }
+        //#region Update Keywords Method
+        //private ICommand _updateKeywords;
+        ///// <summary>
+        ///// This method updates the keywords in the TopicResultItem of the ResultsPage based on the Keyword count config setting.
+        ///// </summary>
+        //public ICommand UpdateKeywords
+        //{
+        //    get { return _updateKeywords ?? (_updateKeywords = new ButtonCommandHandler(() => update_similar_words(), () => { return true; })); }
+        //}
 
-        private void update_similar_words()
-        {
-            foreach(var topicItem in TopicCollection)
-            {
-                if (topicItem.IsVisible == "Visible")
-                {
-                   foreach(var resultItem in topicItem.itemCollection)
-                    {
-                        var enumKeywords = resultItem.words.Take((int)dataCache.Config["keywordCount"]);
-                        resultItem.Keywords.Clear();
-                        foreach(var keyword in enumKeywords)
-                        {
-                            resultItem.Keywords.Add(keyword);
-                        }
-                    }
-                }
-            }
-        }
-        #endregion
+        //private void update_similar_words()
+        //{
+        //    foreach(var topicItem in TopicCollection)
+        //    {
+        //        if (topicItem.IsVisible == "Visible")
+        //        {
+        //           foreach(var resultItem in topicItem.itemCollection)
+        //            {
+        //                var enumKeywords = resultItem.words.Take((int)dataCache.Config["keywordCount"]);
+        //                resultItem.Keywords.Clear();
+        //                foreach(var keyword in enumKeywords)
+        //                {
+        //                    resultItem.Keywords.Add(keyword);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //#endregion
 
     }
 }

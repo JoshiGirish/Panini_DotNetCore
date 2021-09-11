@@ -1,13 +1,17 @@
 ﻿namespace Panini.Models
 {
+    /// <summary>
+    /// Model for displaying the summary of NLP information in <c>Summary View</c>.
+    /// </summary>
     public class NLPData : BaseModel
     {
         #region Tokinzer
-        /// <summary>
-        /// This property represents tht tokenizer used for tokenizing the sentences.
-        /// </summary>
+        
         private string _tokenizer = "Regexp Tokenizer";
-
+        /// <summary>
+        /// Tokenizer used for tokenizing the sentences.
+        /// </summary>
+        /// <value>Tokenizer used for tokenizing the sentences.</value>
         public string Tokenizer
         {
             get { return _tokenizer; }
@@ -16,11 +20,12 @@
         #endregion
 
         #region Tagger
-        /// <summary>
-        /// This property represents the POS tagger used to tag the words in the sentences.
-        /// </summary>
+        
         private string _tagger;
-
+        /// <summary>
+        /// POS tagger used to tag the words in the sentences.
+        /// </summary>
+        /// <value>POS tagger used to tag the words in the sentences.</value>
         public string Tagger
         {
             get { return _tagger; }
@@ -29,11 +34,12 @@
         #endregion
 
         #region Similarity Measure
-        /// <summary>
-        /// This property represents the similarity measure (TF-IDF) used for co-relating the topics.
-        /// </summary>
+        
         private string _similarityMeasure = "Term-Frequency Inverse-Document-Frequency (TFIDF)";
-
+        /// <summary>
+        /// Similarity measure (TF-IDF) used for co-relating the topics.
+        /// </summary>
+        /// <value>Similarity measure (TF-IDF) used for co-relating the topics.</value>
         public string SimilarityMeasure
         {
             get { return _similarityMeasure; }
@@ -42,11 +48,12 @@
         #endregion
 
         #region Length of TF-IDF Vectors
-        /// <summary>
-        /// This property represents the size of the TF-IDF vector array for each topic.
-        /// </summary>
+        
         private int _tfidfVectorLength;
-
+        /// <summary>
+        /// Size of the TF-IDF vector array for each topic.
+        /// </summary>
+        /// <value>Size of the TF-IDF vector array for each topic.</value>
         public int TfIdfVectorLength
         {
             get { return _tfidfVectorLength; }
@@ -55,11 +62,12 @@
         #endregion
 
         #region Sentences in guide
-        /// <summary>
-        /// This property represents the total number of sentences in all the topics.
-        /// </summary>
+        
         private int _numOfSentences;
-
+        /// <summary>
+        /// Total number of sentences in all the topics.
+        /// </summary>
+        /// <value>Total number of sentences in all the topics.</value>
         public int NumOfSentences
         {
             get { return _numOfSentences; }
@@ -68,11 +76,12 @@
         #endregion
 
         #region Tokens in Lexicon
-        /// <summary>
-        /// This property represents the total number of tokens in the lexicon.
-        /// </summary>
+        
         private int _numOfTokens;
-
+        /// <summary>
+        /// Total number of tokens in the lexicon.
+        /// </summary>
+        /// <value>Total number of tokens in the lexicon.</value>
         public int NumOfTokens
         {
             get { return _numOfTokens; }
@@ -81,11 +90,12 @@
         #endregion
 
         #region IsVisible property
-        /// <summary>
-        /// This property binds to the Visibility property of the NLP Data expander in the Summary page.
-        /// </summary>
+        
         private string _isVisible;
-
+        /// <summary>
+        /// Visibility property of the NLP Data expander in the Summary page.
+        /// </summary>
+        /// <value>Visibility property of the NLP Data expander in the Summary page.</value>
         public string IsVisible
         {
             get { return _isVisible; }
@@ -94,11 +104,12 @@
         #endregion
 
         #region IsExpanded property
-        /// <summary>
-        /// This property binds to the IsExpanded property of the NLP Data expander in the Summary page.
-        /// </summary>
+        
         private bool _isExpanded;
-
+        /// <summary>
+        /// IsExpanded property of the NLP Data expander in the Summary page.
+        /// </summary>
+        /// <value>IsExpanded property of the NLP Data expander in the Summary page.</value>
         public bool IsExpanded
         {
             get { return _isExpanded; }

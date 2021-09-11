@@ -17,9 +17,15 @@ using TFIDF;
 
 namespace Panini.ViewModel
 {
-
+	/// <summary>
+	/// Manages the behavior of <c>Summary View</c>.
+	/// </summary>
 	public class SummaryViewModel : BaseViewModel
 	{
+		/// <summary>
+		/// Single instance of <see cref="DataCache"/>.
+		/// </summary>
+		/// <value>Used for sharing resources between view models.</value>
 		private readonly DataCache dataCache = DataCache.Instance;
 
 		private TopicsInfo _topicsSummary;
@@ -49,7 +55,10 @@ namespace Panini.ViewModel
 		private ICommand _run;
 
 		private ICommand _generateHeatMapData;
-
+		/// <summary>
+		/// Summary info of all topics.
+		/// </summary>
+		/// <value>The <see cref="TopicsInfo"/> class instance that stores the summary information of topics in the corpus.</value>
 		public TopicsInfo TopicsSummary
 		{
 			get
@@ -62,7 +71,11 @@ namespace Panini.ViewModel
 				RaisePropertyChanged("TopicsSummary");
 			}
 		}
-
+		/// <summary>
+		/// NLP data of the performed ananlysis
+		/// </summary>
+		/// <value>The <see cref="NLPData"/> class instance that stores the NLP related information like tokenizer, 
+		/// TFIDF vector length, similarity measure, number of total sentences and words in all topics.</value>
 		public NLPData NLPDataInstance
 		{
 			get
@@ -76,6 +89,11 @@ namespace Panini.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Links data of all topics.
+		/// </summary>
+		/// <value>The <see cref="LinksInfo"/> class instance that stores the information 
+		/// about links like total number of existing links (inline and related links), proposed links, matching links.</value>
 		public LinksInfo LinksSummary
 		{
 			get
@@ -89,6 +107,10 @@ namespace Panini.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Plot model for the heatmap.
+		/// </summary>
+		/// <value>The handle of the plot for configuring axes and series of the plot.</value>
 		public PlotModel Model
 		{
 			get
@@ -102,19 +124,23 @@ namespace Panini.ViewModel
 			}
 		}
 
-		public BitmapSource BMPSource
-		{
-			get
-			{
-				return _bmp;
-			}
-			set
-			{
-				_bmp = value;
-				RaisePropertyChanged("BMPSource");
-			}
-		}
+		//public BitmapSource BMPSource
+		//{
+		//	get
+		//	{
+		//		return _bmp;
+		//	}
+		//	set
+		//	{
+		//		_bmp = value;
+		//		RaisePropertyChanged("BMPSource");
+		//	}
+		//}
 
+		/// <summary>
+		/// Preview model.
+		/// </summary>
+		/// <value>The plot model corresponding to the preview part of the heatmap.</value>
 		public PlotModel PreviewModel
 		{
 			get
@@ -128,6 +154,10 @@ namespace Panini.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// State of the heatmap expander.
+		/// </summary>
+		/// <value>If <c>true</c> the headmap expander is expanded, else it is collpased.</value>
 		public bool IsHeatMapExpanded
 		{
 			get
@@ -141,6 +171,10 @@ namespace Panini.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Visibility of the heatmap expander.
+		/// </summary>
+		/// <value>If <c>true</c> the headmap expander is visibile, else it is collpased.</value>
 		public string IsHeatmapVisible
 		{
 			get
@@ -154,6 +188,11 @@ namespace Panini.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Vertical slider postition.
+		/// </summary>
+		/// <value>The position of the vertical slider on the preview part of the heatmap.
+		/// <para>This position is used for computing the part of the window to be displayed in the main heat map.</para></value>
 		public int VerticalSliderPosition
 		{
 			get
@@ -167,6 +206,11 @@ namespace Panini.ViewModel
 			}
 		}
 
+		/// <summary>
+		/// Horizontal slider postition.
+		/// </summary>
+		/// <value>The position of the horizontal slider on the preview part of the heatmap.
+		/// <para>This position is used for computing the part of the window to be displayed in the main heat map.</para></value>
 		public int HorizontalSliderPosition
 		{
 			get
@@ -182,6 +226,10 @@ namespace Panini.ViewModel
 
         private float _sliderMax;
 
+		/// <summary>
+		/// Slider max value.
+		/// </summary>
+		/// <value>The maximum value for each slider on the heatmap preview.</value>
         public float SliderMax
         {
             get { return _sliderMax; }
@@ -190,7 +238,11 @@ namespace Panini.ViewModel
 
 
         private int _kernelSize = 10;
-
+		/// <summary>
+		/// Kernel size.
+		/// </summary>
+		/// <value>The window size of the heatmap.
+		/// <para>The default value is <c>10</c>.</para></value>
         public int KernelSize
         {
             get { return _kernelSize; }
@@ -198,16 +250,22 @@ namespace Panini.ViewModel
         }
 
 		private string _isPreviewVisible;
-
-        public string IsPreviewVisible
+		/// <summary>
+		/// Visibility of the heatmap preview expander.
+		/// </summary>
+		/// <value>If <c>true</c> the headmap preview expander is visibile, else it is collpased.</value>
+		public string IsPreviewVisible
         {
             get { return _isPreviewVisible; }
             set { _isPreviewVisible = value; RaisePropertyChanged(); }
         }
 
         private bool _isPreviewExpanded;
-
-        public bool IsPreviewExpanded
+		/// <summary>
+		/// State of the heatmap preview expander.
+		/// </summary>
+		/// <value>If <c>true</c> the headmap preview expander is expanded, else it is collpased.</value>
+		public bool IsPreviewExpanded
         {
             get { return _isPreviewExpanded; }
             set { _isPreviewExpanded = value; RaisePropertyChanged(); }
@@ -215,7 +273,10 @@ namespace Panini.ViewModel
 
 
 		private int _heatMapHeight = 800;
-
+		/// <summary>
+		/// Height of the heatmap.
+		/// </summary>
+		/// <value>The height of the main heatmap in pixels.</value>
         public int HeatmapHeight
         {
             get { return _heatMapHeight; }
@@ -223,8 +284,11 @@ namespace Panini.ViewModel
         }
 
         private int _heatMapWidth = 750;
-
-        public int HeatMapWidth
+		/// <summary>
+		/// Width of the heatmap.
+		/// </summary>
+		/// <value>The width of the main heatmap in pixels.</value>
+		public int HeatMapWidth
         {
             get { return _heatMapWidth; }
             set { _heatMapWidth = value; RaisePropertyChanged(); }
@@ -232,57 +296,69 @@ namespace Panini.ViewModel
 
 
 
-        public ICommand ExpandAll => _expandAll ?? (_expandAll = new ButtonCommandHandler(delegate
-		{
-			ExpandAllCallback();
-		}, () => ExpandAllCanExecute));
+  //      public ICommand ExpandAll => _expandAll ?? (_expandAll = new ButtonCommandHandler(delegate
+		//{
+		//	ExpandAllCallback();
+		//}, () => ExpandAllCanExecute));
 
-		public bool ExpandAllCanExecute => true;
+		//public bool ExpandAllCanExecute => true;
 
-		public ICommand CollapseAll => _collapseAll ?? (_collapseAll = new ButtonCommandHandler(delegate
-		{
-			CollapseAllCallBack();
-		}, () => CollapseAllCanExecute));
+		//public ICommand CollapseAll => _collapseAll ?? (_collapseAll = new ButtonCommandHandler(delegate
+		//{
+		//	CollapseAllCallBack();
+		//}, () => CollapseAllCanExecute));
 
-		public bool CollapseAllCanExecute => true;
+		//public bool CollapseAllCanExecute => true;
 
+		/// <summary>
+		/// Run command.
+		/// </summary>
+		/// <value>Command to start the generation of report and heatmap.</value>
 		public ICommand Run => _run ?? (_run = new ButtonCommandHandler(delegate
 		{
 			RunCallback();
 		}, () => RunCanExecute));
 
+		/// <summary>
+		/// Run command execution flag.
+		/// </summary>
+		/// <value>Determines if the <see cref="Run"/> command can execute in its current state.</value>
 		public bool RunCanExecute => true;
 
+		/// <summary>
+		/// Command to generate heatmap data.
+		/// </summary>
+		/// <value>Generates the heatmap data and refreshes it in the view.</value>
 		public ICommand GenerateHeatMapData => _generateHeatMapData ?? (_generateHeatMapData = new ButtonCommandHandler(delegate
 		{
 			App.Current.Dispatcher.InvokeAsync((Action)delegate { refresh_heat_map(); });
 		}, () => true));
 
 
-        private void ExpandAllCallback()
-		{
-			try
-			{
-				TopicsSummary.IsExpanded = true;
-				LinksSummary.IsExpanded = true;
-				IsHeatMapExpanded = true;
-				NLPDataInstance.IsExpanded = true;
-				IsPreviewExpanded = true;
-			}
-			catch (NullReferenceException)
-			{
-				MessageBoxResult result = MessageBox.Show("Click Run button to generate the summary!", "Invalid Operation !", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-			}
-		}
+  //      private void ExpandAllCallback()
+		//{
+		//	try
+		//	{
+		//		TopicsSummary.IsExpanded = true;
+		//		LinksSummary.IsExpanded = true;
+		//		IsHeatMapExpanded = true;
+		//		NLPDataInstance.IsExpanded = true;
+		//		IsPreviewExpanded = true;
+		//	}
+		//	catch (NullReferenceException)
+		//	{
+		//		MessageBoxResult result = MessageBox.Show("Click Run button to generate the summary!", "Invalid Operation !", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+		//	}
+		//}
 
-		private void CollapseAllCallBack()
-		{
-			TopicsSummary.IsExpanded = false;
-			LinksSummary.IsExpanded = false;
-			IsHeatMapExpanded = false;
-			NLPDataInstance.IsExpanded = false;
-			IsPreviewExpanded = false;
-		}
+		//private void CollapseAllCallBack()
+		//{
+		//	TopicsSummary.IsExpanded = false;
+		//	LinksSummary.IsExpanded = false;
+		//	IsHeatMapExpanded = false;
+		//	NLPDataInstance.IsExpanded = false;
+		//	IsPreviewExpanded = false;
+		//}
 
 		private void RunCallback()
 		{
@@ -326,7 +402,9 @@ namespace Panini.ViewModel
 			generateNLPDataThread.Start();
 		}
 		
-
+		/// <summary>
+		/// Generates summary information on topics, which includes the total number of topics in the directory, number of valid and igonred topics.
+		/// </summary>
 		public void generate_topics_info()
 		{
 			TopicsSummary = new TopicsInfo();
@@ -348,6 +426,9 @@ namespace Panini.ViewModel
 			TopicsSummary.IsVisible = "Visible";
 		}
 
+		/// <summary>
+		/// Generates summary information on links in topics, which includes number of exiting links (inline and reltaed links).
+		/// </summary>
 		public void generate_links_info()
 		{
 			LinksSummary = new LinksInfo();
@@ -362,6 +443,10 @@ namespace Panini.ViewModel
 			LinksSummary.IsVisible = "Visible";
 		}
 
+		/// <summary>
+		/// Counts the total related links in all the topics.
+		/// </summary>
+		/// <returns>The total number of related links in all the topics of the corpus.</returns>
 		public int get_count_of_all_rel_links()
 		{
 			IEnumerable<List<string>> enumRelLinks = dataCache.corpus.concDict.Values.Select((Topic n) => n.relinks);
@@ -373,6 +458,10 @@ namespace Panini.ViewModel
 			return allRelLinks.Count;
 		}
 
+		/// <summary>
+		/// Counts all inline links in topics of the corpus.
+		/// </summary>
+		/// <returns>The total number of inline links present in all topics of the corpus.</returns>
 		public int get_count_of_all_inline_links()
 		{
 			IEnumerable<List<string>> enumInlineLinks = dataCache.corpus.concDict.Values.Select((Topic n) => n.xrefs);
@@ -384,6 +473,10 @@ namespace Panini.ViewModel
 			return allInlineLinks.Count;
 		}
 
+		/// <summary>
+		/// Counts all links proposed as similar topics in the results.
+		/// </summary>
+		/// <returns>The total number of inline links present in all topics of the corpus.</returns>
 		public int get_count_of_all_proposed_links()
 		{
 			IEnumerable<int> enumLinkCount = dataCache.TopicCollection.Select((TopicItem n) => n.itemCollection.Count);
@@ -395,11 +488,20 @@ namespace Panini.ViewModel
 			return sum;
 		}
 
+
+		/// <summary>
+		/// Counts all links in topics of the corpus.
+		/// </summary>
+		/// <returns>The total number of links (inline + related) present in all topics of the corpus.</returns>
 		public int get_count_of_all_existing_links()
 		{
 			return LinksSummary.NumOfExistingRelLinks + LinksSummary.NumOfExistingInlineLinks;
 		}
 
+		/// <summary>
+		/// Counts all proposed as similar topics which are already linked in the topics.
+		/// </summary>
+		/// <returns>The total number of similar topic suggestions which are already linked in the topics.</returns>
 		public int get_count_of_all_matching_links()
 		{
 			IEnumerable<IEnumerable<string>> enumMatchingLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Intersect(dataCache.corpus.concDict[n.Name].get_all_link_names()));
@@ -411,6 +513,10 @@ namespace Panini.ViewModel
 			return sum;
 		}
 
+		/// <summary>
+		/// Counts the similar topics which can be integrated as links in the topics.
+		/// </summary>
+		/// <returns>The difference between the total number of suggested similar topics and the matching links that link to some of suggested similar topics.</returns>
 		public int get_count_of_all_links_to_be_integrated()
 		{
 			IEnumerable<IEnumerable<string>> enumIntegrateLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Except(dataCache.corpus.concDict[n.Name].get_all_link_names()));
@@ -422,6 +528,10 @@ namespace Panini.ViewModel
 			return sum;
 		}
 
+		/// <summary>
+		/// Counts the obsolete links in all topics of the corpus.
+		/// </summary>
+		/// <returns>The total number of links which can be removed/replaced depending on better link proposals to other similar topics.</returns>
 		public int get_count_of_all_obsolete_links()
 		{
 			IEnumerable<IEnumerable<string>> enumObseleteLinks = dataCache.TopicCollection.Select((TopicItem n) => dataCache.corpus.concDict[n.Name].get_all_link_names().Except(n.get_topic_names()));
@@ -433,6 +543,12 @@ namespace Panini.ViewModel
 			return sum;
 		}
 
+		/// <summary>
+		/// Gets the heatmap data (axis labels and similarity scores) when the number of topics is less than or 
+		/// equal to the window size in the preview. In this case, the preview heatmap is not generated as the 
+		/// number of topics is low enough to fit in main heatmap.
+		/// </summary>
+		/// <returns>The axis labels and similarity scores for plotting the main heatmap.</returns>
 		public Dictionary<string, object> get_full_heatmap_data()
 		{
 			string[] labels = dataCache.corpus.concDict.Keys.ToArray();
@@ -451,6 +567,9 @@ namespace Panini.ViewModel
 			return dataDict;
 		}
 
+		/// <summary>
+		/// Generates and updates the heatmap preview.
+		/// </summary>
 		public void generate_preview_map()
         {
 			Dictionary<string, object> plotData = get_full_heatmap_data();
@@ -502,6 +621,9 @@ namespace Panini.ViewModel
 			
 		}
 
+		/// <summary>
+		/// Generates and updates the main heatmap.
+		/// </summary>
 		public void generate_heat_map()
 		{
 			Dictionary<string, object> plotData = new Dictionary<string, object>();
@@ -580,7 +702,7 @@ namespace Panini.ViewModel
 
         #region Refresh heat map and preview
 		/// <summary>
-		/// Refreshes both the maps.
+		/// Refreshes both the heatmaps.
 		/// </summary>
         public void refresh_heat_map()
 		{
@@ -592,6 +714,10 @@ namespace Panini.ViewModel
 		}
         #endregion
 
+		/// <summary>
+		/// Gets the colors corresponding to the scheme of the heatmap configured by the user in the settings view.
+		/// </summary>
+		/// <returns>The list of colors used by the color pallete of the heatmap.</returns>
         public List<OxyColor> get_color_scheme()
 		{
 			var scheme = dataCache.Config["colorScheme"];
@@ -637,6 +763,9 @@ namespace Panini.ViewModel
 			};
 		}
 
+		/// <summary>
+		/// Generates the summary NLP information to be displayed in the summary view.
+		/// </summary>
 		public void generate_nlp_data()
 		{
 			NLPDataInstance.Tokenizer = "Regexp Tokenizer";
@@ -648,6 +777,10 @@ namespace Panini.ViewModel
 			NLPDataInstance.IsVisible = "Visible";
 		}
 
+		/// <summary>
+		/// Gets the partical data of the heatmap depending on the horizontal and vertical slider positions on the heatmap preview.
+		/// </summary>
+		/// <returns>The axis labels and similarity scores for the partial window to be displayed in the main heatmap.</returns>
 		public Dictionary<string, object> get_partial_heatmap_data()
 		{
 			Dictionary<string, object> heatmapData = new Dictionary<string, object>();

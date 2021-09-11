@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Panini.ViewModel
 {
-    class AboutViewModel : BaseViewModel
+    /// <summary>
+    /// Manages the behavior of <c>About View</c>.
+    /// </summary>
+    public class AboutViewModel : BaseViewModel
     {
     }
 }

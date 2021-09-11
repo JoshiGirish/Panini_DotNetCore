@@ -8,32 +8,120 @@ using HtmlAgilityPack.CssSelectors.NetCore;
 
 namespace TFIDF
 {
+    /// <summary>
+    /// The class that is intantiated for each web-topic in the corpus.
+    /// </summary>
     public class Topic : BaseModel
     {
+
         #region Property Declarations
+        /// <summary>
+        /// Name of the topic.
+        /// </summary>
+        /// <value>The base name of the topic without the extension.</value>
         public string topicName { get; set; }
+
+        /// <summary>
+        /// Text content of the topic.
+        /// </summary>
+        /// <value>The text extracted from the web-topic which the <c>Topic</c> instance represents.</value>
         private string text { get; set; }
+
+        /// <summary>
+        /// Number of sentences in the topic.
+        /// </summary>
+        /// <value>The number of sentences extracted from the topic <see cref="text"/>.</value>
         public int sentCount { get; set; }
+
+        /// <summary>
+        /// URIs that the inline links (<see cref="xrefs"/>) point to.
+        /// </summary>
+        /// <value>The list of <c>href</c> attribute values of inline links in the topic. 
+        /// Inline links usually appear in the body of the topic, inline with the description.
+        /// <para>The DITA specification specifies the use of <c>xref</c> markup element for generating inline links.</para></value>
         public List<string> xrefs { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Inline link tags in the topic.
+        /// </summary>
+        /// <value>The list of inline hyperlinks extracted from the body of the topic.</value>
         public List<string> xrefTags { get; set; } = new List<string>();
+
+        /// <summary>
+        /// URIs that the related links (<see cref="relinks"/>) point to.
+        /// </summary>
+        /// <value>The list of <c>href</c> attribute values of related links in the topic. 
+        /// Related links usually appear in separate section after the body of the topic.
+        /// <para>The DITA specification specifies the use of <c>related-links</c> markup element for generating related links.</para></value>
         public List<string> relinks { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Related link tags in the topic.
+        /// </summary>
+        /// <value>The list of the related links extracted from a separate section, usually highlighted as <c>See Also</c> or <c>Related Topics</c>.</value>
         public List<string> relinkTags { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Words in the topic.
+        /// </summary>
+        /// <value>The list of all the words in the topic, including multiple occurances.</value>
         public List<string> words = new List<string>();
-        private List<double> tfidfVector = new List<double>();
+
+        /// <summary>
+        /// Path of the topic.
+        /// </summary>
+        /// <value>The path of the topic.</value>
         public string path { get; } = "";
+
+        /// <summary>
+        /// <c>TFIDF</c> instance associated with the topic.
+        /// </summary>
+        /// <value>The <c>TFIDF</c> instance which stores all information about TFIDF analysis related to the topic. </value>
         public TFIDF tfidf { get; set; }
         //public enum SelectionMode
         //{
         //    InnerText,
         //    CSSSelector
         //}
+
+        /// <summary>
+        /// The selection mode of the related links container.
+        /// </summary>
+        /// <value>Represents the mode of selection, for extracting the parent container tag which includes are the anchor tags of the related links.</value>
         public string Mode { get; set; }
+
+        /// <summary>
+        /// The comma separated inner texts of the related links containers.
+        /// </summary>
+        /// <value>Represents a comma separated string of the inner texts of the parent container of the related links.
+        /// <para>Usually web-topics contain related links under a section named <c>See Also</c> or <c>Related Topics</c>. 
+        /// These section headings are passed using this <c>InnerText</c> field.</para></value>
         public string InnerText { get; set; } = ""; // comma separated string
+
+        /// <summary>
+        /// The CSS selector of the parent of the related links.
+        /// </summary>
+        /// <value>Represents the CSS Selector of the related link tag.</value>
         public string CSSSelector { get; set; } = "";
+
+        /// <summary>
+        /// The ancestor level of the selected tag.
+        /// </summary>
+        /// <value>Sometimes the tag of the section headings for the related links is not their parent tag, but siblings. 
+        /// In such cases, the <c>AncestorLevel</c> field lets you specify which level of parent must be selected that will encapsulate all related links.</value>
         public int AncestorLevel { get; set; } = 0;
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Instantiates <see cref="Topic"/> class for a web-topic.
+        /// </summary>
+        /// <param name="name">Base name of the topic without its extension.</param>
+        /// <param name="filePath">Path of the topic.</param>
+        /// <param name="html"><c>HTML</c> document that represents the topic.</param>
+        /// <param name="ignoreData">Configuration settings for invalidating topics.</param>
+        /// <param name="selectionOptions">Selection options for the parent container of related links.</param>
+        /// <param name="level">Ancestor level of the parent tag which encapsulates all related links.</param>
         public Topic(string name, string filePath,  HtmlDocument html, Dictionary<string, List<string>> ignoreData, Dictionary<string, string> selectionOptions, int level)
         {
             topicName = name;
@@ -60,11 +148,10 @@ namespace TFIDF
         #region Check Topic Validity
         /// <summary>
         /// Checks the validity of a file from its name.
-        /// Returns "true" if the filename complies with the configured naming conventions.
         /// </summary>
-        /// <param name="filename">Filename to be checked for validity.</param>
+        /// <param name="filename">Topic name to be checked for validity.</param>
         /// <param name="ignoreData">Data dictionary containing configured naming conventions.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if the filename complies with the configured naming conventions, else <c>false</c>.</returns>
         public static bool Is_valid(string filename, Dictionary<string, List<string>> ignoreData)
         {
             var name = Path.GetFileNameWithoutExtension(filename);
@@ -87,10 +174,10 @@ namespace TFIDF
 
         #region Get Topic Text
         /// <summary>
-        /// Returns the raw text string from a given HTML document.
+        /// Extracts the text content from a given <c>HTML</c> document.
         /// </summary>
-        /// <param name="doc">The HTML document whose text is requested.</param>
-        /// <returns></returns>
+        /// <param name="doc">The <c>HTML</c> document whose text is requested.</param>
+        /// <returns>Topic text in the form of a string.</returns>
         public string get_topic_text(HtmlDocument doc)
         {
             var body = doc.DocumentNode.SelectSingleNode("//body");
@@ -105,10 +192,10 @@ namespace TFIDF
 
         #region Get Existing Links
         /// <summary>
-        /// Returns the inline links and related links from the given HTNL document.
+        /// Extracts hyperlink data (inline links and related links) from the given <c>HTML</c> document.
         /// </summary>
         /// <param name="doc">The document from which the links are to be extracted.</param>
-        /// <returns></returns>
+        /// <returns>A dictionary containing the inline links (<see cref="xrefs"/>) and related links (<see cref="relinks"/>) in the topic.</returns>
         public Dictionary<string, List<string>> get_existing_links(HtmlDocument doc)
         {
             // Find the related links
@@ -140,9 +227,9 @@ namespace TFIDF
 
         #region Get Related Links
         /// <summary>
-        /// Finds all related links from the HtmlDocument
+        /// Extracts all the related links from the <c>HTML</c> document (<paramref name="doc"/>).
         /// </summary>
-        /// <param name="doc">Source HtmlDocument</param>
+        /// <param name="doc">The <c>HTML</c> document.</param>
         public void get_related_links(HtmlDocument doc)
         {
             HtmlNode parentTag = null;
@@ -225,9 +312,9 @@ namespace TFIDF
 
         #region Get All Link Names
         /// <summary>
-        /// Return a list of names of all the links in the topic.
+        /// Returns a list of names of all the links in the topic.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A combined list of names of inline and related links.</returns>
         public List<string> get_all_link_names()
         {
             List<string> names = new List<string>();
@@ -239,9 +326,9 @@ namespace TFIDF
 
         #region Get All Words
         /// <summary>
-        /// Returns valid words from the topic text after removing punctuation, symbols, and numbers.
+        /// Extracts all valid words from the topic text.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of valid words after removing punctuation, symbols, and numbers from the topic text.</returns>
         public List<string> get_all_words()
         {
             var data = new string(text.Where(c => !char.IsPunctuation(c) && !char.IsSymbol(c)).ToArray()); // remove punctuation and symbols
@@ -261,10 +348,10 @@ namespace TFIDF
 
         #region Get All Sentences
         /// <summary>
-        /// Returns IEnumerable of sentences from the give text.
+        /// Extracts all sentences from the topic text.
         /// </summary>
         /// <param name="text">Text to be tokenized into sentences.</param>
-        /// <returns></returns>
+        /// <returns>Sentences from the topic text.</returns>
         private int CountTokenizedSentences(string text)
         {
             // remove spaces and split the , . : ; etc..
@@ -275,6 +362,12 @@ namespace TFIDF
         #endregion
 
         #region Get nth Parent Node
+        /// <summary>
+        /// Finds the <c>n</c>th <paramref name="level"/> parent of selected tag (<paramref name="selectedTag"/>). 
+        /// </summary>
+        /// <param name="selectedTag">The tag selected from the <c>HTML</c> document.</param>
+        /// <param name="level">Ancestor level</param>
+        /// <returns></returns>
         public HtmlNode get_nth_parent(HtmlNode selectedTag, int level)
         {
             HtmlNode parent = selectedTag;

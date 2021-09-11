@@ -103,6 +103,12 @@
             "WindowsAPICodePack-Shell": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "docfx.console": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.58.3, )"
             }
           },
           "imports": [
@@ -178,6 +184,12 @@
             "Microsoft.ML": {
               "target": "Package",
               "version": "[1.6.0, )"
+            },
+            "docfx.console": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.58.3, )"
             }
           },
           "imports": [

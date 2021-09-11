@@ -11,12 +11,14 @@
           "HtmlAgilityPack": "1.11.34",
           "HtmlAgilityPack.CssSelectors.NetCore": "1.2.1",
           "LemmaGenerator": "1.1.0",
-          "Microsoft.ML": "1.6.0"
+          "Microsoft.ML": "1.6.0",
+          "docfx.console": "2.58.3"
         },
         "runtime": {
           "TFIDF.dll": {}
         }
       },
+      "docfx.console/2.58.3": {},
       "HtmlAgilityPack/1.11.34": {
         "runtime": {
           "lib/netstandard2.0/HtmlAgilityPack.dll": {
@@ -962,6 +964,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "docfx.console/2.58.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4TyrZNtFjZzBKJ7MIKTLHlU5X/Mkdd5SvFriQYfnjXKnsZTR/V/ClcytU4wV+4+FpTpXGwO5Jzc11B4j8Ve7Qg==",
+      "path": "docfx.console/2.58.3",
+      "hashPath": "docfx.console.2.58.3.nupkg.sha512"
     },
     "HtmlAgilityPack/1.11.34": {
       "type": "package",

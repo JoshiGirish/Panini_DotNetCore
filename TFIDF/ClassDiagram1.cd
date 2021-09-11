@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TFIDF.Corpus">
+    <Position X="6.75" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>IAEAMMACIIIAQGBAAYgQTQBAMAEAAAoAUAyAAAAAgIA=</HashCode>
+      <FileName>Corpus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TFIDF.Topic">
+    <Position X="12.25" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ABAIAABgBKAAAAAAAKACAAAAEhAAAIoIASAAAgAAgAk=</HashCode>
+      <FileName>Topic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

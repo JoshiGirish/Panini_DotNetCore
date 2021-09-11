@@ -8,17 +8,45 @@ using System.Threading.Tasks;
 
 namespace Panini.Models
 {
+    /// <summary>
+    /// Model for displaying an entry in the table of <c>Similar Topics</c> section in <c>Results View</c>.
+    /// </summary>
     public class TopicResultItem : BaseModel
     {
+        /// <summary>
+        /// Name of the similar topic.
+        /// </summary>
+        /// <value>Name of the similar topic.</value>
         public string Name { get; set; }
+        /// <summary>
+        /// Name of the similar topic with <c>XML</c> extension.
+        /// </summary>
+        /// <value>Name of the similar topic with <c>XML</c> extension.</value>
         public string sourceName { get; set; }
+        /// <summary>
+        /// Path of the similar topic.
+        /// </summary>
+        /// <value>Path of the similar topic.</value>
         public string Path { get; set; }
+        /// <summary>
+        /// Similarity scores of the similar topic.
+        /// </summary>
+        /// <value>Similarity scores of the similar topic.</value>
         public float simScore { get; set; }
+        /// <summary>
+        /// Common keywords from the similar topic.
+        /// </summary>
+        /// <value>Common keywords from the similar topic.
+        /// <para>This list contains top <c>100</c> common keywords.</para></value>
         public List<string> words { get; set; }
+
         private string _isLinked = "Collapsed";
 
         private int _numOfInlineLinks;
-
+        /// <summary>
+        /// Number of inline links in the similar topic.
+        /// </summary>
+        /// <value>Number of inline links in the similar topic.</value>
         public int NumOfInlineLinks
         {
             get { return _numOfInlineLinks; }
@@ -26,13 +54,19 @@ namespace Panini.Models
         }
 
         private int _numOfRelatedLinks;
-
+        /// <summary>
+        /// Number of related links in the similar topic.
+        /// </summary>
+        /// <value>Number of related links in the similar topic.</value>
         public int NumOfRelatedLinks
         {
             get { return _numOfRelatedLinks; }
             set { _numOfRelatedLinks = value; RaisePropertyChanged(); }
         }
-
+        /// <summary>
+        /// Flag to represent if the similar topic is already linked to the topic.
+        /// </summary>
+        /// <value>Flag to represent if the similar topic is already linked to the topic.</value>
         public string IsLinked
         {
             get { return _isLinked ; }
@@ -40,6 +74,11 @@ namespace Panini.Models
         }
 
         private List<string> _keywords = new List<string>();
+        /// <summary>
+        /// Keywords displayed for the similar topic.
+        /// </summary>
+        /// <value>NKeywords displayed for the similar topic.
+        /// <para>The number of keywords is specified by the user in the settings view.</para></value>
         public List<string> Keywords
         {
             get { return _keywords; }
@@ -47,20 +86,11 @@ namespace Panini.Models
         }
         //public string keywordsString { get { return string.Join("    ", keywords); } set{ } }
 
+        /// <summary>
+        /// Instantiates the <see cref="TopicResultItem"/> class for each similar topic recommendation.
+        /// </summary>
         public TopicResultItem()
         {
         }
-
-        public TopicResultItem(string name, string path, float simScore, List<string> words, List<string> keywords, string isLinked)
-        {
-            Name = name;
-            sourceName = System.IO.Path.GetFileNameWithoutExtension(name) + ".xml";
-            Path = path;
-            this.simScore = simScore;
-            this.words = words;
-            this.Keywords = keywords;
-            this.IsLinked = isLinked;
-        }
-
     }
 }
