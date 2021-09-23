@@ -13,4 +13,7 @@
 - *Word Rankings* that define how unique a word is to a topic.
 - *Topic Summary* which in the form of number of existing inline links, related links, sentences, and words.
 - *Similarity Heatmap* which provides a visual overview of similarity scores.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 77df11edb22c9e81afb1e5d0014ab78d8e3aff52
