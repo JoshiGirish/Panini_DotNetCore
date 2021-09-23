@@ -1,5 +1,5 @@
 # PANINI
--------
+
 [![Runtime](/images/runtime.svg)](https://dotnet.microsoft.com/download/dotnet/5.0)
 [![Version](/images/version.svg)](#)
 
@@ -13,7 +13,7 @@
 - *Similarity Heatmap* which provides a visual overview of similarity scores.
 
 ## Resources
-------
+
 Documentation : [PANINI Version 1.0.0 Documentation](joshigirish.github.io/panini_dotnetcore/)
 
 APIs : [PANINI API Reference](https://joshigirish.github.io/Panini_DotNetCore/api/index.html)
