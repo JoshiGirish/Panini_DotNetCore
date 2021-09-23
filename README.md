@@ -5,7 +5,7 @@
 
 **PANINI** is a topic recommendation tool that makes it easier for technical writers to interlink topics of a guide. For each topic in the guide, the tool proposes similar topics depending on relevance rankings.
 
-<img src="images/About.png" alt="PANINI">
+![PANINI](images/About.png)
 
 **PANINI** uses basic `Natural Language Processing` and `Machine Learning` techniques to process a set of web topics and compute cosine similarity scores using `Term-Frequency Inverse Document-Frequency` (TFIDF) measure. The tool provides useful statistics like:
 - *Topic Recommendations* that can be used to incorporate inline and related links.
