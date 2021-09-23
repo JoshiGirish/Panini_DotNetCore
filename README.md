@@ -15,5 +15,7 @@
 ## Resources
 ------
 Documentation : [PANINI Version 1.0.0 Documentation](joshigirish.github.io/panini_dotnetcore/)
+
 APIs : [PANINI API Reference](https://joshigirish.github.io/Panini_DotNetCore/api/index.html)
+
 Quick Start Demo : [PANINI - Related Topic Recommendation Tool](https://www.youtube.com/watch?v=7b7FRqfdCkY)
