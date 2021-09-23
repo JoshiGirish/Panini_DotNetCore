@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/Users/Girish/Desktop/docfx_project",
+  "source_base_path": "D:/Dev/Documentation/Panini_core/docfx_project",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -453,10 +453,10 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "gN7tfv8MTlyR6i28rT4ZbVg/Mn1SKc8ZI5+jkr5AOuM="
+          "hash": "801HVZ6eOiNCodS3q2sdDffoeecwiun6Zke/WNnVN3U="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -477,10 +477,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/Getting-Started.html",
-          "hash": "3k3lF9elyZ0HCmNlQfvNbuYSK1Tkz+mVdq1Feus8zXY="
+          "hash": "nEylfi0BVDPyn59SShdrzlAQzAMqPBaSpPsCV5UX7eI="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -489,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/about.html",
-          "hash": "o4M3wPwO0AAMWX40SP/WZW5dl0j7hJ7zz4sS6vuiPeQ="
+          "hash": "8Y80piiYkDx8vLYPARupKuk3cyqnT1MCYh2q2KPI05A="
         }
       },
       "is_incremental": true,
@@ -693,7 +693,7 @@
           "hash": "ow0NzJpbrAF5cftOQ3fvfuwRmAFlN61ufgtQaKvDTcU="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -722,7 +722,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 5,
-          "skipped_file_count": 3
+          "skipped_file_count": 4
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
