@@ -5,7 +5,6 @@
 
 **PANINI** is a topic recommendation tool that makes it easier for technical writers to interlink topics of a guide. For each topic in the guide, the tool proposes similar topics depending on relevance rankings.
 
-![PANINI](../images/About.png)
 
 **PANINI** uses basic `Natural Language Processing` and `Machine Learning` techniques to process a set of web topics and compute cosine similarity scores using `Term-Frequency Inverse Document-Frequency` (TFIDF) measure. The tool provides useful statistics like:
 - *Topic Recommendations* that can be used to incorporate inline and related links.
@@ -16,8 +15,8 @@
 
 ## Resources
 
+Quick Start Demo : [PANINI - Related Topic Recommendation Tool](https://www.youtube.com/watch?v=7b7FRqfdCkY)
+
 Documentation : [PANINI Version 1.0.0 Documentation](https://joshigirish.github.io/Panini_DotNetCore/index.html)
 
 APIs : [PANINI API Reference](https://joshigirish.github.io/Panini_DotNetCore/api/index.html)
-
-Quick Start Demo : [PANINI - Related Topic Recommendation Tool](https://www.youtube.com/watch?v=7b7FRqfdCkY)
