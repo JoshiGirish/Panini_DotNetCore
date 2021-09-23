@@ -147,7 +147,7 @@ namespace Panini.ViewModel
 
         private Color _statusBarColor = new Color();
         /// <summary>
-        /// Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+        /// Status color. This property binds to <c>statusColorBrush</c> in the load view.
         /// </summary>
         /// <value>Color of the status bar.</value>
         public Color StatusBarColor

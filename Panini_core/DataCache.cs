@@ -32,7 +32,7 @@ namespace Panini
 
         private List<string> _listOfFiles;
         /// <summary>
-        /// A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the laod view.
+        /// A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the load view.
         /// </summary>
         /// <value>The names of the files read from the the selected directory are stored in this list.</value>
         public List<string> ListOfFiles

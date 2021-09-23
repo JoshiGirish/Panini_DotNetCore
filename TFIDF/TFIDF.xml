@@ -6,7 +6,7 @@
     <members>
         <member name="T:TFIDF.BaseModel">
             <summary>
-            The base model which implements the <c>INotifyPropertyChanged</c> interface.
+            Base model which implements the <c>INotifyPropertyChanged</c> interface.
             </summary>
         </member>
         <member name="E:TFIDF.BaseModel.PropertyChanged">
@@ -374,7 +374,7 @@
         </member>
         <member name="M:TFIDF.MLPipeline.#ctor">
             <summary>
-            Creates a machine learning engine for traforming text data. 
+            Creates a machine learning engine for transforming text data. 
             The engine takes text data, tokenizes it into words, and removes the stop words.
             </summary>
         </member>

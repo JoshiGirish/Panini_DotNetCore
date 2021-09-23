@@ -141,7 +141,7 @@ namespace Panini.ViewModel
         /// <value>View model from which other view models inherit.</value>
         public BaseViewModel baseViewModel { get { return configVM; } }
         /// <summary>
-        /// <c>Laod View</c> model.
+        /// <c>Load View</c> model.
         /// </summary>
         /// <value>View model for handling behavior of <c>Load View</c>.</value>
         public BaseViewModel LoadViewModel { get { return loadVM; } }

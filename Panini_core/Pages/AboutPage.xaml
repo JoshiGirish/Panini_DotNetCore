@@ -40,11 +40,11 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
-          <Image Height="40"
+          <!--<Image Height="40"
                  Width="40"
                  Source="/Images/hyperlink.png"
-                 Opacity="0.55" />
-          <TextBlock Text="Links"
+                 Opacity="0.55" />-->
+          <TextBlock Text="PANINI"
                      FontSize="40"
                      Margin="10 0"
                      FontWeight="Bold"
@@ -55,14 +55,14 @@
         <StackPanel Grid.Row="1"
                     Orientation="Vertical">
           <TextBlock Text="Version 1.0.0"
-                     Margin="50 0 0 20"
+                     Margin="10 0 0 20"
                      FontStyle="Italic"></TextBlock>
           <TextBlock TextWrapping="Wrap"
                      FontFamily="{StaticResource Ubuntu}"
                      FontSize="14"
                      Foreground=" #FF4F4F4F"
                      TextAlignment="Justify">
-                Links is a utility tool for ranking topics based on relevance scores. Links basically implements a recommendation system based on natural language processing. It uses TF-IDF (Term-Frequency-Inverse-Document-Frequency) for computing similarity and provides useful statistics on topics.
+                PANINI is a utility tool for ranking topics based on relevance scores. The tool implements a recommendation system based on natural language processing. It uses TF-IDF (Term-Frequency-Inverse-Document-Frequency) for computing similarity and provides useful statistics on topics.
           </TextBlock>
         </StackPanel>
       </Grid>

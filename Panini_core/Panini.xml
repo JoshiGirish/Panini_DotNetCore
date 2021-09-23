@@ -14,38 +14,65 @@
             Creates instance of the command handler
             </summary>
             <param name="action">Action to be executed by the command</param>
-            <param name="canExecute">A bolean property to containing current permissions to execute the command</param>
-        </member>
-        <member name="E:Panini.Commands.ButtonCommandHandler.CanExecuteChanged">
-            <summary>
-            Wires CanExecuteChanged event 
-            </summary>
-        </member>
-        <member name="M:Panini.Commands.ButtonCommandHandler.CanExecute(System.Object)">
-            <summary>
-            Forcess checking if execute is allowed
-            </summary>
-            <param name="parameter"></param>
-            <returns></returns>
+            <param name="canExecute">Dictates if the command can be executed</param>
         </member>
         <member name="M:Panini.Commands.ParameterCommandHandler.#ctor(System.Action{System.Object},System.Func{System.Boolean})">
             <summary>
             Creates instance of the command handler
             </summary>
             <param name="action">Action to be executed by the command</param>
-            <param name="canExecute">A bolean property to containing current permissions to execute the command</param>
+            <param name="canExecute">Dictates if the command can be executed</param>
         </member>
-        <member name="E:Panini.Commands.ParameterCommandHandler.CanExecuteChanged">
+        <member name="T:Panini.DataCache">
             <summary>
-            Wires CanExecuteChanged event 
+            A class for sharing resources between view models.
             </summary>
         </member>
-        <member name="M:Panini.Commands.ParameterCommandHandler.CanExecute(System.Object)">
+        <member name="P:Panini.DataCache.corpus">
             <summary>
-            Forcess checking if execute is allowed
+            Corpus of the web-topics.
             </summary>
-            <param name="parameter"></param>
-            <returns></returns>
+            <value>Corpus of the web-topics.</value>
+        </member>
+        <member name="F:Panini.DataCache.DirPath">
+            <summary>
+            Path of the directory containing the web-topics.
+            </summary>
+        </member>
+        <member name="F:Panini.DataCache.TopicCollection">
+            <summary>
+            Collection of <see cref="T:Panini.Models.TopicItem"/> instances.
+            </summary>
+            <value>A list of <see cref="T:Panini.Models.TopicItem"/> instances for each valid topic in the corpus.</value>
+        </member>
+        <member name="P:Panini.DataCache.ListOfFiles">
+            <summary>
+            A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the load view.
+            </summary>
+            <value>The names of the files read from the the selected directory are stored in this list.</value>
+        </member>
+        <member name="F:Panini.DataCache.Config">
+            <summary>
+            Dictionary for storing settings.
+            </summary>
+            <value>Dictionary for storing settings.</value>
+        </member>
+        <member name="F:Panini.DataCache.NLPData">
+            <summary>
+            Dictionary for storing NLP related data.
+            </summary>
+            <value>Dictionary for storing NLP related data.</value>
+        </member>
+        <member name="F:Panini.DataCache.ViewState">
+            <summary>
+            State that stores the enabled views.
+            </summary>
+            <value>Collection of enabled views.</value>
+        </member>
+        <member name="P:Panini.DataCache.Instance">
+            <summary>
+            Returns a singleton instance of <see cref="T:Panini.DataCache"/> class.
+            </summary>
         </member>
         <member name="T:Panini.MainWindow">
             <summary>
@@ -62,7 +89,7 @@
         </member>
         <member name="T:Panini.Models.BaseModel">
             <summary>
-            This is the base model class.
+            Base model class.
             </summary>
         </member>
         <member name="E:Panini.Models.BaseModel.PropertyChanged">
@@ -81,7 +108,7 @@
         </member>
         <member name="T:Panini.Models.InlineLinksModel">
             <summary>
-            Model for displaying inline link data.
+            Model for displaying inline link data in the <c>Inline Links</c> tab of <c>Results View</c>.
             </summary>
         </member>
         <member name="P:Panini.Models.InlineLinksModel.linkedFile">
@@ -170,7 +197,7 @@
         </member>
         <member name="T:Panini.Models.NLPData">
             <summary>
-            Model for displaying the summary of NLP information.
+            Model for displaying the summary of NLP information in <c>Summary View</c>.
             </summary>
         </member>
         <member name="P:Panini.Models.NLPData.Tokenizer">
@@ -223,7 +250,7 @@
         </member>
         <member name="T:Panini.Models.RelatedLinksModel">
             <summary>
-            Model for displaying the related links data.
+            Model for displaying the related links data in the <c>Related Links</c> tab of <c>Results View</c>.
             </summary>
         </member>
         <member name="P:Panini.Models.RelatedLinksModel.linkedFile">
@@ -250,6 +277,11 @@
             </summary>
             <param name="topicName">The name of the topic that contains the related link</param>
             <param name="linkUri">URI of the related link.</param>
+        </member>
+        <member name="T:Panini.Models.TopicItem">
+            <summary>
+            Model for displaying topics in the <c>Topics List</c> section of the <c>Results View</c>.
+            </summary>
         </member>
         <member name="F:Panini.Models.TopicItem.dataCache">
             <summary>
@@ -394,7 +426,7 @@
         </member>
         <member name="T:Panini.Models.TopicResultItem">
             <summary>
-            Model for displaying an entry in the table of <c>Similar Topics</c> section in the results view.
+            Model for displaying an entry in the table of <c>Similar Topics</c> section in <c>Results View</c>.
             </summary>
         </member>
         <member name="P:Panini.Models.TopicResultItem.Name">
@@ -846,7 +878,7 @@
         </member>
         <member name="P:Panini.ViewModel.LoadViewModel.ListOfFiles">
             <summary>
-            A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the laod view.
+            A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the load view.
             </summary>
             <value>The names of the files read from the the selected directory are stored in this list.</value>
         </member>
@@ -870,7 +902,7 @@
         </member>
         <member name="P:Panini.ViewModel.LoadViewModel.StatusBarColor">
             <summary>
-            Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+            Status color. This property binds to <c>statusColorBrush</c> in the load view.
             </summary>
             <value>Color of the status bar.</value>
         </member>
@@ -881,7 +913,7 @@
         </member>
         <member name="P:Panini.ViewModel.LoadViewModel.SelectDirectory">
             <summary>
-            Selects a folder from local storage. This ICommand binds to <c>browseBtn</c> in the laod view. 
+            Selects a folder from local storage. This ICommand binds to <c>browseBtn</c> in the load view. 
             </summary>
         </member>
         <member name="M:Panini.ViewModel.LoadViewModel.Browse">
@@ -962,7 +994,7 @@
         </member>
         <member name="P:Panini.ViewModel.MainViewModel.LoadViewModel">
             <summary>
-            <c>Laod View</c> model.
+            <c>Load View</c> model.
             </summary>
             <value>View model for handling behavior of <c>Load View</c>.</value>
         </member>
@@ -993,7 +1025,7 @@
             <summary>
             Collection of <see cref="T:Panini.Models.TopicItem"/> instances.
             </summary>
-            <value>A list of <see cref="T:Panini.Models.TopicItem"/> instances for each similar topic suggestion.</value>
+            <value>A list of <see cref="T:Panini.Models.TopicItem"/> instances for each valid topic in the corpus.</value>
         </member>
         <member name="P:Panini.ViewModel.ResultsViewModel.selectedResultItem">
             <summary>
@@ -1057,7 +1089,7 @@
         </member>
         <member name="P:Panini.ViewModel.ResultsViewModel.StatusBarColor">
             <summary>
-            Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+            Status color. This property binds to <c>statusColorBrush</c> in the load view.
             </summary>
             <value>Color of the status bar.</value>
         </member>

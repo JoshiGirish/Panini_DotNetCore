@@ -33,7 +33,7 @@ namespace Panini.ViewModel
 
         private ObservableCollection<string> _listOfFiles;
         /// <summary>
-        /// A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the laod view.
+        /// A collection of the files in the directory. This property binds to the <c>ItemsSource</c> attribute of <c>filesList</c> list box in the load view.
         /// </summary>
         /// <value>The names of the files read from the the selected directory are stored in this list.</value>
         public ObservableCollection<string> ListOfFiles
@@ -88,7 +88,7 @@ namespace Panini.ViewModel
 
         private Color _statusBarColor = new Color();
         /// <summary>
-        /// Status color. This property binds to <c>statusColorBrush</c> in the laod view.
+        /// Status color. This property binds to <c>statusColorBrush</c> in the load view.
         /// </summary>
         /// <value>Color of the status bar.</value>
         public Color StatusBarColor
@@ -120,7 +120,7 @@ namespace Panini.ViewModel
         #region Browse Command CallBack
         private ICommand _selectDirectory;
         /// <summary>
-        /// Selects a folder from local storage. This ICommand binds to <c>browseBtn</c> in the laod view. 
+        /// Selects a folder from local storage. This ICommand binds to <c>browseBtn</c> in the load view. 
         /// </summary>
         public ICommand SelectDirectory
         {
