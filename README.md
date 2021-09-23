@@ -14,3 +14,10 @@
 - *Topic Summary* which in the form of number of existing inline links, related links, sentences, and words.
 - *Similarity Heatmap* which provides a visual overview of similarity scores.
 
+## Resources
+
+Documentation : [PANINI Version 1.0.0 Documentation](https://joshigirish.github.io/Panini_DotNetCore/index.html)
+
+APIs : [PANINI API Reference](https://joshigirish.github.io/Panini_DotNetCore/api/index.html)
+
+Quick Start Demo : [PANINI - Related Topic Recommendation Tool](https://www.youtube.com/watch?v=7b7FRqfdCkY)
