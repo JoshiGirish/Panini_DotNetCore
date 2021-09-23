@@ -1,7 +1,9 @@
 # PANINI
 
-[![Runtime](/images/runtime.svg)](https://dotnet.microsoft.com/download/dotnet/5.0)
-[![Version](/images/version.svg)](https://github.com/JoshiGirish/Panini_DotNetCore/releases/tag/V1.0.0)
+[![Runtime](https://img.shields.io/badge/PANINI-.NET%205.0-blue)](https://dotnet.microsoft.com/download/dotnet/5.0)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/JoshiGirish/Panini_DotNetCore?logo=GitHub)](https://github.com/JoshiGirish/Panini_DotNetCore/releases/tag/V1.0.0)
+[![GitHub issues](https://img.shields.io/github/issues-raw/JoshiGirish/Panini_DotNetCore?color=red)](https://github.com/JoshiGirish/Panini_DotNetCore/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/JoshiGirish/Panini_DotNetCore?color=green)](https://github.com/JoshiGirish/Panini_DotNetCore/issues?q=is%3Aissue+is%3Aclosed)
 
 **PANINI** is a topic recommendation tool that makes it easier for technical writers to interlink topics of a guide. For each topic in the guide, the tool proposes similar topics depending on relevance rankings.
 
