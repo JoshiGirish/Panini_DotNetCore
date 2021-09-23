@@ -453,7 +453,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "801HVZ6eOiNCodS3q2sdDffoeecwiun6Zke/WNnVN3U="
+          "hash": "0F6bqVEvhxcSKtbn+ICx51o6mTqfc72/crQflp18L94="
         }
       },
       "is_incremental": false,
@@ -477,10 +477,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/Getting-Started.html",
-          "hash": "nEylfi0BVDPyn59SShdrzlAQzAMqPBaSpPsCV5UX7eI="
+          "hash": "nPHua5BbrkTdLyDACtB1jXkzjcMOHugacHzNnj6h5dE="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -489,22 +489,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/about.html",
-          "hash": "8Y80piiYkDx8vLYPARupKuk3cyqnT1MCYh2q2KPI05A="
+          "hash": "Td4E93WScniZ05inkGsDKDhAwjEIq0jW5Luvb+S4+R4="
         }
       },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "articles/intro.md",
-      "output": {
-        ".html": {
-          "relative_path": "articles/intro.html",
-          "hash": "7TAsDQrTHubVMFgGnSpTgF7OvzXKmv2Q61G5z2vqqfk="
-        }
-      },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -690,10 +678,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "ow0NzJpbrAF5cftOQ3fvfuwRmAFlN61ufgtQaKvDTcU="
+          "hash": "secEeU8D7+AE1Gk9p02uZP6934Dilfir9xkaeShyrhs="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -721,8 +709,8 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 5,
-          "skipped_file_count": 4
+          "total_file_count": 4,
+          "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
