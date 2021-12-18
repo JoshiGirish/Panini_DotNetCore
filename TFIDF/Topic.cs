@@ -172,6 +172,13 @@ namespace TFIDF
         }
         #endregion
 
+        #region Get Topic Title
+        public string get_topic_title(HtmlDocument doc)
+        {
+            return string.Empty;
+        }
+        #endregion
+
         #region Get Topic Text
         /// <summary>
         /// Extracts the text content from a given <c>HTML</c> document.

@@ -12,7 +12,7 @@ namespace Panini.ViewModel
     /// <summary>
     /// Manages the behavior of the <c>Settings View</c>.
     /// </summary>
-    public class ConfigViewModel: BaseViewModel
+    public class ConfigViewModel : BaseViewModel
     {
         /// <summary>
         /// Single instance of <see cref="DataCache"/>.
@@ -43,6 +43,16 @@ namespace Panini.ViewModel
         /// </summary>
         /// <value>Represents a set of substrings which when matched at the end of the web-topic names, results in the topic being ignored from the TFIDF analysis.</value>
         private List<string> ignoreTopicName = new List<string> { "Sitemap" };
+
+        /// <summary>
+        /// A list of candidate HTML heading tags for topic title
+        /// </summary>
+        private List<string> titleTags = new List<string> { "h1", "h2", "h3", "h4", "h5", "h6" };
+
+        public List<string> TitleTags
+        {
+            get { return titleTags; }
+        }
 
         /// <summary>
         /// A list of ending strings to invalidate web-topics.

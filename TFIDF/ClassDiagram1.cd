@@ -10,7 +10,7 @@
   <Class Name="TFIDF.Topic">
     <Position X="12.25" Y="3" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>ABAIAABgBKAAAAAAAKACAAAAEhAAAIoIASAAAgAAgAk=</HashCode>
+      <HashCode>ABAIAABgBIAAAAAAAKACgAAAEhAAAIoIASAAAgAAgAk=</HashCode>
       <FileName>Topic.cs</FileName>
     </TypeIdentifier>
   </Class>

@@ -112,7 +112,7 @@ namespace Panini.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Panini;V1.0.0.0;component/pages/resultspage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Panini;component/pages/resultspage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Pages\ResultsPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
