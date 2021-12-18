@@ -54,6 +54,20 @@ namespace Panini.ViewModel
             get { return titleTags; }
         }
 
+
+        private string _titleTag = "h1";
+
+        public string TitleTag
+        {
+            get { return _titleTag; }
+            set
+            {
+                _titleTag = value; 
+                RaisePropertyChanged();
+                dataCache.corpus.titleTag = value;
+            }
+        }
+
         /// <summary>
         /// A list of ending strings to invalidate web-topics.
         /// </summary>

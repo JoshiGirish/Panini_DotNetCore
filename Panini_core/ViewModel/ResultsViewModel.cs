@@ -323,8 +323,8 @@ namespace Panini.ViewModel
                                         Keywords = dataCache.corpus.get_similar_words(topic, top, (int)dataCache.Config["keywordCount"]),
                                         NumOfInlineLinks = top.xrefs.Count,
                                         NumOfRelatedLinks = top.relinks.Count,
-                                        IsLinked = topic.get_all_link_names().Contains(top.topicName) == true ? "Visible" : "Collapsed"
-                                    });;
+                                        IsLinked = topic.get_all_link_names().Contains(top.fileName) == true ? "Visible" : "Collapsed"
+                                    });
                 var itemColl = new ObservableCollection<TopicResultItem>();
                 foreach (var item in enumItems)
                 {

@@ -461,12 +461,13 @@
                 <ComboBox Style="{DynamicResource ComboBoxStyle1}" 
                           Grid.Column="1"
                           x:Name="tagCombo"
-                          Width="50"
+                          Width="60"
                           VerticalAlignment="Center"
                           HorizontalAlignment="Left"
                           Background="White"
                           BorderBrush="White"
-                          ItemsSource="{Binding Path=TitleTags}">
+                          ItemsSource="{Binding Path=TitleTags}"
+                          SelectedItem="{Binding Path=TitleTag}">
                   <ComboBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ComboBoxItem}">
                       <Setter Property="Background"

@@ -119,6 +119,11 @@ namespace TFIDF
         public Dictionary<string, List<string>> ignoreData;
 
         /// <summary>
+        /// The HTML tag of the topic title.
+        /// </summary>
+        public string titleTag;
+
+        /// <summary>
         /// The max word count.
         /// </summary>
         /// <value>Represents the number of words of the topic with the highest word count.</value>
@@ -267,7 +272,7 @@ namespace TFIDF
             {
                 if (Topic.Is_valid(file.FullName, ignoreData))
                 {
-                    var topic = instantiate_topic(file, targetDir, ignoreData, selectionData, AncestorLevel);
+                    var topic = instantiate_topic(file, targetDir, ignoreData, selectionData, AncestorLevel, titleTag);
                     topics.Add(topic);
                     update_lexicon(topic);
                 }
@@ -337,7 +342,7 @@ namespace TFIDF
                                                        if (Topic.Is_valid(file.FullName, ignoreData))
                                                        {
 
-                                                           var topic = instantiate_topic(file, targetDir, ignoreData, selectionData, AncestorLevel);
+                                                           var topic = instantiate_topic(file, targetDir, ignoreData, selectionData, AncestorLevel, titleTag);
                                                            if(topic.words != null)
                                                            {
                                                                concqueue.Enqueue(topic);
@@ -435,7 +440,7 @@ namespace TFIDF
         /// <param name="ignoreData">Contains data to verify if the filename complies with configured options.</param>
         /// <param name="selectionData">Contains data used for extracting related links from the file.</param>
         /// <returns></returns>
-        public Topic instantiate_topic(FileInfo file, string directory, Dictionary<string,List<string>> ignoreData, Dictionary<string,string> selectionData, int level)
+        public Topic instantiate_topic(FileInfo file, string directory, Dictionary<string,List<string>> ignoreData, Dictionary<string,string> selectionData, int level, string titleTag)
         {
             // Initialize Topic instance for each file
             var topicName = Path.GetFileNameWithoutExtension(file.FullName);
@@ -444,7 +449,7 @@ namespace TFIDF
             Console.WriteLine("\n\n ----------- " + topicName + "----------------\n");
             var doc = new HtmlDocument();
             doc.Load(path);
-            Topic topic = new Topic(fileName, path, doc, ignoreData, selectionData, level);
+            Topic topic = new Topic(fileName, path, doc, ignoreData, selectionData, level, titleTag);
             if(topic.words != null) topicNames.Add(topicName);
 
             return topic;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Web;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
@@ -16,10 +17,16 @@ namespace TFIDF
 
         #region Property Declarations
         /// <summary>
-        /// Name of the topic.
+        /// Title of the topic.
         /// </summary>
         /// <value>The base name of the topic without the extension.</value>
         public string topicName { get; set; }
+
+        /// <summary>
+        /// Name of the topic/file.
+        /// </summary>
+        /// <value>The name of the file associated with the topic.</value>
+        public string fileName { get; set; }
 
         /// <summary>
         /// Text content of the topic.
@@ -122,22 +129,15 @@ namespace TFIDF
         /// <param name="ignoreData">Configuration settings for invalidating topics.</param>
         /// <param name="selectionOptions">Selection options for the parent container of related links.</param>
         /// <param name="level">Ancestor level of the parent tag which encapsulates all related links.</param>
-        public Topic(string name, string filePath,  HtmlDocument html, Dictionary<string, List<string>> ignoreData, Dictionary<string, string> selectionOptions, int level)
+        public Topic(string name, string filePath,  HtmlDocument html, Dictionary<string, List<string>> ignoreData, Dictionary<string, string> selectionOptions, int level, string titleTag)
         {
-            topicName = name;
+            topicName = get_topic_title(html, titleTag);
+            fileName = name;
             path = filePath;
             text = get_topic_text(html);
             words = get_all_words();
             sentCount = CountTokenizedSentences(get_topic_text(html));
             Mode = selectionOptions["Mode"];
-            //if ((string)selectionOptions["Mode"] == "cssSelection")
-            //{
-            //    Mode = SelectionMode.CSSSelector;
-            //}
-            //else
-            //{
-            //    Mode = SelectionMode.InnerText;
-            //};
             InnerText = selectionOptions["InnerText"];
             CSSSelector = selectionOptions["CSSSelector"];
             AncestorLevel = level;
@@ -173,9 +173,28 @@ namespace TFIDF
         #endregion
 
         #region Get Topic Title
-        public string get_topic_title(HtmlDocument doc)
+        /// <summary>
+        /// Extracts the title of the topic (first occurance of the title tag e.g. h1, h2, etc)
+        /// </summary>
+        /// <param name="doc">The <c>HTML</c> document of the topic.</param>
+        /// <param name="titleTag">HTML tag of the topic title</param>
+        /// <returns></returns>
+        public string get_topic_title(HtmlDocument doc, string titleTag)
         {
-            return string.Empty;
+            IEnumerable<HtmlNode> tags = doc.DocumentNode.Descendants(titleTag);
+            string title;
+            int count = 0;
+            try
+            {
+                title = HttpUtility.HtmlDecode(tags.First().InnerText);
+            }
+            catch (System.InvalidOperationException)
+            {
+
+                title = $"Topic_{count}";
+                count++;
+            }
+            return title;
         }
         #endregion
 
@@ -190,9 +209,7 @@ namespace TFIDF
             var body = doc.DocumentNode.SelectSingleNode("//body");
             string text = string.Join(" ", doc.DocumentNode.Descendants()
                 .Where(n => !n.HasChildNodes && !string.IsNullOrWhiteSpace(n.InnerText))
-                .Select(n => n.InnerText));
-            // Log
-            
+                .Select(n => n.InnerText));            
             return text;
         }
         #endregion
