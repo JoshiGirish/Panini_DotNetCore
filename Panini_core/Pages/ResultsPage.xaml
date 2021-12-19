@@ -849,7 +849,7 @@
                   <TextBlock Text="Topics List" FontSize="14" FontWeight="SemiBold" Foreground="white" HorizontalAlignment="Center"/>
                 </Grid>
                 <ListBox DockPanel.Dock="Top" IsSynchronizedWithCurrentItem="True"
-             ItemsSource="{Binding TopicCollection}" Background="Transparent" FontSize="14" BorderBrush="LightGray" SelectedIndex="0">
+             ItemsSource="{Binding TopicCollection}" Background="Transparent" FontSize="14" BorderBrush="LightGray" SelectedIndex="{Binding SelectedTopicIndex}">
                   <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
                       <Setter Property="Visibility" Value="{Binding IsVisible}"/>

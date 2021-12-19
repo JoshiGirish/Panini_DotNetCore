@@ -131,8 +131,8 @@ namespace TFIDF
         /// <param name="level">Ancestor level of the parent tag which encapsulates all related links.</param>
         public Topic(string name, string filePath,  HtmlDocument html, Dictionary<string, List<string>> ignoreData, Dictionary<string, string> selectionOptions, int level, string titleTag)
         {
-            topicName = get_topic_title(html, titleTag);
             fileName = name;
+            topicName = get_topic_title(html, titleTag);
             path = filePath;
             text = get_topic_text(html);
             words = get_all_words();
@@ -183,15 +183,13 @@ namespace TFIDF
         {
             IEnumerable<HtmlNode> tags = doc.DocumentNode.Descendants(titleTag);
             string title;
-            int count = 0;
             try
             {
                 title = HttpUtility.HtmlDecode(tags.First().InnerText);
             }
             catch (System.InvalidOperationException)
             {
-                title = $"Topic_{count}";
-                count++;
+                title = fileName;
             }
             return title;
         }

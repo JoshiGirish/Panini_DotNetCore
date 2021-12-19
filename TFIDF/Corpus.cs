@@ -121,7 +121,7 @@ namespace TFIDF
         /// <summary>
         /// The HTML tag of the topic title.
         /// </summary>
-        public string titleTag;
+        public string titleTag = "h1";
 
         /// <summary>
         /// The max word count.
@@ -445,7 +445,8 @@ namespace TFIDF
             // Initialize Topic instance for each file
             var topicName = Path.GetFileNameWithoutExtension(file.FullName);
             var fileName = Path.GetFileName(file.FullName);
-            var path = Path.Combine(directory, topicName + file.Extension);
+            //var path = Path.Combine(directory, topicName + file.Extension);
+            var path = file.FullName;
             Console.WriteLine("\n\n ----------- " + topicName + "----------------\n");
             var doc = new HtmlDocument();
             doc.Load(path);

@@ -482,6 +482,12 @@
                               Value="White" />
                     </Style>
                   </ComboBox.ItemContainerStyle>
+                    <ComboBox.ToolTip>
+                      <ToolTip MaxWidth="300">
+                        <TextBlock TextWrapping="Wrap"
+                                   Text="When title extraction is enabled, this list lets you select the type of heading tag of the topic title.&#x0a;Note: If the title tag is not found in the topic HTML, the filename will be displayed as default fallback." />
+                      </ToolTip>
+                    </ComboBox.ToolTip>
                 </ComboBox>
                   <Label DockPanel.Dock="Left"
                          Padding="2">tag</Label>

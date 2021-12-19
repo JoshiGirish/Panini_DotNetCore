@@ -48,6 +48,14 @@ namespace Panini.ViewModel
 
         private BindingList<TopicItem> _dummyTopicCollection = new BindingList<TopicItem>();
 
+
+        private int _selectedTopicIndex = 0;
+        public int SelectedTopicIndex 
+        { 
+            get { return _selectedTopicIndex; }
+            set { _selectedTopicIndex = value; RaisePropertyChanged(); }
+        }
+
         /// <summary>
         /// Selected similar topic.
         /// </summary>
@@ -307,8 +315,6 @@ namespace Panini.ViewModel
             stopwatch.Stop();
             SimScoreComputationTime = stopwatch.ElapsedMilliseconds / 1000;
 
-            ProcessingMessageVisibility = "Collapsed";
-            ProgressBarVisibility = "Collapsed";
             Status = "";
             foreach (var topic in dataCache.corpus.concDict.Values)
             {
@@ -337,9 +343,12 @@ namespace Panini.ViewModel
                         TopicCollection.Add(new TopicItem(topic.fileName, "Visible",itemColl));
                     });
             }
+            ProcessingMessageVisibility = "Collapsed";
+            ProgressBarVisibility = "Collapsed";
             _dummyTopicCollection = TopicCollection;
             dataCache.TopicCollection = TopicCollection;
             ResultsVisibility = "Visible"; // display the results
+            SelectedTopicIndex = 0;
             dataCache.ViewState.Add("SummaryViewEnabled");
         }
         #endregion
@@ -419,7 +428,7 @@ namespace Panini.ViewModel
             //}
             foreach(var topItem in TopicCollection)
             {
-                if (!topItem.Name.ToLower().Contains(SearchText.ToLower()))
+                if (!topItem.displayName.ToLower().Contains(SearchText.ToLower()))
                 {
                     topItem.IsVisible = "Collapsed";
                 }
