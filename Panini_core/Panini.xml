@@ -295,6 +295,18 @@
             </summary>
             <value>Name of the topic.</value>
         </member>
+        <member name="P:Panini.Models.TopicItem.fileName">
+            <summary>
+            Filename of the topic.
+            </summary>
+            <value>The filename of the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicItem.displayName">
+            <summary>
+            Display name of the topic item.
+            </summary>
+            <value>The name to be displayed in the topic item entry (topic title or file name).</value>
+        </member>
         <member name="P:Panini.Models.TopicItem.path">
             <summary>
             Path of the topic.
@@ -434,6 +446,18 @@
             Name of the similar topic.
             </summary>
             <value>Name of the similar topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.fileName">
+            <summary>
+            Name of the topic/file.
+            </summary>
+            <value>The name of the file associated with the topic.</value>
+        </member>
+        <member name="P:Panini.Models.TopicResultItem.displayName">
+            <summary>
+            Display name of the topic item.
+            </summary>
+            <value>The name to be displayed in the topic item entry (topic title or file name).</value>
         </member>
         <member name="P:Panini.Models.TopicResultItem.sourceName">
             <summary>
@@ -712,6 +736,23 @@
             A list of topic names used to invalidate web-topics.
             </summary>
             <value>Represents a set of substrings which when matched at the end of the web-topic names, results in the topic being ignored from the TFIDF analysis.</value>
+        </member>
+        <member name="F:Panini.ViewModel.ConfigViewModel.titleTags">
+            <summary>
+            A list of candidate HTML heading tags for topic title
+            </summary>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.TitleTag">
+            <summary>
+            The HTML tag of the topic title.
+            </summary>
+            <value>This property binds to the <c>tagCombo</c> drop-down list in the settings view.</value>
+        </member>
+        <member name="P:Panini.ViewModel.ConfigViewModel.IsTitleRequested">
+            <summary>
+            Flag for enabling title extranction.
+            </summary>
+            <value>This property binds to the <c>IsChecked</c> property of the <c>activateTitleMode</c> checkbox in the settings view.</value>
         </member>
         <member name="P:Panini.ViewModel.ConfigViewModel.IgnoreTopicNameEndsWith">
             <summary>
@@ -1438,6 +1479,36 @@
         <member name="M:Panini_core.App.Main">
             <summary>
             Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>

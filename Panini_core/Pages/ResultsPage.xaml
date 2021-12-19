@@ -43,7 +43,7 @@
                                                    Text="Open this topic in web browser." />
               </Button.ToolTip>
             </Button>
-            <TextBlock Text="{Binding Path=Name}" FontSize="16" FontWeight="SemiBold" Height="30" Margin="5 10 5 5" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Path=displayName}" FontSize="16" FontWeight="SemiBold" Height="30" Margin="5 10 5 5" VerticalAlignment="Center"/>
           </StackPanel>
           <Grid Margin="0 5 0 0">
               <Grid.Resources>
@@ -282,7 +282,7 @@
                    Content="Topic name"
                    VerticalAlignment="Center" />
           <TextBlock Grid.Column="1"
-                     Text="{Binding Path=Name, Mode=OneWay}"
+                     Text="{Binding Path=displayName, Mode=OneWay}"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Left" />
         </Grid>

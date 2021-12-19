@@ -127,6 +127,11 @@
             </list>
             </para></value>
         </member>
+        <member name="F:TFIDF.Corpus.titleTag">
+            <summary>
+            The HTML tag of the topic title.
+            </summary>
+        </member>
         <member name="F:TFIDF.Corpus.wordsMax">
             <summary>
             The max word count.
@@ -234,7 +239,7 @@
             Calculates the TFIDF scores of each topic using parallel computing.
             </summary>
         </member>
-        <member name="M:TFIDF.Corpus.instantiate_topic(System.IO.FileInfo,System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Collections.Generic.Dictionary{System.String,System.String},System.Int32)">
+        <member name="M:TFIDF.Corpus.instantiate_topic(System.IO.FileInfo,System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String)">
             <summary>
             Instantiates the <c>Topic</c> class for each file in the directory ignoring files which do not comply with the data stored in <see cref="F:TFIDF.Corpus.ignoreData"/>.
             </summary>
@@ -467,9 +472,15 @@
         </member>
         <member name="P:TFIDF.Topic.topicName">
             <summary>
-            Name of the topic.
+            Title of the topic.
             </summary>
             <value>The base name of the topic without the extension.</value>
+        </member>
+        <member name="P:TFIDF.Topic.fileName">
+            <summary>
+            Name of the topic/file.
+            </summary>
+            <value>The name of the file associated with the topic.</value>
         </member>
         <member name="P:TFIDF.Topic.text">
             <summary>
@@ -556,7 +567,7 @@
             <value>Sometimes the tag of the section headings for the related links is not their parent tag, but siblings. 
             In such cases, the <c>AncestorLevel</c> field lets you specify which level of parent must be selected that will encapsulate all related links.</value>
         </member>
-        <member name="M:TFIDF.Topic.#ctor(System.String,System.String,HtmlAgilityPack.HtmlDocument,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Collections.Generic.Dictionary{System.String,System.String},System.Int32)">
+        <member name="M:TFIDF.Topic.#ctor(System.String,System.String,HtmlAgilityPack.HtmlDocument,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.String)">
             <summary>
             Instantiates <see cref="T:TFIDF.Topic"/> class for a web-topic.
             </summary>
@@ -574,6 +585,14 @@
             <param name="filename">Topic name to be checked for validity.</param>
             <param name="ignoreData">Data dictionary containing configured naming conventions.</param>
             <returns><c>true</c> if the filename complies with the configured naming conventions, else <c>false</c>.</returns>
+        </member>
+        <member name="M:TFIDF.Topic.get_topic_title(HtmlAgilityPack.HtmlDocument,System.String)">
+            <summary>
+            Extracts the title of the topic (first occurance of the title tag e.g. h1, h2, etc)
+            </summary>
+            <param name="doc">The <c>HTML</c> document of the topic.</param>
+            <param name="titleTag">HTML tag of the topic title</param>
+            <returns>The title of the topic.</returns>
         </member>
         <member name="M:TFIDF.Topic.get_topic_text(HtmlAgilityPack.HtmlDocument)">
             <summary>
