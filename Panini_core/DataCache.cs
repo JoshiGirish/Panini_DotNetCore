@@ -68,6 +68,7 @@ namespace Panini
             Config["colorScheme"] = "Default";
             Config["maxVocabSize"] = 500;
             Config["accelerator"] = "";
+            Config["IsTitleRequested"] = true;
 
             // Initialize NLP data
             NLPData = new Dictionary<string, object>();

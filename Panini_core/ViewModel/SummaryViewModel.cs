@@ -504,7 +504,7 @@ namespace Panini.ViewModel
 		/// <returns>The total number of similar topic suggestions which are already linked in the topics.</returns>
 		public int get_count_of_all_matching_links()
 		{
-			IEnumerable<IEnumerable<string>> enumMatchingLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Intersect(dataCache.corpus.concDict[n.Name].get_all_link_names()));
+			IEnumerable<IEnumerable<string>> enumMatchingLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Intersect(dataCache.corpus.concDict[n.fileName].get_all_link_names()));
 			int sum = 0;
 			foreach (IEnumerable<string> links in enumMatchingLinks)
 			{
@@ -519,7 +519,7 @@ namespace Panini.ViewModel
 		/// <returns>The difference between the total number of suggested similar topics and the matching links that link to some of suggested similar topics.</returns>
 		public int get_count_of_all_links_to_be_integrated()
 		{
-			IEnumerable<IEnumerable<string>> enumIntegrateLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Except(dataCache.corpus.concDict[n.Name].get_all_link_names()));
+			IEnumerable<IEnumerable<string>> enumIntegrateLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Except(dataCache.corpus.concDict[n.fileName].get_all_link_names()));
 			int sum = 0;
 			foreach (IEnumerable<string> links in enumIntegrateLinks)
 			{
@@ -534,7 +534,7 @@ namespace Panini.ViewModel
 		/// <returns>The total number of links which can be removed/replaced depending on better link proposals to other similar topics.</returns>
 		public int get_count_of_all_obsolete_links()
 		{
-			IEnumerable<IEnumerable<string>> enumObseleteLinks = dataCache.TopicCollection.Select((TopicItem n) => dataCache.corpus.concDict[n.Name].get_all_link_names().Except(n.get_topic_names()));
+			IEnumerable<IEnumerable<string>> enumObseleteLinks = dataCache.TopicCollection.Select((TopicItem n) => dataCache.corpus.concDict[n.fileName].get_all_link_names().Except(n.get_topic_names()));
 			int sum = 0;
 			foreach (IEnumerable<string> links in enumObseleteLinks)
 			{

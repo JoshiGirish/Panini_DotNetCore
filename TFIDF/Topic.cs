@@ -178,7 +178,7 @@ namespace TFIDF
         /// </summary>
         /// <param name="doc">The <c>HTML</c> document of the topic.</param>
         /// <param name="titleTag">HTML tag of the topic title</param>
-        /// <returns></returns>
+        /// <returns>The title of the topic.</returns>
         public string get_topic_title(HtmlDocument doc, string titleTag)
         {
             IEnumerable<HtmlNode> tags = doc.DocumentNode.Descendants(titleTag);
@@ -190,7 +190,6 @@ namespace TFIDF
             }
             catch (System.InvalidOperationException)
             {
-
                 title = $"Topic_{count}";
                 count++;
             }

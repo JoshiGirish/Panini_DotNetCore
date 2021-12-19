@@ -310,7 +310,7 @@ namespace TFIDF
                 foreach (var corpusTopic in topics)
                 {
                     var score = cosine_similarity(sourceTopic, corpusTopic);
-                    sourceTopic.tfidf.similarityScores.Add(corpusTopic.topicName, score);
+                    sourceTopic.tfidf.similarityScores.Add(corpusTopic.fileName, score);
                 }
             }
             stopwatch.Stop();
@@ -376,7 +376,7 @@ namespace TFIDF
             ParallelLoopResult tfidfCompResult = Parallel.ForEach(topics,
                                                    (topic) => {
                                                        topic.tfidf = new TFIDF(topic, topics);
-                                                       concDict.TryAdd(topic.topicName, topic);
+                                                       concDict.TryAdd(topic.fileName, topic);
                                                    });
             stopwatch.Stop();
             var tfidfCalculationTime = stopwatch.ElapsedMilliseconds / 1000;
@@ -396,7 +396,7 @@ namespace TFIDF
                 foreach (var corpusTopic in concDict.Values)
                 {
                     var score = cosine_similarity(sourceTopic, corpusTopic);
-                    sourceTopic.tfidf.similarityScores.Add(corpusTopic.topicName, score);
+                    sourceTopic.tfidf.similarityScores.Add(corpusTopic.fileName, score);
                 }
             }
             stopwatch.Stop();
@@ -450,7 +450,7 @@ namespace TFIDF
             var doc = new HtmlDocument();
             doc.Load(path);
             Topic topic = new Topic(fileName, path, doc, ignoreData, selectionData, level, titleTag);
-            if(topic.words != null) topicNames.Add(topicName);
+            if(topic.words != null) topicNames.Add(fileName);
 
             return topic;
         }
@@ -508,7 +508,7 @@ namespace TFIDF
         /// <returns></returns>
         public IEnumerable<Topic> get_similar_topics(Topic topic, int numOfTopics)
         {
-            return topics.OrderByDescending(n => n.tfidf.similarityScores[topic.topicName]).Take(numOfTopics+1).Skip(1); 
+            return topics.OrderByDescending(n => n.tfidf.similarityScores[topic.fileName]).Take(numOfTopics+1).Skip(1); 
             // numOfTopics + 1 -> as the most similar topic is the topic itself, which we skip
         }
         #endregion
@@ -524,7 +524,7 @@ namespace TFIDF
         /// <returns></returns>
         public double get_similarity_score(Topic sourceTopic, Topic targetTopic)
         {
-            return Math.Round(targetTopic.tfidf.similarityScores[sourceTopic.topicName]*100, 1);
+            return Math.Round(targetTopic.tfidf.similarityScores[sourceTopic.fileName]*100, 1);
         }
         #endregion
 

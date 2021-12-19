@@ -19,6 +19,16 @@ namespace Panini.Models
         /// <value>Name of the similar topic.</value>
         public string Name { get; set; }
         /// <summary>
+        /// Name of the topic/file.
+        /// </summary>
+        /// <value>The name of the file associated with the topic.</value>
+        public string fileName { get; set; }
+        /// <summary>
+        /// Display name of the topic item.
+        /// </summary>
+        /// <value>The name to be displayed in the topic item entry (topic title or file name).</value>
+        public string displayName { get; set; }
+        /// <summary>
         /// Name of the similar topic with <c>XML</c> extension.
         /// </summary>
         /// <value>Name of the similar topic with <c>XML</c> extension.</value>

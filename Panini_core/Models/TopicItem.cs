@@ -26,6 +26,16 @@ namespace Panini.Models
         /// <value>Name of the topic.</value>
         public string Name {get; set;}
         /// <summary>
+        /// Filename of the topic.
+        /// </summary>
+        /// <value>The filename of the topic.</value>
+        public string fileName { get; set; }
+        /// <summary>
+        /// Display name of the topic item.
+        /// </summary>
+        /// <value>The name to be displayed in the topic item entry (topic title or file name).</value>
+        public string displayName { get; set; }
+        /// <summary>
         /// Path of the topic.
         /// </summary>
         /// <value>Path of the topic.</value>
@@ -77,7 +87,7 @@ namespace Panini.Models
         /// <value>Number of sentences in the topic.</value>
         public int NumOfSentences
         {
-            get { return dataCache.corpus.concDict[Name].sentCount; }
+            get { return dataCache.corpus.concDict[fileName].sentCount; }
         }
         /// <summary>
         /// Number of words in the topic.
@@ -85,7 +95,7 @@ namespace Panini.Models
         /// <value>Number of words in the topic.</value>
         public int NumOfUniqueWords
         {
-            get { return dataCache.corpus.concDict[Name].words.Count; }
+            get { return dataCache.corpus.concDict[fileName].words.Count; }
         }
         /// <summary>
         /// Number of inline links in the topic.
@@ -94,7 +104,7 @@ namespace Panini.Models
         public int NumOfInlineLinks
 
         {
-            get { return dataCache.corpus.concDict[Name].xrefs.Count; }
+            get { return dataCache.corpus.concDict[fileName].xrefs.Count; }
         }
         /// <summary>
         /// Number of related links in the topic.
@@ -102,7 +112,7 @@ namespace Panini.Models
         /// <value>Number of related links in the topic.</value>
         public int NumOfRelatedLinks
 {
-            get { return dataCache.corpus.concDict[Name].relinks.Count; }
+            get { return dataCache.corpus.concDict[fileName].relinks.Count; }
         }
 
         private string _isVisible = "Visible";
@@ -163,26 +173,28 @@ namespace Panini.Models
         /// similar topic suggestions in the <c>Similar Topics</c> section of the results view.</param>
         public TopicItem(string name, string isVisible, ObservableCollection<TopicResultItem> itemCollection)
         {
-            Name = name;
-            path = dataCache.corpus.concDict[Name].path;
+            fileName = name;
+            Name = dataCache.corpus.concDict[fileName].topicName;
+            displayName = (bool)dataCache.Config["IsTitleRequested"] ? Name : fileName;
+            path = dataCache.corpus.concDict[fileName].path;
             this.itemCollection = itemCollection;
             IsVisible = isVisible;
             WordsList = new ObservableCollection<WordsListModel>();
-            foreach (var word in dataCache.corpus.concDict[Name].tfidf.tfidfVector.OrderByDescending(n=>n.Value).Take(50).Select(n => n.Key))
+            foreach (var word in dataCache.corpus.concDict[fileName].tfidf.tfidfVector.OrderByDescending(n=>n.Value).Take(50).Select(n => n.Key))
             {
-                if(dataCache.corpus.concDict[Name].words.Contains(word)) WordsList.Add(new WordsListModel(Name, word));
+                if(dataCache.corpus.concDict[fileName].words.Contains(word)) WordsList.Add(new WordsListModel(fileName, word));
             }
 
             InlineLinksList = new ObservableCollection<InlineLinksModel>();
-            foreach(var tag in dataCache.corpus.concDict[Name].xrefTags)
+            foreach(var tag in dataCache.corpus.concDict[fileName].xrefTags)
             {
-                InlineLinksList.Add(new InlineLinksModel(Name, tag));
+                InlineLinksList.Add(new InlineLinksModel(fileName, tag));
             }
 
             RelatedLinksList = new ObservableCollection<RelatedLinksModel>();
-            foreach (var tag in dataCache.corpus.concDict[Name].relinkTags)
+            foreach (var tag in dataCache.corpus.concDict[fileName].relinkTags)
             {
-                RelatedLinksList.Add(new RelatedLinksModel(Name, tag));
+                RelatedLinksList.Add(new RelatedLinksModel(fileName, tag));
             }
 
             compute_ratios();
@@ -194,7 +206,7 @@ namespace Panini.Models
         /// <returns>The name of the topic to which the <see cref="TopicItem"/> class instance is associated.</returns>
         public override string ToString()
         {
-            return Name;
+            return fileName;
         }
 
         /// <summary>
@@ -206,7 +218,7 @@ namespace Panini.Models
             List<string> names = new List<string>();
             foreach(var item in itemCollection)
             {
-                names.Add(item.Name);
+                names.Add(item.fileName);
             }
             return names;
         }
@@ -219,7 +231,7 @@ namespace Panini.Models
         public void compute_ratios()
         {
             // Calculate fraction of words compared to max
-            float wordCount = dataCache.corpus.concDict[Name].words.Count();
+            float wordCount = dataCache.corpus.concDict[fileName].words.Count();
             wordsRatioTooltip = $"Words in topic : {(int)wordCount}";
             float maxWordCount = dataCache.corpus.wordsMax;
             if(wordCount != 0.0f && maxWordCount != 0.0f)
@@ -229,13 +241,13 @@ namespace Panini.Models
             else { wordsRatio = 0; }
 
             // Calculate fraction of xrefs compared to max
-            float xrefCount = dataCache.corpus.concDict[Name].xrefs.Count();
+            float xrefCount = dataCache.corpus.concDict[fileName].xrefs.Count();
             xrefsRatioTooltip = $"Inline links in topic : {(int)xrefCount}";
             float maxXrefCount = dataCache.corpus.xrefsMax;
             xrefsRatio = (xrefCount != 0 && maxXrefCount != 0) ? (int)((xrefCount / maxXrefCount)*partition*0.5) : 0;
 
             // Calculate fraction of relinks compared to max
-            float relinkCount = dataCache.corpus.concDict[Name].relinks.Count();
+            float relinkCount = dataCache.corpus.concDict[fileName].relinks.Count();
             relinksRatioTooltip = $"Related links in topic : {(int)relinkCount}";
             float maxrelinkCount = dataCache.corpus.relinksMax;
             relinksRatio = (relinkCount != 0 && maxrelinkCount != 0) ? (int)((relinkCount / maxrelinkCount)*partition*0.5) : 0;

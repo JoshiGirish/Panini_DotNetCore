@@ -57,6 +57,10 @@ namespace Panini.ViewModel
 
         private string _titleTag = "h1";
 
+        /// <summary>
+        /// The HTML tag of the topic title.
+        /// </summary>
+        /// <value>This property binds to the <c>tagCombo</c> drop-down list in the settings view.</value>
         public string TitleTag
         {
             get { return _titleTag; }
@@ -66,6 +70,18 @@ namespace Panini.ViewModel
                 RaisePropertyChanged();
                 dataCache.corpus.titleTag = value;
             }
+        }
+
+        private bool _isTitleRequested = true;
+
+        /// <summary>
+        /// Flag for enabling title extranction.
+        /// </summary>
+        /// <value>This property binds to the <c>IsChecked</c> property of the <c>activateTitleMode</c> checkbox in the settings view.</value>
+        public bool IsTitleRequested
+        {
+            get { return _isTitleRequested; }
+            set { _isTitleRequested = value; dataCache.Config["IsTitleRequested"] = value; RaisePropertyChanged(); }
         }
 
         /// <summary>

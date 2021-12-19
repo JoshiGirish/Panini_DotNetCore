@@ -316,6 +316,8 @@ namespace Panini.ViewModel
                                     .Select(top => new TopicResultItem()
                                     {
                                         Name = top.topicName,
+                                        fileName = top.fileName,
+                                        displayName = (bool)dataCache.Config["IsTitleRequested"] ? top.topicName : top.fileName,
                                         sourceName = Path.GetFileNameWithoutExtension(top.topicName) + ".xml",
                                         Path = top.path,
                                         simScore = (float)dataCache.corpus.get_similarity_score(topic, top),
@@ -332,7 +334,7 @@ namespace Panini.ViewModel
                 }
                 App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        TopicCollection.Add(new TopicItem(topic.topicName, "Visible",itemColl));
+                        TopicCollection.Add(new TopicItem(topic.fileName, "Visible",itemColl));
                     });
             }
             _dummyTopicCollection = TopicCollection;

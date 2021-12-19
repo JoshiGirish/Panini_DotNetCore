@@ -450,24 +450,30 @@
               <!--TopicTitle -->
               <Grid Margin="20 0 0 0">
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="200" />
+                  <ColumnDefinition Width="40" />
+                  <ColumnDefinition Width="160" />
                   <ColumnDefinition Width="*"
                                     MaxWidth="300" />
                 </Grid.ColumnDefinitions>
-                <Grid.Resources>
-                </Grid.Resources>
-                <Label Grid.Column="0">Topic title tag</Label>
-                
-                <ComboBox Style="{DynamicResource ComboBoxStyle1}" 
-                          Grid.Column="1"
+                <CheckBox Grid.Column="0"
+                          x:Name="activateTitleMode"
+                          IsChecked="{Binding IsTitleRequested}"
+                          Margin="10 0 0 0"/>
+                <Label Grid.Column="1"
+                       HorizontalAlignment="Left"
+                       Padding="2 5">Extract Topic title from</Label>
+                <DockPanel Grid.Column="2">
+                  <ComboBox Style="{DynamicResource ComboBoxStyle1}" 
                           x:Name="tagCombo"
+                          DockPanel.Dock="Left"
                           Width="60"
                           VerticalAlignment="Center"
                           HorizontalAlignment="Left"
                           Background="White"
                           BorderBrush="White"
                           ItemsSource="{Binding Path=TitleTags}"
-                          SelectedItem="{Binding Path=TitleTag}">
+                          SelectedItem="{Binding Path=TitleTag}"
+                          IsEnabled="{Binding ElementName=activateTitleMode, Path=IsChecked}">
                   <ComboBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ComboBoxItem}">
                       <Setter Property="Background"
@@ -477,6 +483,9 @@
                     </Style>
                   </ComboBox.ItemContainerStyle>
                 </ComboBox>
+                  <Label DockPanel.Dock="Left"
+                         Padding="2">tag</Label>
+                </DockPanel>
               </Grid>
             </StackPanel>
 
