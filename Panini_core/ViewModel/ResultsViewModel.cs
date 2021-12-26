@@ -555,26 +555,25 @@ namespace Panini.ViewModel
 
         #region Naming validity check and prompt
         /// <summary>
-        /// Checks if any of the filename is valid.
+        /// Checks if at least two files are valid.
         /// </summary>
-        /// <value>Raises an alert if none of the files pass the naming guidelines configured in the settings.</value>
-        /// <returns>True if all files the validation.</returns>
+        /// <value>Raises an alert if at least two files do not pass the naming guidelines configured in the settings.</value>
+        /// <returns>True if at least two files pass the validation.</returns>
         public bool is_any_file_valid()
         {
-            foreach(FileInfo file in Corpus.Files)
+            int nValidFiles = Corpus.Files.Where(file => Topic.Is_valid(file.Name, dataCache.corpus.ignoreData)).Count();
+            
+            if(nValidFiles <= 1)
             {
-                // Returns true if at least one file is valid
-                if(Topic.Is_valid(file.Name, dataCache.corpus.ignoreData))
-                {
-                    return true;
-                }
+                string message = "At least two files must comply with the naming rules to compute similarity. Re-configure topic name settings.";
+                string title = "Topic name check failed !";
+                MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                return false;
             }
 
-            string message = "None of the files comply with the naming rules. Re-configure topic name settings.";
-            string title = "No valid topics !";
-            MessageBox.Show(message, title, MessageBoxButton.OK ,MessageBoxImage.Warning);
+            return true;
 
-            return false;
         }
         #endregion
 
