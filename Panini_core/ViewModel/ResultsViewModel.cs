@@ -240,7 +240,7 @@ namespace Panini.ViewModel
         /// </summary>
         private void RunCallback()
         {
-            if (!are_all_files_valid()) return;
+            if (!is_any_file_valid()) return;
             dataCache.corpus.reset_corpus((int)dataCache.Config["maxVocabSize"]);
             TopicCollection.Clear();
             Thread generateThread = new Thread(new ThreadStart(compute_results));
@@ -555,24 +555,26 @@ namespace Panini.ViewModel
 
         #region Naming validity check and prompt
         /// <summary>
-        /// Checks if all the filenames are valid.
+        /// Checks if any of the filename is valid.
         /// </summary>
         /// <value>Raises an alert if none of the files pass the naming guidelines configured in the settings.</value>
         /// <returns>True if all files the validation.</returns>
-        public bool are_all_files_valid()
+        public bool is_any_file_valid()
         {
             foreach(FileInfo file in Corpus.Files)
             {
-                if(!Topic.Is_valid(file.FullName, dataCache.corpus.ignoreData))
+                // Returns true if at least one file is valid
+                if(Topic.Is_valid(file.Name, dataCache.corpus.ignoreData))
                 {
-                    string message = "None of the files comply with the naming rules. Re-configure topic name settings.";
-                    string title = "No valid topics !";
-                    MessageBox.Show(message, title, MessageBoxButton.OK ,MessageBoxImage.Warning);
-
-                    return false;
+                    return true;
                 }
             }
-            return true;
+
+            string message = "None of the files comply with the naming rules. Re-configure topic name settings.";
+            string title = "No valid topics !";
+            MessageBox.Show(message, title, MessageBoxButton.OK ,MessageBoxImage.Warning);
+
+            return false;
         }
         #endregion
 
