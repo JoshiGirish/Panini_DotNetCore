@@ -3,24 +3,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Panini.Models;
-using System.Collections.Specialized;
 using System.Threading;
 using System;
-using System.Collections.Generic;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using TFIDF;
-using System.Threading.Tasks;
-using Microsoft.Win32;
-using ICSharpCode.AvalonEdit;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using LiveCharts;
-using LiveCharts.Wpf;
-using System.Text;
 
 namespace Panini.ViewModel
 {
@@ -248,6 +240,7 @@ namespace Panini.ViewModel
         /// </summary>
         private void RunCallback()
         {
+            if (!are_all_files_valid()) return;
             dataCache.corpus.reset_corpus((int)dataCache.Config["maxVocabSize"]);
             TopicCollection.Clear();
             Thread generateThread = new Thread(new ThreadStart(compute_results));
@@ -350,6 +343,7 @@ namespace Panini.ViewModel
             ResultsVisibility = "Visible"; // display the results
             SelectedTopicIndex = 0;
             dataCache.ViewState.Add("SummaryViewEnabled");
+            dataCache.ViewState.Add("ThemesViewEnabled");
         }
         #endregion
 
@@ -556,6 +550,29 @@ namespace Panini.ViewModel
             {
                 // throw 
             }
+        }
+        #endregion
+
+        #region Naming validity check and prompt
+        /// <summary>
+        /// Checks if all the filenames are valid.
+        /// </summary>
+        /// <value>Raises an alert if none of the files pass the naming guidelines configured in the settings.</value>
+        /// <returns>True if all files the validation.</returns>
+        public bool are_all_files_valid()
+        {
+            foreach(FileInfo file in Corpus.Files)
+            {
+                if(!Topic.Is_valid(file.FullName, dataCache.corpus.ignoreData))
+                {
+                    string message = "None of the files comply with the naming rules. Re-configure topic name settings.";
+                    string title = "No valid topics !";
+                    MessageBox.Show(message, title, MessageBoxButton.OK ,MessageBoxImage.Warning);
+
+                    return false;
+                }
+            }
+            return true;
         }
         #endregion
 
