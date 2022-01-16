@@ -333,7 +333,7 @@ namespace Panini.ViewModel
                 }
                 App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        TopicCollection.Add(new TopicItem(topic.fileName, "Visible",itemColl));
+                        TopicCollection.Add(new TopicItem(topic.path, "Visible",itemColl));
                     });
             }
             ProcessingMessageVisibility = "Collapsed";

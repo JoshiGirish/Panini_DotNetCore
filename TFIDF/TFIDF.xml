@@ -353,7 +353,7 @@
             <summary>
             A dictionary for storing word counts.
             </summary>
-            <value>A threa-safe dictionary for storing counts of the words in the lexicon.</value>
+            <value>A thread-safe dictionary for storing counts of the words in the lexicon.</value>
         </member>
         <member name="M:TFIDF.Lexicon.update_from(System.Collections.Generic.List{System.String})">
             <summary>
@@ -526,7 +526,7 @@
             <summary>
             Words in the topic.
             </summary>
-            <value>The list of all the words in the topic, including multiple occurances.</value>
+            <value>The list of all the words in the topic, including multiple occurrences.</value>
         </member>
         <member name="P:TFIDF.Topic.path">
             <summary>

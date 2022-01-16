@@ -188,7 +188,7 @@
                       HorizontalAlignment="Stretch"
                       HorizontalContentAlignment="Center"
                         IsEnabled="{Binding ViewState, Converter={StaticResource ResourceKey=viewStateConverter}, ConverterParameter=SummaryViewEnabled}">
-            <md:PackIcon Kind="File"/>
+            <md:PackIcon Kind="Notebook"/>
             <beh:Interaction.Triggers>
               <beh:EventTrigger EventName="Selected">
                 <beh:InvokeCommandAction Command="{Binding SwitchView}" CommandParameter="{Binding ElementName=Summary, Path=Name}"/>
@@ -201,7 +201,31 @@
               </StackPanel>
             </ListViewItem.ToolTip>
         </ListViewItem>
-      </ListView>
+
+          <ListViewItem x:Name="Themes"
+                        Height="50"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        IsEnabled="{Binding ViewState, Converter={StaticResource ResourceKey=viewStateConverter}, ConverterParameter=ThemesViewEnabled}">
+            <md:PackIcon Kind="FileTree" />
+            <beh:Interaction.Triggers>
+              <beh:EventTrigger EventName="Selected">
+                <beh:InvokeCommandAction Command="{Binding SwitchView}"
+                                         CommandParameter="{Binding ElementName=Themes, Path=Name}" />
+              </beh:EventTrigger>
+            </beh:Interaction.Triggers>
+            <ListViewItem.ToolTip>
+              <StackPanel Width="200">
+                <TextBlock Text="Themes"
+                           FontSize="16"
+                           FontWeight="SemiBold" />
+                <TextBlock TextWrapping="Wrap"
+                           Text="Displays theme analysis and proposals to group topics." />
+              </StackPanel>
+            </ListViewItem.ToolTip>
+          </ListViewItem>
+        </ListView>
         <Frame Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden">
         </Frame>
       </Grid>

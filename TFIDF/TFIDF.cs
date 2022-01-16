@@ -14,7 +14,7 @@ namespace TFIDF
         /// <summary>
         /// Term-Frequency Inverse Document-Frequency vector for the topic.
         /// </summary>
-        /// <value>TThis vector stores the TFIDF scores of each word of the lexicon that appears in the given topic. 
+        /// <value>This vector stores the TFIDF scores of each word of the lexicon that appears in the given topic. 
         /// This vector is later used for computing cosine similarity between topics.
         /// <para>The length of the vector is equal to the maximum vocabulary size of the <see cref="Lexicon"/>.</para></value>
         public SortedDictionary<string, double> tfidfVector = new SortedDictionary<string, double>(); // size => no of words in lexicon
@@ -38,7 +38,7 @@ namespace TFIDF
         /// <summary>
         /// Word count vector for the topic.
         /// </summary>
-        /// <value>This vector stores the number of occurances of each word of the lexicon that appears in the given topic.
+        /// <value>This vector stores the number of occurrences of each word of the lexicon that appears in the given topic.
         /// <para>The length of the vector is equal to the maximum vocabulary size of the <see cref="Lexicon"/>.</para></value>
         public SortedDictionary<string, int> wordCountVector = new SortedDictionary<string, int>(); // size => no of words in lexicon
 

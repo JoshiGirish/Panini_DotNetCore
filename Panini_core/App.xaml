@@ -61,30 +61,43 @@
     </Style>
 
     <!-- Base style for list box items -->
-    <Style x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
-      <Setter Property="SnapsToDevicePixels" Value="true"/>
-      <Setter Property="OverridesDefaultStyle" Value="true"/>
+    <Style x:Key="{x:Type ListBoxItem}"
+           TargetType="ListBoxItem">
+      <Setter Property="SnapsToDevicePixels"
+              Value="true" />
+      <Setter Property="OverridesDefaultStyle"
+              Value="true" />
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="ListBoxItem">
-            <Border Name="Border" Padding="2" SnapsToDevicePixels="true" Background="Transparent">
-              <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            <Border Name="Border"
+                    Padding="2"
+                    SnapsToDevicePixels="true"
+                    Background="Transparent">
+              <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
             </Border>
             <ControlTemplate.Triggers>
-              <Trigger Property="IsSelected" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#efe6ff"/>
+              <Trigger Property="IsSelected"
+                       Value="true">
+                <Setter TargetName="Border"
+                        Property="Background"
+                        Value="#efe6ff" />
 
               </Trigger>
-              <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#efe6ff"/>
-                <Setter Property="Cursor" Value="Hand"/>
+              <Trigger Property="IsMouseOver"
+                       Value="true">
+                <Setter TargetName="Border"
+                        Property="Background"
+                        Value="#efe6ff" />
+                <Setter Property="Cursor"
+                        Value="Hand" />
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
         </Setter.Value>
       </Setter>
     </Style>
-    
+
     <!-- Base style for checkbox -->
     <Style TargetType="CheckBox">
       <Setter Property="Background" Value="Transparent"/>

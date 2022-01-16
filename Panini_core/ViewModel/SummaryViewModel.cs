@@ -504,7 +504,7 @@ namespace Panini.ViewModel
 		/// <returns>The total number of similar topic suggestions which are already linked in the topics.</returns>
 		public int get_count_of_all_matching_links()
 		{
-			IEnumerable<IEnumerable<string>> enumMatchingLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Intersect(dataCache.corpus.concDict[n.fileName].get_all_link_names()));
+			IEnumerable<IEnumerable<string>> enumMatchingLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Intersect(dataCache.corpus.concDict[n.path].get_all_link_names()));
 			int sum = 0;
 			foreach (IEnumerable<string> links in enumMatchingLinks)
 			{
@@ -519,7 +519,7 @@ namespace Panini.ViewModel
 		/// <returns>The difference between the total number of suggested similar topics and the matching links that link to some of suggested similar topics.</returns>
 		public int get_count_of_all_links_to_be_integrated()
 		{
-			IEnumerable<IEnumerable<string>> enumIntegrateLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Except(dataCache.corpus.concDict[n.fileName].get_all_link_names()));
+			IEnumerable<IEnumerable<string>> enumIntegrateLinks = dataCache.TopicCollection.Select((TopicItem n) => n.get_topic_names().Except(dataCache.corpus.concDict[n.path].get_all_link_names()));
 			int sum = 0;
 			foreach (IEnumerable<string> links in enumIntegrateLinks)
 			{
@@ -534,7 +534,7 @@ namespace Panini.ViewModel
 		/// <returns>The total number of links which can be removed/replaced depending on better link proposals to other similar topics.</returns>
 		public int get_count_of_all_obsolete_links()
 		{
-			IEnumerable<IEnumerable<string>> enumObseleteLinks = dataCache.TopicCollection.Select((TopicItem n) => dataCache.corpus.concDict[n.fileName].get_all_link_names().Except(n.get_topic_names()));
+			IEnumerable<IEnumerable<string>> enumObseleteLinks = dataCache.TopicCollection.Select((TopicItem n) => dataCache.corpus.concDict[n.path].get_all_link_names().Except(n.get_topic_names()));
 			int sum = 0;
 			foreach (IEnumerable<string> links in enumObseleteLinks)
 			{
@@ -551,13 +551,14 @@ namespace Panini.ViewModel
 		/// <returns>The axis labels and similarity scores for plotting the main heatmap.</returns>
 		public Dictionary<string, object> get_full_heatmap_data()
 		{
-			string[] labels = dataCache.corpus.concDict.Keys.ToArray();
+			string[] paths = dataCache.corpus.concDict.Keys.ToArray();
+			string[] labels = dataCache.corpus.concDict.Keys.Select(path => dataCache.corpus.concDict[path].topicName).ToArray();
 			double[,] data = new double[labels.Count(), labels.Count()];
-			for (int i = 0; i < labels.Count(); i++)
+			for (int i = 0; i < paths.Count(); i++)
 			{
-				for (int j = 0; j < labels.Count(); j++)
+				for (int j = 0; j < paths.Count(); j++)
 				{
-					data[i, j] = dataCache.corpus.concDict[labels[i]].tfidf.similarityScores[labels[j]];
+					data[i, j] = dataCache.corpus.concDict[paths[i]].tfidf.similarityScores[paths[j]];
 				}
 			}
 			Dictionary<string, object> dataDict = new Dictionary<string, object>();
@@ -797,8 +798,13 @@ namespace Panini.ViewModel
 			int hIndex = (int) Math.Round(slope * HorizontalSliderPosition);
 
 			// Labels to be displayed on vertical and horizontal axes
-			string[] vlabels = (string[])(heatmapData["vlabels"] = dataCache.corpus.concDict.Keys.ToList().GetRange(vIndex, KernelSize).ToArray());
-			string[] hlabels = (string[])(heatmapData["hlabels"] = dataCache.corpus.concDict.Keys.ToList().GetRange(hIndex, KernelSize).ToArray());
+			string[] vlabels = (string[])(heatmapData["vlabels"] = dataCache.corpus.concDict.Keys.Select(path => dataCache.corpus.concDict[path].topicName).ToList().GetRange(vIndex, KernelSize).ToArray());
+			string[] hlabels = (string[])(heatmapData["hlabels"] = dataCache.corpus.concDict.Keys.Select(path => dataCache.corpus.concDict[path].topicName).ToList().GetRange(hIndex, KernelSize).ToArray());
+
+			// Corresponding paths of the files
+			string[] vPaths = dataCache.corpus.concDict.Keys.ToList().GetRange(vIndex, KernelSize).ToArray();
+			string[] hPaths = dataCache.corpus.concDict.Keys.ToList().GetRange(hIndex, KernelSize).ToArray();
+
 
 			double[,] data = new double[KernelSize, KernelSize];
 
@@ -806,8 +812,8 @@ namespace Panini.ViewModel
 			{
 				for (int j = 0; j < KernelSize; j++)
 				{
-					data[i, j] = dataCache.corpus.concDict[vlabels[j]].tfidf.similarityScores[hlabels[i]];
-				}
+                    data[i, j] = dataCache.corpus.concDict[vPaths[j]].tfidf.similarityScores[hPaths[i]];
+                }
 			}
 			heatmapData["data"] = data;
 

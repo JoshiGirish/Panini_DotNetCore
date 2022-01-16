@@ -27,7 +27,7 @@ namespace TFIDF
         /// <summary>
         /// A dictionary for storing word counts.
         /// </summary>
-        /// <value>A threa-safe dictionary for storing counts of the words in the lexicon.</value>
+        /// <value>A thread-safe dictionary for storing counts of the words in the lexicon.</value>
         public static ConcurrentDictionary<string, int> wordsDictionary = new ConcurrentDictionary<string, int>();
 
         #region Update word counts
@@ -62,6 +62,15 @@ namespace TFIDF
         }
         #endregion
 
+        /// <summary>
+        /// Resets the lexicon.
+        /// </summary>
+        /// <value>Resets the lexicon words to an empty list.</value>
+        public static void reset_lexicon()
+        {
+            words = new List<string>();
+            wordsDictionary = new ConcurrentDictionary<string, int>();
+        }
         //static Lexicon(int maxSize)
         //{
         //    MaxVocabSize = maxSize;

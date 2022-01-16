@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aglomera" Version="1.1.1" />
     <PackageReference Include="AvalonEdit" Version="6.1.2.30" />
     <PackageReference Include="docfx.console" Version="2.58.3">
       <PrivateAssets>all</PrivateAssets>
@@ -48,6 +49,7 @@
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="HtmlAgilityPack.NetCore" Version="1.5.0.1" />
     <PackageReference Include="ILGPU" Version="0.10.1" />
+    <PackageReference Include="Kneedle" Version="1.0.1" />
     <PackageReference Include="LemmaGenerator" Version="1.1.0" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.1" />

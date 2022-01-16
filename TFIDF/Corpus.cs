@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Windows;
-using System.Threading;
 using HtmlAgilityPack;
+using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.LinearAlgebra.Factorization;
 
 namespace TFIDF
 {
@@ -215,6 +215,7 @@ namespace TFIDF
             topics = new List<Topic>();
             topicNames = new List<string>();
             topicMap = new Dictionary<string, Topic>();
+            Lexicon.reset_lexicon();
             Lexicon.MaxVocabSize = maxSize;
             concDict = new ConcurrentDictionary<string, Topic>();
         }
@@ -231,7 +232,7 @@ namespace TFIDF
             // Get all the files in the target directory
             //targetDir = directory;
             targetDirInfo = new DirectoryInfo(directory);
-            Files = targetDirInfo.GetFiles("*.htm*");
+            Files = targetDirInfo.GetFiles("*.htm*",SearchOption.AllDirectories);
             return Files.Select(n => n.Name);
         }
         #endregion
@@ -339,10 +340,11 @@ namespace TFIDF
             ParallelLoopResult readTopicResult = Parallel.ForEach(Files,
                                                    (file) =>
                                                    {
-                                                       if (Topic.Is_valid(file.FullName, ignoreData))
+                                                       if (Topic.Is_valid(file.Name, ignoreData))
                                                        {
 
                                                            var topic = instantiate_topic(file, targetDir, ignoreData, selectionData, AncestorLevel, titleTag);
+                                                           
                                                            if(topic.words != null)
                                                            {
                                                                concqueue.Enqueue(topic);
@@ -376,7 +378,7 @@ namespace TFIDF
             ParallelLoopResult tfidfCompResult = Parallel.ForEach(topics,
                                                    (topic) => {
                                                        topic.tfidf = new TFIDF(topic, topics);
-                                                       concDict.TryAdd(topic.fileName, topic);
+                                                       concDict.TryAdd(topic.path, topic);
                                                    });
             stopwatch.Stop();
             var tfidfCalculationTime = stopwatch.ElapsedMilliseconds / 1000;
@@ -396,7 +398,7 @@ namespace TFIDF
                 foreach (var corpusTopic in concDict.Values)
                 {
                     var score = cosine_similarity(sourceTopic, corpusTopic);
-                    sourceTopic.tfidf.similarityScores.Add(corpusTopic.fileName, score);
+                    sourceTopic.tfidf.similarityScores.Add(corpusTopic.path, score);
                 }
             }
             stopwatch.Stop();
@@ -509,7 +511,7 @@ namespace TFIDF
         /// <returns></returns>
         public IEnumerable<Topic> get_similar_topics(Topic topic, int numOfTopics)
         {
-            return topics.OrderByDescending(n => n.tfidf.similarityScores[topic.fileName]).Take(numOfTopics+1).Skip(1); 
+            return topics.OrderByDescending(n => n.tfidf.similarityScores[topic.path]).Take(numOfTopics+1).Skip(1); 
             // numOfTopics + 1 -> as the most similar topic is the topic itself, which we skip
         }
         #endregion
@@ -525,7 +527,7 @@ namespace TFIDF
         /// <returns></returns>
         public double get_similarity_score(Topic sourceTopic, Topic targetTopic)
         {
-            return Math.Round(targetTopic.tfidf.similarityScores[sourceTopic.fileName]*100, 1);
+            return Math.Round(targetTopic.tfidf.similarityScores[sourceTopic.path]*100, 1);
         }
         #endregion
 
@@ -556,5 +558,69 @@ namespace TFIDF
             relinksMax = topics.Select(topic => topic.relinks.Count).ToArray().Max();
         }
         #endregion
+
+        #region Compute Singular Value Decomposition
+        public Svd<double> compute_svd()
+        {
+            var doubArray = get_term_doucment_matrix();
+            var topicNames = topics.Select(topic => topic.topicName).ToArray();
+
+            doubArray.writeRecordsToCSV(new object[] { "array.csv", topicNames});
+
+            var m = DenseMatrix.OfArray(doubArray);
+
+            var svd = m.Svd(true);
+
+
+            var conceptArray = svd.VT.ToArray();
+            conceptArray.writeRecordsToCSV(new object[] { "conceptArray.csv", topicNames});
+
+            return svd;
+        }
+        #endregion
+
+        #region Get Term-Document Matrix
+        public double[,] get_term_doucment_matrix()
+        {
+            var collection = new SortedSet<string> { };
+            double zero = 0.0;
+
+            // This loops collects a few most popular words from each topic
+            foreach (Topic topic in topics)
+            {
+                var wordGroups = topic.words
+                    .GroupBy(word => word)
+                    .Select(word => new
+                    {
+                        term = word.Key,
+                        count = word.Count()
+                    });
+                var wordDict = wordGroups.ToDictionary(item => item.term, item => item.count);
+                collection.UnionWith(wordDict.OrderByDescending(item => item.Value).Take(30).Select(item => item.Key).ToList());
+            }
+            var doubArray = new double[collection.Count, topics.Count];
+
+            for (var i = 0; i < topics.Count; i++)
+            {
+                //var word_counts = collection.ToArray()
+                //                    .OrderByDescending(word => word)
+                //                    .Select(word => topics[i].words.Where(top_word => top_word == word).Count()).ToArray();
+                //var word_counts = Lexicon.words.OrderByDescending(word => word).Select(word => topics[i].words.Where(top_word => top_word == word).Count()).ToArray();
+                var word_counts = collection.ToArray().OrderByDescending(word => word).Select(word => topics[i].tfidf.tfVector.TryGetValue(word, out zero) ? zero : zero).ToArray();
+                //var word_counts = topics[i].tfidf.wordCountVector.Values.ToArray();
+                for (var j = 0; j < word_counts.Length; j++)
+                {
+                    doubArray[j, i] = word_counts[j];
+                }
+            }
+
+            return doubArray;
+        }
+        #endregion
+        public IEnumerable<KeyValuePair<string,int>> get_lexicon_word_counts()
+        {
+            return Lexicon.wordsDictionary.OrderByDescending(key => key.Value).Take(200);
+        }
+
     }
 }

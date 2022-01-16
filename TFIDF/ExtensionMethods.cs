@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace TFIDF
 {
@@ -96,5 +97,35 @@ namespace TFIDF
             }
         }
         #endregion
+
+        #region Write CSV
+        public static void writeRecordsToCSV(
+                              this double[,] data, params object[] fileInfo)
+        {
+            var filePath = (string)fileInfo[0];
+            var topicNames = (string[])fileInfo[1];
+
+            var csv = new StringBuilder();
+
+            for(var i=0; i < data.GetLength(1); i++)
+            {
+                var line = "";
+
+                for(var j=0; j < data.GetLength(0); j++)
+                {
+                    line += j==0? $"{data[j, i]}" : $",{data[j,i]}";
+                }
+
+                line += $",{topicNames[i]}";
+
+                csv.AppendLine(line);
+
+            }
+
+
+            File.WriteAllText(filePath, csv.ToString());
+        }
+        #endregion
+
     }
 }

@@ -1,14 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Panini.Pages;
-using Panini.ViewModel;
-using System.ComponentModel;
+﻿using Panini.Pages;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Panini.Commands;
 using System.Collections.ObjectModel;
-using Microsoft.Toolkit.Collections;
 using System.Collections.Specialized;
 
 namespace Panini.ViewModel
@@ -24,6 +18,7 @@ namespace Panini.ViewModel
         private readonly LoadViewModel loadVM;
         private readonly ResultsViewModel resultsVM;
         private readonly SummaryViewModel summaryVM;
+        private readonly ThemesViewModel themesVM;
 
 
         private AboutPage aboutPage = new AboutPage();
@@ -31,6 +26,7 @@ namespace Panini.ViewModel
         private LoadPage loadPage = new LoadPage();
         private ResultsPage resultsPage = new ResultsPage();
         private SummaryPage summaryPage = new SummaryPage();
+        private ThemesPage themesPage = new ThemesPage();
 
         private Page _currentPage = new AboutPage();
 
@@ -100,6 +96,9 @@ namespace Panini.ViewModel
                     CurrentPage = summaryPage;
                     break;
 
+                case "Themes":
+                    CurrentPage = themesPage;
+                    break;
             }
         }
         #endregion
@@ -126,6 +125,7 @@ namespace Panini.ViewModel
             loadVM = new LoadViewModel();
             resultsVM = new ResultsViewModel();
             summaryVM = new SummaryViewModel();
+            themesVM = new ThemesViewModel();
 
             dataCache.ViewState.CollectionChanged += update_view_status;
         }
@@ -155,5 +155,10 @@ namespace Panini.ViewModel
         /// </summary>
         /// <value>View model for handling behavior of <c>Summary View</c>.</value>
         public BaseViewModel SummaryViewModel { get { return summaryVM; } }
+        /// <summary>
+        /// <c>Themes View</c> model.
+        /// </summary>
+        /// <value>View model for handling behavior of <c>Themes View</c>.</value>
+        public BaseViewModel ThemesViewModel { get { return themesVM; } }
     }
 }

@@ -71,7 +71,7 @@ namespace TFIDF
         /// <summary>
         /// Words in the topic.
         /// </summary>
-        /// <value>The list of all the words in the topic, including multiple occurances.</value>
+        /// <value>The list of all the words in the topic, including multiple occurrences.</value>
         public List<string> words = new List<string>();
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace TFIDF
             var validWords = data.tokenize()?.lemmatize();
             if(validWords != null)
             {
-                return validWords.Where(word => !int.TryParse(word, out _) && word.Length>1).Select(n => n).ToList(); // return words which are not numbers
+                return validWords.Where(word => !int.TryParse(word, out _) && word.Length>1).Select(n => n.ToLower()).ToList(); // return words which are not numbers
             }
             else
             {
@@ -375,10 +375,7 @@ namespace TFIDF
         /// <returns>Sentences from the topic text.</returns>
         private int CountTokenizedSentences(string text)
         {
-            // remove spaces and split the , . : ; etc..
-            return text.Split(new string[] { " ", "   ", "\r\n" }, StringSplitOptions.None)
-                .SelectMany(o => o.SplitAndKeep(".,;:\\/?!#$%()=+-*\"'–_`<>&^@{}[]|~'".ToArray())).Count();
-                //.Select(o => o.ToLower());
+            return Regex.Split(text, @"(?<=[\.!\?])\s+").Count();
         }
         #endregion
 
