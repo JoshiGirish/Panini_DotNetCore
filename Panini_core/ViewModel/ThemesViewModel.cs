@@ -15,6 +15,7 @@ using System.IO;
 using Kneedle;
 using LiveCharts.Defaults;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Panini.ViewModel
 {
@@ -96,6 +97,8 @@ namespace Panini.ViewModel
 
         private double[] _chartYSeries = new double[] { };
 
+        private double[] _chartYSeriesFullPrecision = new double[] { };
+
 
 
         private Dictionary<string, Dictionary<string, int?>> _knees = new Dictionary<string, Dictionary<string, int?>>() { };
@@ -116,10 +119,13 @@ namespace Panini.ViewModel
         public int SliderValue
         {
             get { return _sliderValue; }
-            set { _sliderValue = value; SubClusterDistance = _chartYSeries[value]; RaisePropertyChanged(); }
+            set { _sliderValue = value; SubClusterDistance = _chartYSeries[value]; 
+                    Thread generateThread = new Thread(new ThreadStart(create_subclusters));
+                    generateThread.IsBackground = true;
+                    generateThread.Start(); RaisePropertyChanged(); }
         }
 
-        private int _maxValue = 10;
+        private int _maxValue = 1;
         public int MaxValue
         {
             get { return _maxValue; }
@@ -127,12 +133,20 @@ namespace Panini.ViewModel
         }
 
 
-        private double _selectedDissimilarityLevel = 0.0;
-        public double SelectedDissimilarityLevel
+        private double _selectedDissimilarity = 0.0;
+        public double SelectedDissimilarity
         {
-            get { return _selectedDissimilarityLevel; }
-            set { _selectedDissimilarityLevel = value; RaisePropertyChanged(); }
+            get { return _selectedDissimilarity; }
+            set { _selectedDissimilarity = value; RaisePropertyChanged(); }
         }
+
+        private int _selectedClusteringLevel = 1;
+        public int SelectedClusteringLevel
+        {
+            get { return _selectedClusteringLevel; }
+            set { _selectedClusteringLevel = value; RaisePropertyChanged(); }
+        }
+
 
         private int[] _ticks = { };
         public int[] Ticks
@@ -239,16 +253,7 @@ namespace Panini.ViewModel
             foreach (var linkage in linkages)
                 clusterings[linkage.Value] = get_clustering(instances, linkage.Key, linkage.Value);
 
-            foreach (var clustering in clusterings)
-            {
-                var doubArray = new List<string>() { };
-                var knees = compute_knees(clustering);
-                _knees[clustering.Key] = new Dictionary<string, int?>()
-                    {
-                        { "k_cc", knees[0] },
-                        { "k_c" , knees[1] }
-                    };
-            }
+            compute_all_knees();
 
             DataSource = get_tree_nodes(_knees[LinkageMap[SelectedLinkage]]["k_cc"]);
             ChartData = new SeriesCollection { };
@@ -259,7 +264,7 @@ namespace Panini.ViewModel
             SelectedLinkage = "MIN-ENERGY";
         }
 
-        private void get_all_knees()
+        private void compute_all_knees()
         {
             foreach(var clustering in clusterings)
             {
@@ -279,7 +284,7 @@ namespace Panini.ViewModel
             var clusterLevelNode = new ObservableCollection<Item>() { };
             foreach (var clustering in clusterings)
             {
-                var doubArray = new List<string>() { };
+                var themeLabel = new List<string>() { };
                     
                 if (clustering.Key == LinkageMap[SelectedLinkage]) ///////////
                 {
@@ -289,12 +294,13 @@ namespace Panini.ViewModel
                         int kneeValue = KneePoint ?? _chartXSeries.GetLength(0)-1; // Show the single cluster if no knee point found
                         if (Math.Round(clusterset.Dissimilarity, 2, MidpointRounding.ToEven) == _chartYSeries[kneeValue])
                         {
-                            doubArray.Add(clusterset.Dissimilarity.ToString());
+                            themeLabel.Add(clusterset.Dissimilarity.ToString());
                             var clusterCount = 0;
                             foreach (var cluster in clusterset)
                             {
                                 var clusterSetNode = new Item() { };
-                                clusterSetNode.Name = clusterCount.ToString() + " " + cluster.Parent1?.ToString() + " " + cluster.Parent2?.ToString();
+                                //clusterSetNode.Name = clusterCount.ToString() + " " + cluster.Parent1?.ToString() + " " + cluster.Parent2?.ToString();
+                                clusterSetNode.Name = clusterCount.ToString();
                                 clusterSetNode.Dissimilarity = cluster.Dissimilarity;
                                 clusterSetNode.Children = get_cluster_members(cluster);
                                 clusterLevelNode.Add(clusterSetNode);
@@ -304,7 +310,7 @@ namespace Panini.ViewModel
                     }
                 }
                 // Write some data
-                dictArrays[clustering.Key] = doubArray;
+                dictArrays[clustering.Key] = themeLabel;
             }
             string json = JsonSerializer.Serialize(dictArrays);
             File.WriteAllText("jsonData.json", json);
@@ -312,6 +318,112 @@ namespace Panini.ViewModel
             return clusterLevelNode;
 
         }
+
+        private void create_subclusters()
+        {
+            var dictArrays = new Dictionary<string, List<string>>();
+            var clusterLevelNode = new ObservableCollection<Item>() { };
+            foreach (var clustering in clusterings)
+            {
+                var themeLabel = new List<string>() { };
+
+                if (clustering.Key == LinkageMap[SelectedLinkage]) ///////////
+                {
+                    compute_series_points(clustering);
+                    var clustersetCount = 0;
+                    foreach (var clusterset in clustering.Value)
+                    {
+                        if (SelectedClusteringLevel == clustersetCount)
+                        {
+                            themeLabel.Add(clusterset.Dissimilarity.ToString());
+                            var clusterCount = 0;
+                            foreach (var cluster in clusterset)
+                            {
+                                var clusterSetNode = new Item() { };
+                                //clusterSetNode.Name = clusterCount.ToString() + " " + cluster.Parent1?.ToString() + " " + cluster.Parent2?.ToString();
+                                clusterSetNode.Name = clusterCount.ToString();
+                                clusterSetNode.Dissimilarity = cluster.Dissimilarity;
+                                clusterSetNode.Children = SliderValue == SelectedClusteringLevel ? get_cluster_members(cluster) : bifurcateCluster(cluster);
+                                clusterLevelNode.Add(clusterSetNode);
+                                clusterCount++;
+                            }
+                        }
+                        clustersetCount++;
+                    }
+                }
+                // Write some data
+                dictArrays[clustering.Key] = themeLabel;
+            }
+            string json = JsonSerializer.Serialize(dictArrays);
+            File.WriteAllText("jsonData.json", json);
+            DataSource = clusterLevelNode;
+        }
+
+        private ObservableCollection<Item> bifurcateCluster(Cluster<DataPoint> cluster)
+        {
+            var clusterChildren = new ObservableCollection<Item>() { };
+            if(cluster.Parent1 != null) // for clusters that are not leaf nodes (single datapoint)
+            {
+                var clusterParentNode = new Item() { };
+                clusterParentNode.Name = cluster.Parent1.ToString();
+                //if (SubClusterDepth < SelectedClusteringLevel - SliderValue)
+                if(cluster.Dissimilarity >= _chartYSeriesFullPrecision[SliderValue]) // decompose clusters between the root cluster distance and sub-cluster distance
+                {
+                    clusterParentNode.Children = bifurcateCluster(cluster.Parent1);
+                }
+                else  // aggregate multi-level children for cluster dissimilarity less than sub-cluster distance value
+                {
+                    var collection = new ObservableCollection<Item>() { };
+                    foreach (var datapoint in cluster.Parent1)
+                    {
+                        collection.Add(new Item
+                        {
+                            Name = datapoint.ID
+                        });
+                    }
+                    clusterParentNode.Children = collection;
+                }
+                clusterChildren.Add(clusterParentNode);
+            }
+
+            
+            if (cluster.Parent2 != null)
+            {
+                var clusterParentNode = new Item() { };
+                clusterParentNode.Name = cluster.Parent2.ToString();
+                if (cluster.Dissimilarity >= _chartYSeriesFullPrecision[SliderValue])
+                {
+                    clusterParentNode.Children = bifurcateCluster(cluster.Parent2);
+                }
+                else
+                {
+                    var collection = new ObservableCollection<Item>() { };
+                    foreach(var datapoint in cluster.Parent2)
+                    {
+                        collection.Add(new Item
+                        {
+                            Name = datapoint.ID
+                        }) ;
+                    }
+                    clusterParentNode.Children = collection;
+                }
+                clusterChildren.Add(clusterParentNode);
+            }
+
+            if(cluster.Parent1 == null && cluster.Parent2 == null) // return the single datapoint for cluster which has no parents
+            {
+                foreach (var datapoint in cluster)
+                {
+                    clusterChildren.Add(new Item
+                    {
+                        Name = datapoint.ID
+                    });
+                }
+            }
+
+            return clusterChildren;
+        }
+
 
         private ObservableCollection<Item> get_cluster_members(Cluster<DataPoint> cluster)
         {
@@ -336,7 +448,8 @@ namespace Panini.ViewModel
 
         private void compute_series_points(KeyValuePair<string, ClusteringResult<DataPoint>> clustering)
         {
-            _chartYSeries = clustering.Value.Select(cs => Math.Round(cs.Dissimilarity, 2, MidpointRounding.ToEven)).ToArray(); // Get Y values
+            _chartYSeriesFullPrecision = clustering.Value.Select(cs => cs.Dissimilarity).ToArray(); // Get Y values
+            _chartYSeries = _chartYSeriesFullPrecision.Select(point => Math.Round(point, 2, MidpointRounding.ToEven)).ToArray();
             CurrentChartData = _chartYSeries;
             var intX = Enumerable.Range(0, _chartYSeries.Length).ToArray(); // Get X values
             _chartXSeries = intX.Select(point => (double)point).ToArray(); // Convert int array to double array
@@ -397,11 +510,11 @@ namespace Panini.ViewModel
         {
             DataSource = new ObservableCollection<Item>();
             DataSource = get_tree_nodes((int?)p.X);
-            SelectedDissimilarityLevel = p.Y;
+            SelectedDissimilarity = p.Y;
+            SelectedClusteringLevel = (int)p.X;
 
             // Set the slider limits everytime a dissimilarity level is selected in the chart
-
-            Ticks = _chartYSeries.Where(val => val < SelectedDissimilarityLevel).Select(val => Array.IndexOf(_chartYSeries,val)).ToArray(); // Get values less than dissimilarity and rescale to slider range
+            Ticks = _chartXSeries.Where(x => x < (int)p.X).Select(x => (int)x).ToArray(); // Get values less than dissimilarity and rescale to slider range
             MaxValue = Ticks.Length;
             SliderValue = MaxValue;
         }
