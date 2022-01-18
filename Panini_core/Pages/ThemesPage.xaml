@@ -695,7 +695,16 @@
               <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type vm:Item}"
                                           ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Name}" />
+                  <Grid>
+                  <Border Grid.Column="2"
+                            CornerRadius="5"
+                            Background="#f7f2ff"
+                            Padding="5 0"
+                          Visibility="{Binding LevelMarkerVisibility}">
+                  </Border>
+                    <TextBlock Text="{Binding Name}"
+                               Height="18"/>
+                  </Grid>
                 </HierarchicalDataTemplate>
               </TreeView.ItemTemplate>
               <TreeView.ItemContainerStyle>
@@ -728,7 +737,8 @@
               <StackPanel Grid.Column="0"
                           Grid.Row="0"
                           Margin="30 0">
-                    <Grid Height="20">
+                    <Grid Height="20"
+                          Margin="0 0 0 10">
                       <TextBlock Text="Cluster Configuration"
                                  FontSize="14"
                                  FontWeight="SemiBold"
@@ -770,11 +780,17 @@
                                       MaxWidth="300" />
                   </Grid.ColumnDefinitions>
                   <Label Grid.Column="0">Root Cluster Distance</Label>
-                  <TextBlock Grid.Column="1"
-                             Text="{Binding SelectedDissimilarity}"
-                             HorizontalAlignment="Left"
-                             VerticalAlignment="Center" />
-                </Grid>
+                    <Border Grid.Column="1"
+                            CornerRadius="5"
+                            Padding="5"
+                            Height="25">
+                      <TextBlock Text="{Binding SelectedDissimilarity}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"
+                                 FontSize="14"
+                                 FontWeight="Light"  />
+                    </Border>
+                  </Grid>
                 
                 <!--Subcluster Distance-->
                 <Grid Margin="20 10 0 0">
@@ -796,11 +812,19 @@
                           IsSnapToTickEnabled="True"
                           VerticalAlignment="Center">
                   </Slider>
-                  <TextBlock Grid.Column="2"
-                             Text="{Binding SubClusterDistance}" 
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"/>
-                </Grid>
+                    <Border Grid.Column="2"
+                            Background="#f7f2ff"
+                            CornerRadius="5"
+                            Padding="5"
+                            Margin="10 0"
+                            Height="25">
+                      <TextBlock Text="{Binding SubClusterDistance}"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 FontSize="14"
+                                 FontWeight="Light" />
+                    </Border>
+                  </Grid>
 
                 <!--Cluster Fuzzyness-->
                 <Grid Margin="20 10 0 0">
@@ -818,10 +842,21 @@
                           Value="{Binding FuzzynessSliderValue}"
                           Minimum="0"
                           Maximum="100"
-                          TickFrequency="1"
                           VerticalAlignment="Center">
                   </Slider>
-                </Grid>
+                    <Border Grid.Column="2"
+                            Background="#f7f2ff"
+                            CornerRadius="5"
+                            Padding="5"
+                            Margin="10 0"
+                            Height="25">
+                    <TextBlock Text="{Binding FuzzynessSliderValue}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontWeight="Light"/>
+                    </Border>
+                  </Grid>
 
               </StackPanel>
 
@@ -848,8 +883,8 @@
                       </lvc:AxisSection>
                       <lvc:AxisSection Value="{Binding DistanceSliderValue}"
                                        StrokeThickness="1"
-                                       Stroke="#947cc2"
-                                       Opacity="0.5">
+                                         Stroke="#b295e8"
+                                       Opacity="0.3">
                       </lvc:AxisSection>
                     </lvc:Axis.Sections>
                   </lvc:Axis>

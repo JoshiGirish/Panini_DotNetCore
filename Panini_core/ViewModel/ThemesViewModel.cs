@@ -162,7 +162,7 @@ namespace Panini.ViewModel
         private double _fuzzyness = 0.0;
         public double FuzzynessSliderValue
         {
-            get { return _fuzzyness; }
+            get { return  Math.Round(_fuzzyness,2); }
             set { _fuzzyness = value; sub_cluster(); RaisePropertyChanged(); }
         }
 
@@ -352,8 +352,7 @@ namespace Panini.ViewModel
                             {
                                 var clusterSetNode = new Item() { };
                                 //clusterSetNode.Name = clusterCount.ToString() + " " + cluster.Parent1?.ToString() + " " + cluster.Parent2?.ToString();
-                                clusterSetNode.Name = clusterCount.ToString();
-                                clusterSetNode.BackgroundColor = Color.Violet;
+                                clusterSetNode.Name = $"Separation : {Math.Round(cluster.Dissimilarity, 2)}";
                                 clusterSetNode.Dissimilarity = cluster.Dissimilarity;
                                 clusterSetNode.Children = DistanceSliderValue == SelectedClusteringLevel ? get_cluster_members(cluster) : bifurcateCluster(cluster,cluster);
                                 clusterLevelNode.Add(clusterSetNode);
@@ -366,8 +365,8 @@ namespace Panini.ViewModel
                 // Write some data
                 dictArrays[clustering.Key] = themeLabel;
             }
-            string json = JsonSerializer.Serialize(dictArrays);
-            File.WriteAllText("jsonData.json", json);
+            //string json = JsonSerializer.Serialize(dictArrays);
+            //File.WriteAllText("jsonData.json", json);
             DataSource = clusterLevelNode;
         }
 
@@ -393,14 +392,29 @@ namespace Panini.ViewModel
                 }
             }
 
-            if(cluster.Parent1 != null) // for clusters that are not leaf nodes (single datapoint)
+            if (cluster.Parent1 == null && cluster.Parent2 == null) // return the single datapoint for cluster which has no parents
+            {
+                foreach (var datapoint in cluster)
+                {
+                    clusterChildren.Add(new Item
+                    {
+                        Name = datapoint.ID,
+                        LevelMarkerVisibility = "Collapsed"
+                    });
+                }
+            }
+
+            if (cluster.Parent1 != null) // for clusters that are not leaf nodes (single datapoint)
             {
                 var clusterParentNode = new Item() { };
-                clusterParentNode.Name = cluster.Parent1.ToString();
+                //clusterParentNode.Name = cluster.Parent1.ToString();
+                clusterParentNode.Name = $"Separation : {Math.Round(cluster.Parent1.Dissimilarity,2).ToString()}" ;
                 //if (SubClusterDepth < SelectedClusteringLevel - DistanceSliderValue)
-                if(cluster.Dissimilarity >= _chartYSeriesFullPrecision[DistanceSliderValue]) // decompose clusters between the root cluster distance and sub-cluster distance
+                if (cluster.Dissimilarity >= _chartYSeriesFullPrecision[DistanceSliderValue]) // decompose clusters between the root cluster distance and sub-cluster distance
                 {
                     clusterParentNode.Children = bifurcateCluster(cluster.Parent1, parentCluster);
+                    clusterParentNode.LevelMarkerVisibility = "Visible";
+
                 }
                 else  // aggregate multi-level children for cluster dissimilarity less than sub-cluster distance value
                 {
@@ -410,6 +424,7 @@ namespace Panini.ViewModel
                         collection.Add(new Item
                         {
                             Name = datapoint.ID,
+                            LevelMarkerVisibility = "Collapsed"
                         });
                     }
                     clusterParentNode.Children = collection;
@@ -421,10 +436,12 @@ namespace Panini.ViewModel
             if (cluster.Parent2 != null)
             {
                 var clusterParentNode = new Item() { };
-                clusterParentNode.Name = cluster.Parent2.ToString();
+                //clusterParentNode.Name = cluster.Parent2.ToString();
+                clusterParentNode.Name = $"Separation : {Math.Round(cluster.Parent2.Dissimilarity, 2).ToString()}";
                 if (cluster.Dissimilarity >= _chartYSeriesFullPrecision[DistanceSliderValue])
                 {
                     clusterParentNode.Children = bifurcateCluster(cluster.Parent2, parentCluster);
+                    clusterParentNode.LevelMarkerVisibility = "Visible";
                 }
                 else
                 {
@@ -434,23 +451,12 @@ namespace Panini.ViewModel
                         collection.Add(new Item
                         {
                             Name = datapoint.ID,
-
+                            LevelMarkerVisibility = "Collapsed"
                         }) ;
                     }
                     clusterParentNode.Children = collection;
                 }
                 clusterChildren.Add(clusterParentNode);
-            }
-
-            if(cluster.Parent1 == null && cluster.Parent2 == null) // return the single datapoint for cluster which has no parents
-            {
-                foreach (var datapoint in cluster)
-                {
-                    clusterChildren.Add(new Item
-                    {
-                        Name = datapoint.ID
-                    });
-                }
             }
 
             return clusterChildren;
@@ -464,6 +470,7 @@ namespace Panini.ViewModel
             {
                 var clusterNode = new Item() { };
                 clusterNode.Name = datapoint.ID;
+                clusterNode.LevelMarkerVisibility = "Collapsed";
                 members.Add(clusterNode);
             }
             return members;
@@ -600,7 +607,9 @@ namespace Panini.ViewModel
     {
         public string Name { get; set; }
         public double Dissimilarity { get; set; }
-        public Color BackgroundColor { get; set; }
+        public int Level { get; set; }
+        public string LevelMarkerVisibility { get; set; }
+
         public ObservableCollection<Item> Children { get; set; } = new ObservableCollection<Item>();
 
         public override string ToString()
