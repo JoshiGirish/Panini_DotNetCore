@@ -8,6 +8,7 @@
       xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:beh="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Royale"
       mc:Ignorable="d"
@@ -660,7 +661,7 @@
         </StackPanel>
       <StackPanel Grid.Row="1">
         <Grid Name="MainGrid"
-              Visibility="{Binding ThemesViewVisibility}">
+          Visibility="{Binding ThemesViewVisibility}">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="Auto"/>
@@ -694,7 +695,7 @@
               <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type vm:Item}"
                                           ItemsSource="{Binding Children}">
-                  <TextBlock Text="{Binding Name}" />
+                    <TextBlock Text="{Binding Name}" />
                 </HierarchicalDataTemplate>
               </TreeView.ItemTemplate>
               <TreeView.ItemContainerStyle>
@@ -716,7 +717,8 @@
               <RowDefinition />
               <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <DockPanel Grid.Row="0">
+            <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -724,6 +726,7 @@
             
               <!-- Left Half of Themes Section -->
               <StackPanel Grid.Column="0"
+                          Grid.Row="0"
                           Margin="30 0">
                     <Grid Height="20">
                       <TextBlock Text="Cluster Configuration"
@@ -758,30 +761,6 @@
                             ItemsSource="{Binding Linkages}"
                             SelectedItem="{Binding SelectedLinkage}"></ComboBox>
                 </Grid>
-                
-                <!--Subcluster Distance-->
-                <Grid Margin="20 10 0 0">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200" />
-                    <ColumnDefinition Width="*"
-                                      MaxWidth="300" />
-                    <ColumnDefinition Width="Auto"
-                                      MinWidth="100"
-                                      MaxWidth="150" />
-                  </Grid.ColumnDefinitions>
-                  <Label Grid.Column="0">Subcluster Distance</Label>
-                  <Slider Grid.Column="1"
-                          Value="{Binding SliderValue}"
-                          Minimum="0"
-                          Maximum="{Binding MaxValue}"
-                          Ticks="{Binding Ticks}"
-                          IsSnapToTickEnabled="True"
-                          VerticalAlignment="Center"/>
-                  <TextBlock Grid.Column="2"
-                             Text="{Binding SubClusterDistance}" 
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"/>
-                </Grid>
 
                 <!--Root Cluster Dissimilarity-->
                 <Grid Margin="20 10 0 0">
@@ -796,14 +775,63 @@
                              HorizontalAlignment="Left"
                              VerticalAlignment="Center" />
                 </Grid>
+                
+                <!--Subcluster Distance-->
+                <Grid Margin="20 10 0 0">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*"
+                                      MaxWidth="300" />
+                    <ColumnDefinition Width="Auto"
+                                      MinWidth="100"
+                                      MaxWidth="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0">Subcluster Distance</Label>
+                  <Slider x:Name="SubClusterSlider"
+                          Grid.Column="1"
+                          Value="{Binding DistanceSliderValue}"
+                          Minimum="0"
+                          Maximum="{Binding MaxValue}"
+                          Ticks="{Binding Ticks}"
+                          IsSnapToTickEnabled="True"
+                          VerticalAlignment="Center">
+                  </Slider>
+                  <TextBlock Grid.Column="2"
+                             Text="{Binding SubClusterDistance}" 
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+                </Grid>
+
+                <!--Cluster Fuzzyness-->
+                <Grid Margin="20 10 0 0">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*"
+                                      MaxWidth="300" />
+                    <ColumnDefinition Width="Auto"
+                                      MinWidth="100"
+                                      MaxWidth="150" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0">Distance Fuzzyness</Label>
+                  <Slider x:Name="FuzzynessSlider"
+                          Grid.Column="1"
+                          Value="{Binding FuzzynessSliderValue}"
+                          Minimum="0"
+                          Maximum="100"
+                          TickFrequency="1"
+                          VerticalAlignment="Center">
+                  </Slider>
+                </Grid>
 
               </StackPanel>
 
 
-      <!-- Dissimilarity Chart -->
+              <!-- Dissimilarity Chart -->
               <lvc:CartesianChart Grid.Column="1"
+                                  Grid.Row="1"
                                   Series="{Binding ChartData}"
-                                  DataClickCommand="{Binding UpdateTree}">
+                                  DataClickCommand="{Binding UpdateTree}"
+                                  VerticalAlignment="Stretch">
                 <lvc:CartesianChart.SeriesColors>
                   <lvc:ColorsCollection>
                     <Color>#947cc2</Color>
@@ -818,7 +846,7 @@
                                        Stroke="#aaaaaa"
                                        Opacity=".5">
                       </lvc:AxisSection>
-                      <lvc:AxisSection Value="{Binding SliderValue}"
+                      <lvc:AxisSection Value="{Binding DistanceSliderValue}"
                                        StrokeThickness="1"
                                        Stroke="#947cc2"
                                        Opacity="0.5">
@@ -829,13 +857,17 @@
               </lvc:CartesianChart>
             
             </Grid>
+            </DockPanel>
             <GridSplitter Grid.Row="1"
-                          VerticalAlignment="Center"
+                          VerticalAlignment="Top"
                           HorizontalAlignment="Stretch"
                           Height="3"
                           ShowsPreview="True"
                           Background="#e3e3e3" />
-
+            <DockPanel Grid.Row="2">
+              <Grid>
+              </Grid>
+            </DockPanel>
           </Grid>
         </Grid>
       </StackPanel>

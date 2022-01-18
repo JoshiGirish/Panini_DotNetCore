@@ -16,6 +16,7 @@ using Kneedle;
 using LiveCharts.Defaults;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Panini.ViewModel
 {
@@ -62,7 +63,6 @@ namespace Panini.ViewModel
                     ExecuteDelegate = p => update_tree(p)
                 }); }
         }
-
 
         private ObservableCollection<Item> _dataSource = new ObservableCollection<Item>();
 
@@ -115,14 +115,11 @@ namespace Panini.ViewModel
 
         private Dictionary<string, ClusteringResult<DataPoint>> clusterings = new Dictionary<string, ClusteringResult<DataPoint>>() { };
 
-        private int _sliderValue = 0;
-        public int SliderValue
+        private int _distanceSliderValue = 0;
+        public int DistanceSliderValue
         {
-            get { return _sliderValue; }
-            set { _sliderValue = value; SubClusterDistance = _chartYSeries[value]; 
-                    Thread generateThread = new Thread(new ThreadStart(create_subclusters));
-                    generateThread.IsBackground = true;
-                    generateThread.Start(); RaisePropertyChanged(); }
+            get { return _distanceSliderValue; }
+            set { _distanceSliderValue = value; SubClusterDistance = _chartYSeries[value]; sub_cluster(); RaisePropertyChanged(); }
         }
 
         private int _maxValue = 1;
@@ -160,6 +157,13 @@ namespace Panini.ViewModel
         {
             get { return _subClusterDistance; }
             set { _subClusterDistance = value; RaisePropertyChanged(); }
+        }
+
+        private double _fuzzyness = 0.0;
+        public double FuzzynessSliderValue
+        {
+            get { return _fuzzyness; }
+            set { _fuzzyness = value; sub_cluster(); RaisePropertyChanged(); }
         }
 
         #region Processing Flag
@@ -230,6 +234,13 @@ namespace Panini.ViewModel
             }
 
             return clustering;
+        }
+
+        private void sub_cluster()
+        {
+            Thread subclusterThread = new Thread(new ThreadStart(create_subclusters));
+            subclusterThread.IsBackground = true;
+            subclusterThread.Start();
         }
 
         public void create_clusters()
@@ -342,8 +353,9 @@ namespace Panini.ViewModel
                                 var clusterSetNode = new Item() { };
                                 //clusterSetNode.Name = clusterCount.ToString() + " " + cluster.Parent1?.ToString() + " " + cluster.Parent2?.ToString();
                                 clusterSetNode.Name = clusterCount.ToString();
+                                clusterSetNode.BackgroundColor = Color.Violet;
                                 clusterSetNode.Dissimilarity = cluster.Dissimilarity;
-                                clusterSetNode.Children = SliderValue == SelectedClusteringLevel ? get_cluster_members(cluster) : bifurcateCluster(cluster);
+                                clusterSetNode.Children = DistanceSliderValue == SelectedClusteringLevel ? get_cluster_members(cluster) : bifurcateCluster(cluster,cluster);
                                 clusterLevelNode.Add(clusterSetNode);
                                 clusterCount++;
                             }
@@ -359,17 +371,36 @@ namespace Panini.ViewModel
             DataSource = clusterLevelNode;
         }
 
-        private ObservableCollection<Item> bifurcateCluster(Cluster<DataPoint> cluster)
+        private ObservableCollection<Item> bifurcateCluster(Cluster<DataPoint> cluster, Cluster<DataPoint> parentCluster)
         {
             var clusterChildren = new ObservableCollection<Item>() { };
+
+            // If the two parents are close enough (distance less than fuzzyness value) return all their children as collection
+            if (cluster.Parent1 != null && cluster.Parent2 != null) // return the single datapoint for cluster which has no parents
+            {
+                var linkage = new MinimumEnergyLinkage<DataPoint>(new DataPoint(null, null));
+                var fuzzyFraction = FuzzynessSliderValue / 100;
+                var fuzzyness = linkage.Calculate(parentCluster.Parent1, parentCluster.Parent2) * fuzzyFraction;
+                if (linkage.Calculate(cluster.Parent1, cluster.Parent2) <= fuzzyness)
+                {
+                    var parent1Children = get_cluster_members(cluster.Parent1);
+                    var parent2Children = get_cluster_members(cluster.Parent2);
+                    foreach (var child in parent1Children.Concat(parent2Children))
+                    {
+                        clusterChildren.Add(child);
+                    }
+                    return clusterChildren;
+                }
+            }
+
             if(cluster.Parent1 != null) // for clusters that are not leaf nodes (single datapoint)
             {
                 var clusterParentNode = new Item() { };
                 clusterParentNode.Name = cluster.Parent1.ToString();
-                //if (SubClusterDepth < SelectedClusteringLevel - SliderValue)
-                if(cluster.Dissimilarity >= _chartYSeriesFullPrecision[SliderValue]) // decompose clusters between the root cluster distance and sub-cluster distance
+                //if (SubClusterDepth < SelectedClusteringLevel - DistanceSliderValue)
+                if(cluster.Dissimilarity >= _chartYSeriesFullPrecision[DistanceSliderValue]) // decompose clusters between the root cluster distance and sub-cluster distance
                 {
-                    clusterParentNode.Children = bifurcateCluster(cluster.Parent1);
+                    clusterParentNode.Children = bifurcateCluster(cluster.Parent1, parentCluster);
                 }
                 else  // aggregate multi-level children for cluster dissimilarity less than sub-cluster distance value
                 {
@@ -378,7 +409,7 @@ namespace Panini.ViewModel
                     {
                         collection.Add(new Item
                         {
-                            Name = datapoint.ID
+                            Name = datapoint.ID,
                         });
                     }
                     clusterParentNode.Children = collection;
@@ -391,9 +422,9 @@ namespace Panini.ViewModel
             {
                 var clusterParentNode = new Item() { };
                 clusterParentNode.Name = cluster.Parent2.ToString();
-                if (cluster.Dissimilarity >= _chartYSeriesFullPrecision[SliderValue])
+                if (cluster.Dissimilarity >= _chartYSeriesFullPrecision[DistanceSliderValue])
                 {
-                    clusterParentNode.Children = bifurcateCluster(cluster.Parent2);
+                    clusterParentNode.Children = bifurcateCluster(cluster.Parent2, parentCluster);
                 }
                 else
                 {
@@ -402,7 +433,8 @@ namespace Panini.ViewModel
                     {
                         collection.Add(new Item
                         {
-                            Name = datapoint.ID
+                            Name = datapoint.ID,
+
                         }) ;
                     }
                     clusterParentNode.Children = collection;
@@ -516,7 +548,7 @@ namespace Panini.ViewModel
             // Set the slider limits everytime a dissimilarity level is selected in the chart
             Ticks = _chartXSeries.Where(x => x < (int)p.X).Select(x => (int)x).ToArray(); // Get values less than dissimilarity and rescale to slider range
             MaxValue = Ticks.Length;
-            SliderValue = MaxValue;
+            DistanceSliderValue = MaxValue;
         }
 
         public void update_chart() // when the linkage is changed using the drop-down list
@@ -568,11 +600,20 @@ namespace Panini.ViewModel
     {
         public string Name { get; set; }
         public double Dissimilarity { get; set; }
+        public Color BackgroundColor { get; set; }
         public ObservableCollection<Item> Children { get; set; } = new ObservableCollection<Item>();
 
         public override string ToString()
         {
             return Name;
+        }
+    }
+
+    public class DissimilarityMetric : IDissimilarityMetric<DataPoint>
+    {
+        public double Calculate(DataPoint instance1, DataPoint instance2)
+        {
+            throw new NotImplementedException();
         }
     }
 }
