@@ -811,7 +811,13 @@
                           Ticks="{Binding Ticks}"
                           IsSnapToTickEnabled="True"
                           VerticalAlignment="Center">
-                  </Slider>
+                      <beh:Interaction.Triggers>
+                        <beh:EventTrigger EventName="PreviewMouseUp"
+                                          SourceObject="{Binding ElementName=SubClusterSlider}">
+                          <beh:InvokeCommandAction Command="{Binding SubClusterSliderCommand}" />
+                        </beh:EventTrigger>
+                      </beh:Interaction.Triggers>
+                    </Slider>
                     <Border Grid.Column="2"
                             Background="#f7f2ff"
                             CornerRadius="5"
@@ -843,6 +849,12 @@
                           Minimum="0"
                           Maximum="100"
                           VerticalAlignment="Center">
+                      <beh:Interaction.Triggers>
+                        <beh:EventTrigger EventName="PreviewMouseUp"
+                                          SourceObject="{Binding ElementName=FuzzynessSlider}">
+                          <beh:InvokeCommandAction Command="{Binding FuzzynessSliderCommand}" />
+                        </beh:EventTrigger>
+                      </beh:Interaction.Triggers>
                   </Slider>
                     <Border Grid.Column="2"
                             Background="#f7f2ff"

@@ -17,6 +17,8 @@ using LiveCharts.Defaults;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace Panini.ViewModel
 {
@@ -62,6 +64,24 @@ namespace Panini.ViewModel
                 {
                     ExecuteDelegate = p => update_tree(p)
                 }); }
+        }
+
+        private ICommand _subClusterSliderCommand;
+        public ICommand SubClusterSliderCommand
+        {
+            get { return _subClusterSliderCommand ?? (_subClusterSliderCommand = new ButtonCommandHandler(() => SubClusterCallback(), () => true)); }
+        }
+
+
+        private ICommand _fuzzynessSliderCommand;
+        public ICommand FuzzynessSliderCommand
+        {
+            get { return _fuzzynessSliderCommand ?? (_fuzzynessSliderCommand = new ButtonCommandHandler(() => SubClusterCallback(), () => true)); }
+        }
+
+        private void SubClusterCallback()
+        {
+            sub_cluster();
         }
 
         private ObservableCollection<Item> _dataSource = new ObservableCollection<Item>();
@@ -119,7 +139,7 @@ namespace Panini.ViewModel
         public int DistanceSliderValue
         {
             get { return _distanceSliderValue; }
-            set { _distanceSliderValue = value; SubClusterDistance = _chartYSeries[value]; sub_cluster(); RaisePropertyChanged(); }
+            set { _distanceSliderValue = value; SubClusterDistance = _chartYSeries[value]; RaisePropertyChanged(); }
         }
 
         private int _maxValue = 1;
@@ -163,7 +183,7 @@ namespace Panini.ViewModel
         public double FuzzynessSliderValue
         {
             get { return  Math.Round(_fuzzyness,2); }
-            set { _fuzzyness = value; sub_cluster(); RaisePropertyChanged(); }
+            set { _fuzzyness = value; RaisePropertyChanged(); }
         }
 
         private ILinkageCriterion<DataPoint> _linkage = new MinimumEnergyLinkage<DataPoint>(new DataPoint(null, null)) { };
@@ -735,11 +755,6 @@ namespace Panini.ViewModel
         }
     }
 
-    public class DissimilarityMetric : IDissimilarityMetric<DataPoint>
-    {
-        public double Calculate(DataPoint instance1, DataPoint instance2)
-        {
-            throw new NotImplementedException();
-        }
-    }
+
 }
+
