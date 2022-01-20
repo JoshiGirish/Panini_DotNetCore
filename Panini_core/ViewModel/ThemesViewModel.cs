@@ -334,9 +334,9 @@ namespace Panini.ViewModel
                             {
                                 var clusterSetNode = new Item() { };
                                 //clusterSetNode.Name = clusterCount.ToString() + " " + cluster.Parent1?.ToString() + " " + cluster.Parent2?.ToString();
-                                clusterSetNode.Name = clusterCount.ToString();
-                                clusterSetNode.Dissimilarity = cluster.Dissimilarity;
+                                clusterSetNode.Dissimilarity =Math.Round(cluster.Dissimilarity,2);
                                 clusterSetNode.Children = get_cluster_members(cluster);
+                                clusterSetNode.TopicCount = clusterSetNode.Children.Count;
                                 clusterLevelNode.Add(clusterSetNode);
                                 clusterCount++;
                             }
@@ -377,10 +377,10 @@ namespace Panini.ViewModel
                                 
                                 var clusterSetNode = new Item() { };
                                 //clusterSetNode.Name = clusterCount.ToString() + " " + cluster.Parent1?.ToString() + " " + cluster.Parent2?.ToString();
-                                clusterSetNode.Name = $"Separation : {Math.Round(cluster.Dissimilarity, 2)}";
-                                clusterSetNode.Dissimilarity = cluster.Dissimilarity;
-
-                                clusterSetNode.Children = DistanceSliderValue == SelectedClusteringLevel ? get_cluster_members(cluster) : bifurcateCluster(cluster, interClusterDistance,cluster);
+                                clusterSetNode.Dissimilarity = Math.Round(cluster.Dissimilarity, 2);
+                                clusterSetNode.Level = 0;
+                                clusterSetNode.Children = DistanceSliderValue == SelectedClusteringLevel ? get_cluster_members(cluster) : bifurcateCluster(cluster, interClusterDistance,0,cluster);
+                                clusterSetNode.TopicCount = clusterSetNode.Children.Count;
                                 clusterLevelNode.Add(clusterSetNode);
                                 clusterCount++;
                             }
@@ -409,13 +409,14 @@ namespace Panini.ViewModel
             return distances.Length == 0 ? 0.0 : distances.Max();
         }
 
-        private ObservableCollection<Item> bifurcateCluster(Cluster<DataPoint> cluster, double maxDistance, Cluster<DataPoint> parentCluster)
+        private ObservableCollection<Item> bifurcateCluster(Cluster<DataPoint> cluster, double maxDistance, int parentNodeLevel, Cluster<DataPoint> parentCluster)
         {
             var clusterChildren = new ObservableCollection<Item>() { };
             var fuzzyFraction = FuzzynessSliderValue / 100;
             //var fuzzyness = linkage.Calculate(parentCluster.Parent1, parentCluster.Parent2) * fuzzyFraction;
             var fuzzyness = maxDistance * fuzzyFraction;
 
+            var nodeLevel = parentNodeLevel + 1;
 
             // If the two parents are close enough (distance less than fuzzyness value) return all their children as collection
             //if (cluster.Parent1 != null && cluster.Parent2 != null) // return the single datapoint for cluster which has no parents
@@ -453,26 +454,16 @@ namespace Panini.ViewModel
             {
                 var clusterParentNode = new Item() { };
                 //clusterParentNode.Name = cluster.Parent1.ToString();
-                clusterParentNode.Name = $"Separation : {Math.Round(cluster.Parent1.Dissimilarity,2).ToString()}" ;
+                clusterParentNode.Dissimilarity = Math.Round(cluster.Parent1.Dissimilarity,2) ;
                 //if (SubClusterDepth < SelectedClusteringLevel - DistanceSliderValue)
                 if (cluster.Dissimilarity >= _chartYSeriesFullPrecision[DistanceSliderValue]) // decompose clusters between the root cluster distance and sub-cluster distance
                 {
                     if (_linkage.Calculate(cluster, cluster.Parent1) < fuzzyness)
                     {
-                        //if (cluster.Parent1.Parent1 == null) // Add only
-                        //{
-                        //    var members = get_cluster_members(cluster.Parent1);
-                        //    foreach (var member in members)
-                        //    {
-                        //        clusterChildren.Add(member);
-                        //    }
-                        //}
-                        //else
-                        //{
                         if (cluster.Parent1.Parent1 == null) 
                         {
                             var interClusterDistance = _linkage.Calculate(cluster.Parent1, cluster.Parent2);
-                            var children = bifurcateCluster(cluster.Parent1, interClusterDistance, parentCluster);
+                            var children = bifurcateCluster(cluster.Parent1, interClusterDistance, parentNodeLevel, parentCluster);
                             foreach (var child in children)
                             {
                                 clusterChildren.Add(child);
@@ -481,7 +472,7 @@ namespace Panini.ViewModel
                         if(cluster.Parent1.Parent1 != null)
                         {
                             var interClusterDistance = _linkage.Calculate(cluster.Parent1.Parent1, cluster.Parent1.Parent2);
-                            var children = bifurcateCluster(cluster.Parent1.Parent1, interClusterDistance,parentCluster);
+                            var children = bifurcateCluster(cluster.Parent1.Parent1, interClusterDistance, parentNodeLevel, parentCluster);
                             foreach (var child in children)
                             {
                                 clusterChildren.Add(child);
@@ -490,19 +481,20 @@ namespace Panini.ViewModel
                         if(cluster.Parent1.Parent2 != null)
                         {
                             var interClusterDistance = _linkage.Calculate(cluster.Parent1.Parent1, cluster.Parent1.Parent2);
-                            var children = bifurcateCluster(cluster.Parent1.Parent2,interClusterDistance, parentCluster);
+                            var children = bifurcateCluster(cluster.Parent1.Parent2,interClusterDistance, parentNodeLevel, parentCluster);
                             foreach (var child in children)
                             {
                                 clusterChildren.Add(child);
                             }
                         }
-                        //}
                     }
                     else
                     {
                         var interClusterDistance = _linkage.Calculate(cluster.Parent1, cluster.Parent2);
-                        clusterParentNode.Children = bifurcateCluster(cluster.Parent1, interClusterDistance, parentCluster);
+                        clusterParentNode.Children = bifurcateCluster(cluster.Parent1, interClusterDistance, nodeLevel, parentCluster);
+                        clusterParentNode.TopicCount = clusterParentNode.Children.Count;
                         clusterParentNode.LevelMarkerVisibility = "Visible";
+                        clusterParentNode.Level = nodeLevel;
                         clusterChildren.Add(clusterParentNode);
                     }
 
@@ -518,7 +510,10 @@ namespace Panini.ViewModel
                             LevelMarkerVisibility = "Collapsed"
                         });
                     }
+                    clusterParentNode.Dissimilarity = Math.Round(cluster.Parent1.Dissimilarity, 2);
                     clusterParentNode.Children = collection;
+                    clusterParentNode.TopicCount = clusterParentNode.Children.Count;
+                    clusterParentNode.Level = nodeLevel;
                     clusterChildren.Add(clusterParentNode);
                 }
             }
@@ -528,25 +523,15 @@ namespace Panini.ViewModel
             {
                 var clusterParentNode = new Item() { };
                 //clusterParentNode.Name = cluster.Parent2.ToString();
-                clusterParentNode.Name = $"Separation : {Math.Round(cluster.Parent2.Dissimilarity, 2).ToString()}";
+                clusterParentNode.Dissimilarity = Math.Round(cluster.Parent2.Dissimilarity, 2);
                 if (cluster.Dissimilarity >= _chartYSeriesFullPrecision[DistanceSliderValue])
                 {
                     if (_linkage.Calculate(cluster, cluster.Parent2) < fuzzyness)
                     {
-                        //if(cluster.Parent2.Parent2 == null) // Add only
-                        //{
-                        //    var members = get_cluster_members(cluster.Parent2);
-                        //    foreach(var member in members)
-                        //    {
-                        //        clusterChildren.Add(member);
-                        //    }
-                        //}
-                        //else
-                        //{
                         if (cluster.Parent2.Parent1 == null) // If cluster.Parent2 is leaf node
                         {
                             var interClusterDistance = _linkage.Calculate(cluster.Parent1, cluster.Parent2);
-                            var children = bifurcateCluster(cluster.Parent2, interClusterDistance, parentCluster);
+                            var children = bifurcateCluster(cluster.Parent2, interClusterDistance, parentNodeLevel, parentCluster);
                             foreach (var child in children)
                             {
                                 clusterChildren.Add(child);
@@ -555,7 +540,7 @@ namespace Panini.ViewModel
                         if (cluster.Parent2.Parent1 != null)
                         {
                             var interClusterDistance = _linkage.Calculate(cluster.Parent2.Parent1, cluster.Parent2.Parent2);
-                            var children = bifurcateCluster(cluster.Parent2.Parent1, interClusterDistance, parentCluster);
+                            var children = bifurcateCluster(cluster.Parent2.Parent1, interClusterDistance, parentNodeLevel, parentCluster);
                             foreach (var child in children)
                             {
                                 clusterChildren.Add(child);
@@ -564,19 +549,21 @@ namespace Panini.ViewModel
                         if (cluster.Parent2.Parent2 != null)
                         {
                             var interClusterDistance = _linkage.Calculate(cluster.Parent2.Parent1, cluster.Parent2.Parent2);
-                            var children = bifurcateCluster(cluster.Parent2.Parent2,interClusterDistance, parentCluster);
+                            var children = bifurcateCluster(cluster.Parent2.Parent2,interClusterDistance, parentNodeLevel, parentCluster);
                             foreach (var child in children)
                             {
                                 clusterChildren.Add(child);
                             }
                         }
-                        //}
                     }
                     else
                     {
                         var interClusterDistance = _linkage.Calculate(cluster.Parent1, cluster.Parent2);
-                        clusterParentNode.Children = bifurcateCluster(cluster.Parent2,interClusterDistance, parentCluster);
+                        clusterParentNode.Children = bifurcateCluster(cluster.Parent2,interClusterDistance, nodeLevel, parentCluster);
+                        clusterParentNode.TopicCount = clusterParentNode.Children.Count;
+                        clusterParentNode.Dissimilarity = Math.Round(cluster.Dissimilarity, 2);
                         clusterParentNode.LevelMarkerVisibility = "Visible";
+                        clusterParentNode.Level = nodeLevel;
                         clusterChildren.Add(clusterParentNode);
                     }
                 }
@@ -591,7 +578,11 @@ namespace Panini.ViewModel
                             LevelMarkerVisibility = "Collapsed"
                         }) ;
                     }
+
+                    clusterParentNode.Dissimilarity = Math.Round(cluster.Parent1.Dissimilarity, 2);
                     clusterParentNode.Children = collection;
+                    clusterParentNode.TopicCount = clusterParentNode.Children.Count;
+                    clusterParentNode.Level = nodeLevel;
                     clusterChildren.Add(clusterParentNode);
                 }
             }
@@ -745,6 +736,7 @@ namespace Panini.ViewModel
         public string Name { get; set; }
         public double Dissimilarity { get; set; }
         public int Level { get; set; }
+        public int TopicCount { get; set; }
         public string LevelMarkerVisibility { get; set; }
 
         public ObservableCollection<Item> Children { get; set; } = new ObservableCollection<Item>();

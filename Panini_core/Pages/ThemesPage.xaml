@@ -696,14 +696,74 @@
                 <HierarchicalDataTemplate DataType="{x:Type vm:Item}"
                                           ItemsSource="{Binding Children}">
                   <Grid>
-                  <Border Grid.Column="2"
-                            CornerRadius="5"
-                            Background="#f7f2ff"
-                            Padding="5 0"
-                          Visibility="{Binding LevelMarkerVisibility}">
-                  </Border>
-                    <TextBlock Text="{Binding Name}"
-                               Height="18"/>
+                    <TextBlock Grid.Column="0"
+                               Text="{Binding Name}"
+                               Height="18" />
+                      <Border CornerRadius="5"
+                            BorderThickness="1"
+                              BorderBrush="#e7d1ff"
+                              Padding="2 0"
+                              Cursor="Hand"
+                              Visibility="{Binding LevelMarkerVisibility}">
+                      <Border.Background>
+                        <LinearGradientBrush StartPoint="0.5,0"
+                                             EndPoint="0.5,1">
+                          <GradientStop Color="#fbf7ff"
+                                        Offset="0" />
+                          <GradientStop Color="#f3e8ff"
+                                        Offset="1.0" />
+                        </LinearGradientBrush>
+                      </Border.Background>
+                      <Grid Visibility="{Binding LevelMarkerVisibility}">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition />
+                          <ColumnDefinition />
+                          <ColumnDefinition />
+                          <ColumnDefinition />
+                          <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding Level}"
+                                   Height="16"
+                                   FontStyle="Italic"
+                                   FontSize="11">
+                          <TextBlock.ToolTip>
+                            <ToolTip>
+                              <TextBlock TextWrapping="Wrap"
+                                         Text="Indentation Level" />
+                            </ToolTip>
+                          </TextBlock.ToolTip>
+                        </TextBlock>
+                        <Separator Grid.Column="1"
+                                   Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                        <TextBlock  Grid.Column="2"
+                                    Text="{Binding TopicCount}"
+                                    Height="16"
+                                    FontStyle="Italic"
+                                    FontSize="11">
+                          <TextBlock.ToolTip>
+                            <ToolTip>
+                              <TextBlock TextWrapping="Wrap"
+                                         Text="Number of topics in the theme" />
+                            </ToolTip>
+                          </TextBlock.ToolTip>
+                        </TextBlock>
+                        <Separator Grid.Column="3"
+                          Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                        <TextBlock  Grid.Column="4"
+                                    Text="{Binding Dissimilarity}"
+                                    Height="16"
+                                   FontStyle="Italic"
+                                    FontSize="11">
+                          <TextBlock.ToolTip>
+                            <ToolTip>
+                              <TextBlock TextWrapping="Wrap"
+                                         Text="Dissimilarity" />
+                            </ToolTip>
+                          </TextBlock.ToolTip>
+                        </TextBlock>
+                      </Grid>
+                      </Border>
                   </Grid>
                 </HierarchicalDataTemplate>
               </TreeView.ItemTemplate>
@@ -756,13 +816,21 @@
                     </Grid>
                 
                 <!--Distance Measure-->
-                <Grid Margin="20 10 0 0">
+                <Grid Margin="20 5 0 0">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="*"
                                       MaxWidth="300" />
                   </Grid.ColumnDefinitions>
-                  <Label Grid.Column="0">Distance Measure</Label>
+                  <Label Grid.Column="0"
+                         Content="Distance Measure">
+                      <Label.ToolTip>
+                        <ToolTip MaxWidth="300">
+                          <TextBlock TextWrapping="Wrap"
+                                     Text="Enter comma separated substrings that appear at the end of the file names. &#x0a;For example, enter &quot;faq&quot;, if the topic name is &quot;help-t-faq.html&quot;." />
+                        </ToolTip>
+                      </Label.ToolTip>
+                  </Label>
                   <ComboBox Style="{DynamicResource ComboBoxStyle1}"
                             Grid.Column="1"
                             x:Name="linkageSelectionCombo"
@@ -773,7 +841,7 @@
                 </Grid>
 
                 <!--Root Cluster Dissimilarity-->
-                <Grid Margin="20 10 0 0">
+                <Grid Margin="20 5 0 0">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="*"
@@ -793,7 +861,7 @@
                   </Grid>
                 
                 <!--Subcluster Distance-->
-                <Grid Margin="20 10 0 0">
+                <Grid Margin="20 5 0 0">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="*"
@@ -833,7 +901,7 @@
                   </Grid>
 
                 <!--Cluster Fuzzyness-->
-                <Grid Margin="20 10 0 0">
+                <Grid Margin="20 5 0 0">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="*"
