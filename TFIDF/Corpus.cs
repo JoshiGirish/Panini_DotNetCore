@@ -596,7 +596,7 @@ namespace TFIDF
                         count = word.Count()
                     });
                 var wordDict = wordGroups.ToDictionary(item => item.term, item => item.count);
-                collection.UnionWith(wordDict.OrderByDescending(item => item.Value).Take(30).Select(item => item.Key).ToList());
+                collection.UnionWith(wordDict.OrderByDescending(item => item.Value).Take(20).Select(item => item.Key).ToList());
             }
             var doubArray = new double[collection.Count, topics.Count];
 
@@ -606,7 +606,7 @@ namespace TFIDF
                 //                    .OrderByDescending(word => word)
                 //                    .Select(word => topics[i].words.Where(top_word => top_word == word).Count()).ToArray();
                 //var word_counts = Lexicon.words.OrderByDescending(word => word).Select(word => topics[i].words.Where(top_word => top_word == word).Count()).ToArray();
-                var word_counts = collection.ToArray().OrderByDescending(word => word).Select(word => topics[i].tfidf.tfVector.TryGetValue(word, out zero) ? zero : zero).ToArray();
+                var word_counts = collection.ToArray().OrderByDescending(word => word).Select(word => topics[i].tfidf.tfidfVector.TryGetValue(word, out zero) ? zero : zero).ToArray();
                 //var word_counts = topics[i].tfidf.wordCountVector.Values.ToArray();
                 for (var j = 0; j < word_counts.Length; j++)
                 {
